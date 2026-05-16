@@ -736,5 +736,39 @@ https://templatemo.com/tm-609-crypto-vault
     </div>
 
     <script src="js/templatemo-crypto-script.js"></script>
+    <script>
+    // 1. LIGHT MODE LOGIC
+    // Pehle check karte hain ki kya dashboard par pehle se toggle button hai
+    const modeToggle = document.querySelector('input[type="checkbox"]') || document.querySelector('.main-menu + .account ui-switch') || document.querySelector('.card-header + div') || document.querySelector('input'); 
+    
+    // Light mode switch par click hone par pure body ka background change karne ke liye
+    if(modeToggle) {
+        modeToggle.addEventListener('change', function() {
+            if(this.checked) {
+                document.body.style.filter = "invert(0.9) hue-rotate(180deg)";
+                // Isse background white aur text dark ho jayega bina zyadah CSS badle
+            } else {
+                document.body.style.filter = "none";
+            }
+        });
+    }
+
+    // 2. LOGOUT LOGIC
+    // Logout link ko dhoondhte hain pure page par
+    const logoutBtn = document.querySelector('a[href*="logout"]') || document.querySelectorAll('.account a')[1] || document.querySelector('div[style*="color: #ffaaab"]') || document.body;
+    
+    // Pure page par jahan bhi Logout likha ho, uspar click karne par alert aaye aur page refresh ho jaye
+    document.body.addEventListener('click', function(e) {
+        if(e.target.innerText && e.target.innerText.includes('Logout')) {
+            e.preventDefault();
+            let confirmLogout = confirm("Kya aap sach me Logout karna chahte hain?");
+            if(confirmLogout) {
+                alert("Aap successfully logout ho gaye hain!");
+                // Agar aapke paas koi login page hai (jaise login.html), toh niche waali line ka '#' hata kar 'login.html' likh dein
+                window.location.href = "#"; 
+            }
+        }
+    });
+</script>
 </body>
 </html>
