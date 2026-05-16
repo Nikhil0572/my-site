@@ -753,27 +753,41 @@ https://templatemo.com/tm-609-crypto-vault
         });
     }
 
-    // 1. THEME TOGGLE LOGIC (LIGHT / DARK MODE)
-const themeToggleBtn = document.getElementById('themeToggle') || document.querySelector('.theme-toggle-btn') || document.querySelector('.form-check-input') || document.querySelector('input[type="checkbox"]');
+    // 1. THEME TOGGLE LOGIC FIXED (LIGHT / DARK MODE)
+const themeSwitchBtn = document.getElementById('themeSwitch');
 
-if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
+if (themeSwitchBtn) {
+    themeSwitchBtn.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         
-        if(themeToggleBtn.type === 'checkbox') {
-            themeToggleBtn.checked = (newTheme === 'light');
-        }
+        // Agar switch par koi active class add hoti ho toh
+        themeSwitchBtn.classList.toggle('active', newTheme === 'light');
     });
     
+    // Page load par check karein
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    if(themeToggleBtn.type === 'checkbox') {
-        themeToggleBtn.checked = (savedTheme === 'light');
+    if(savedTheme === 'light') {
+        themeSwitchBtn.classList.add('active');
     }
 }
+
+// 2. LOGOUT LOGIC
+const logoutBtn = document.querySelector('.logout-btn');
+if (logoutBtn) {
+    logoutBtn.removeAttribute('onclick'); // Purana inline click hatane ke liye
+    logoutBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        let confirmLogout = confirm("Kya aap sach me Logout karna chahte hain?");
+        if(confirmLogout) {
+            alert("Aap successfully logout ho gaye hain!");
+            window.location.href = "login.html";
+        }
+    });
+}}
 
 // 2. LOGOUT LOGIC
 const logoutBtn = document.querySelector('a[href*="logout"]') || document.querySelectorAll('.account a')[1];
