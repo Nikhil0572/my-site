@@ -16,10 +16,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="templatemo-crypto-style.css">
     <link rel="stylesheet" href="templatemo-crypto-login.css">
+    <style>
+        /* CSS fixing for tab switching since we removed external script dependency */
+        .auth-form { display: none !important; }
+        .auth-form.active { display: flex !important; flex-direction: column; }
+        .success-message { display: none !important; }
+        .success-message.active { display: flex !important; flex-direction: column; align-items: center; text-align: center; }
+        .checkbox-wrapper { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+        .checkbox { width: 18px; height: 18px; border: 2px solid #555; border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .checkbox.checked { background: #ff9800; border-color: #ff9800; }
+        .checkbox svg { display: none; }
+        .checkbox.checked svg { display: block; }
+    </style>
 </head>
 <body class="auth-page">
     
-    <!-- Left Side - Branding -->
     <div class="auth-branding">
         <div class="branding-content">
             <div class="branding-logo" style="background: #ff9800; color: #000; font-weight: bold; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 20px; margin-bottom: 15px;">SS</div>
@@ -43,21 +54,12 @@
                     <span style="font-size: 20px;">🔒</span>
                     <span style="font-size: 14px; color: #ccc;">Secure Admin & Staff Authentication</span>
                 </div>
-                <div class="branding-feature" style="display: flex; align-items: center; gap: 10px;">
-                    <div class="feature-icon" style="display: flex; align-items: center;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff9800" stroke-width="2">
-                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-                        </svg>
-                    </div>
-                    <span style="font-size: 14px; color: #ccc;">Real-time Analytics & Performance</span>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- Right Side - Form -->
     <div class="auth-form-container">
-        <button class="theme-toggle-btn" id="themeToggle">
+        <button class="theme-toggle-btn" id="themeToggleBtn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="5"/>
                 <line x1="12" y1="1" x2="12" y2="3"/>
@@ -72,18 +74,16 @@
         </button>
 
         <div class="auth-form-wrapper">
-            <div class="form-header">
+            <div id="formHeader" class="form-header">
                 <h1>Welcome Back</h1>
                 <p>Enter your credentials to access your dashboard</p>
             </div>
 
-            <!-- Tab Switcher -->
-            <div class="auth-tabs">
-                <button class="auth-tab active" data-form="login">Sign In</button>
-                <button class="auth-tab" data-form="register">Sign Up</button>
+            <div id="authTabsWrapper" class="auth-tabs">
+                <button class="auth-tab active" id="tabLogin">Sign In</button>
+                <button class="auth-tab" id="tabRegister">Sign Up</button>
             </div>
 
-            <!-- Login Form -->
             <form class="auth-form active" id="loginForm">
                 <div class="form-group">
                     <label class="form-label">Email Address</label>
@@ -104,7 +104,7 @@
                             <path d="M7 11V7a5 5 0 0110 0v4"/>
                         </svg>
                         <input type="password" class="form-input" id="loginPassword" placeholder="Enter your password" required>
-                        <button type="button" class="password-toggle" data-target="loginPassword">
+                        <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                 <circle cx="12" cy="12" r="3"/>
@@ -114,9 +114,9 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="checkbox-wrapper" id="rememberMe">
-                        <div class="checkbox">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1c1c1e" stroke-width="3">
+                    <div class="checkbox-wrapper" onclick="toggleCheckbox('rememberCheckbox')">
+                        <div class="checkbox" id="rememberCheckbox">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3">
                                 <polyline points="20 6 9 17 4 12"/>
                             </svg>
                         </div>
@@ -134,29 +134,15 @@
                 </div>
 
                 <div class="social-buttons">
-                    <button type="button" class="social-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24">
-                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                        </svg>
-                        Google
-                    </button>
-                    <button type="button" class="social-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                        </svg>
-                        Apple
-                    </button>
+                    <button type="button" class="social-btn">Google</button>
+                    <button type="button" class="social-btn">Apple</button>
                 </div>
 
                 <p class="form-footer">
-                    Don't have an account? <a href="#" id="switchToRegister">Sign up for free</a>
+                    Don't have an account? <a href="#" id="linkToRegister">Sign up for free</a>
                 </p>
             </form>
 
-            <!-- Register Form -->
             <form class="auth-form" id="registerForm">
                 <div class="form-group">
                     <label class="form-label">Full Name</label>
@@ -188,82 +174,124 @@
                             <path d="M7 11V7a5 5 0 0110 0v4"/>
                         </svg>
                         <input type="password" class="form-input" id="registerPassword" placeholder="Create a password" required>
-                        <button type="button" class="password-toggle" data-target="registerPassword">
+                        <button type="button" class="password-toggle" onclick="togglePassword('registerPassword')">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                 <circle cx="12" cy="12" r="3"/>
                             </svg>
                         </button>
                     </div>
-                    <div class="password-strength">
-                        <div class="strength-bar"></div>
-                        <div class="strength-bar"></div>
-                        <div class="strength-bar"></div>
-                        <div class="strength-bar"></div>
-                    </div>
-                    <p class="strength-text">Use 8+ characters with a mix of letters, numbers & symbols</p>
                 </div>
 
                 <div class="form-group">
-                    <div class="checkbox-wrapper" id="agreeTerms">
-                        <div class="checkbox">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1c1c1e" stroke-width="3">
+                    <div class="checkbox-wrapper" onclick="toggleCheckbox('termsCheckbox')">
+                        <div class="checkbox" id="termsCheckbox">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3">
                                 <polyline points="20 6 9 17 4 12"/>
                             </svg>
                         </div>
-                        <span class="checkbox-label">I agree to the <a href="#" style="color: var(--accent-copper);">Terms of Service</a> and <a href="#" style="color: var(--accent-copper);">Privacy Policy</a></span>
+                        <span class="checkbox-label">I agree to the Terms & Privacy Policy</span>
                     </div>
                 </div>
 
                 <button type="submit" class="submit-btn">Create Account</button>
 
-                <div class="divider">
-                    <div class="divider-line"></div>
-                    <span class="divider-text">or continue with</span>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="social-buttons">
-                    <button type="button" class="social-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24">
-                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                        </svg>
-                        Google
-                    </button>
-                    <button type="button" class="social-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                        </svg>
-                        Apple
-                    </button>
-                </div>
-
                 <p class="form-footer">
-                    Already have an account? <a href="#" id="switchToLogin">Sign in</a>
+                    Already have an account? <a href="#" id="linkToLogin">Sign in</a>
                 </p>
             </form>
 
-            <!-- Success Message -->
             <div class="success-message" id="successMessage">
-                <div class="success-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1c1c1e" stroke-width="2">
+                <div class="success-icon" style="background: #ff9800; padding: 15px; border-radius: 50%; margin-bottom: 15px;">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2">
                         <polyline points="20 6 9 17 4 12"/>
                     </svg>
                 </div>
                 <h2>Account Created!</h2>
-                <p>Check your email to verify your account and get started.</p>
-                <button class="submit-btn" onclick="window.location.href='index.html'">Go to Dashboard</button>
+                <p style="color: #ccc; margin-bottom: 20px;">Check your email to verify your account and get started.</p>
+                <button class="submit-btn" onclick="location.reload()">Go to Login</button>
             </div>
         </div>
 
-        <p class="copyright">
-            Copyright &copy; 2026 S.S. ENTERPRISES. Designed by <a href="https://templatemo.com" target="_blank" rel="nofollow">TemplateMo</a>
+        <p class="copyright" style="margin-top: 20px; font-size: 12px; color: #666;">
+            Copyright &copy; 2026 S.S. ENTERPRISES. All Rights Reserved.
         </p>
     </div>
 
-    <script src="js/templatemo-crypto-script.js"></script>
+    <script>
+        const tabLogin = document.getElementById('tabLogin');
+        const tabRegister = document.getElementById('tabRegister');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const successMessage = document.getElementById('successMessage');
+        const authTabsWrapper = document.getElementById('authTabsWrapper');
+        const formHeader = document.getElementById('formHeader');
+
+        const linkToRegister = document.getElementById('linkToRegister');
+        const linkToLogin = document.getElementById('linkToLogin');
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+        // Tab Switching Logic
+        function showLogin() {
+            tabLogin.classList.add('active');
+            tabRegister.classList.remove('active');
+            loginForm.classList.add('active');
+            registerForm.classList.remove('active');
+            successMessage.classList.remove('active');
+        }
+
+        function showRegister() {
+            tabRegister.classList.add('active');
+            tabLogin.classList.remove('active');
+            registerForm.classList.add('active');
+            loginForm.classList.remove('active');
+            successMessage.classList.remove('active');
+        }
+
+        tabLogin.addEventListener('click', showLogin);
+        tabRegister.addEventListener('click', showRegister);
+        linkToRegister.addEventListener('click', (e) => { e.preventDefault(); showRegister(); });
+        linkToLogin.addEventListener('click', (e) => { e.preventDefault(); showLogin(); });
+
+        // Password Show/Hide Function
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            if (input.type === 'password') {
+                input.type = 'text';
+            } else {
+                input.type = 'password';
+            }
+        }
+
+        // Custom Checkbox Function
+        function toggleCheckbox(id) {
+            const checkbox = document.getElementById(id);
+            checkbox.classList.toggle('checked');
+        }
+
+        // Theme Toggle Logic
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Register Form Submit (Show success screen)
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            registerForm.classList.remove('active');
+            loginForm.classList.remove('active');
+            authTabsWrapper.style.display = 'none';
+            formHeader.style.display = 'none';
+            successMessage.classList.add('active');
+        });
+
+        // Login Form Submit (Placeholder action)
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Logging in...');
+        });
+    </script>
 </body>
 </html>
