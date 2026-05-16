@@ -11,25 +11,26 @@
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
     </script>
-    <style>
-        /* Light mode active hone par screen ke saare colors badalne ke liye */
+ <style>
+        /* Forcefully invert colors across the entire page layout for Light Mode */
         [data-theme="light"] {
-            background-color: #f4f6f9 !important;
-            color: #1a1a1a !important;
+            filter: invert(1) hue-rotate(180deg) !important;
         }
-        [data-theme="light"] aside, 
-        [data-theme="light"] .sidebar,
-        [data-theme="light"] .main-menu {
-            background-color: #ffffff !important;
-            border-right: 1px solid #e0e0e0 !important;
+        
+        /* Dashboard ki images ya maps ulte na dikhein, unhe wapis seedha karne ke liye */
+        [data-theme="light"] img, 
+        [data-theme="light"] svg, 
+        [data-theme="light"] canvas,
+        [data-theme="light"] .chart-container,
+        [data-theme="light"] .apexcharts-canvas {
+            filter: invert(1) hue-rotate(180deg) !important;
         }
-        [data-theme="light"] .dashboard-card, 
-        [data-theme="light"] .card,
-        [data-theme="light"] main,
-        [data-theme="light"] .main-content {
-            background-color: #ffffff !important;
-            color: #1a1a1a !important;
+        
+        /* Toggle button active hone par orange background settings */
+        .theme-switch.active {
+            background-color: #ff9800 !important;
         }
+    </style>
         [data-theme="light"] h1, 
         [data-theme="light"] h2, 
         [data-theme="light"] h3, 
