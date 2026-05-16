@@ -11,6 +11,38 @@
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
     </script>
+    <style>
+        /* Light mode active hone par screen ke saare colors badalne ke liye */
+        [data-theme="light"] {
+            background-color: #f4f6f9 !important;
+            color: #1a1a1a !important;
+        }
+        [data-theme="light"] aside, 
+        [data-theme="light"] .sidebar,
+        [data-theme="light"] .main-menu {
+            background-color: #ffffff !important;
+            border-right: 1px solid #e0e0e0 !important;
+        }
+        [data-theme="light"] .dashboard-card, 
+        [data-theme="light"] .card,
+        [data-theme="light"] main,
+        [data-theme="light"] .main-content {
+            background-color: #ffffff !important;
+            color: #1a1a1a !important;
+        }
+        [data-theme="light"] h1, 
+        [data-theme="light"] h2, 
+        [data-theme="light"] h3, 
+        [data-theme="light"] p,
+        [data-theme="light"] span,
+        [data-theme="light"] .nav-link {
+            color: #1a1a1a !important;
+        }
+        /* Toggle switch active hone par orange dikhane ke liye */
+        .theme-switch.active {
+            background-color: #ff9800 !important;
+        }
+    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
