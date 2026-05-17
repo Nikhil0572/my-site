@@ -97,7 +97,6 @@
                     </a>
                 </li>
             </ul>
-
             <p class="menu-category">ACCOUNT</p>
             <ul class="nav-menu">
                 <li class="nav-item">
@@ -110,16 +109,16 @@
                 <li class="nav-item text-center" style="margin-top: 20px; padding: 0 15px;">
                     <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
                         <span style="font-size: 14px; color: #ccc;">Light Mode</span>
-                        <div class="theme-switch" id="themeSwitch" style="cursor: pointer; width: 40px; height: 20px; background: #555; border-radius: 10px; position: relative; transition: 0.3s;" onclick="
+                        <div class="theme-switch" id="themeSwitch" style="cursor: pointer; width: 40px; height: 20px; background: #555; border-radius: 10px; position: relative;" onclick="
                             this.classList.toggle('active');
-                            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+                            const htmlTag = document.documentElement;
+                            const currentTheme = htmlTag.getAttribute('data-theme') || 'dark';
                             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                            document.documentElement.setAttribute('data-theme', newTheme);
+                            htmlTag.setAttribute('data-theme', newTheme);
                             localStorage.setItem('theme', newTheme);
                         "></div>
                     </div>
                 </li>
-
                 <li class="nav-item" style="margin-top: 10px;">
                     <button class="logout-btn" style="width: 100%; background: #ff9800; color: #000; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer;" onclick="
                         if(confirm('Kya aap sach me Logout karna chahte hain?')) {
