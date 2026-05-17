@@ -126,7 +126,7 @@
             <span class="brand-title">ENTERPRISES</span>
         </div>
 
-        <form id="loginForm" onsubmit="handleLogin(event)">
+        <form id="loginForm">
             <div class="form-group">
                 <label for="username">Username / Email</label>
                 <input type="text" id="username" placeholder="Enter your username" required>
@@ -137,25 +137,29 @@
                 <input type="password" id="password" placeholder="Enter your password" required>
             </div>
 
-            <button type="submit" class="login-btn">Log In</button>
+            <button type="button" class="login-btn" onclick="checkCredentials()">Log In</button>
             <div id="error" class="error-msg">Galat Username ya Password!</div>
         </form>
     </div>
 
     <script>
-        function handleLogin(event) {
-            event.preventDefault(); // Page refresh hone se rokne ke liye
-            
-            const uName = document.getElementById('username').value;
-            const pWord = document.getElementById('password').value;
+        function checkCredentials() {
+            const uName = document.getElementById('username').value.trim();
+            const pWord = document.getElementById('password').value.trim();
             const errorDiv = document.getElementById('error');
 
-            // Abhi ke liye simple demo username aur password set kiya hai
-            if(uName === 'admin' && pWord === '12345') {
-                // Agar sahi hai toh index.html (Dashboard) par bhej dega
-                window.location.href = 'index.html';
+            // Dono fields check karne ke liye ki khali toh nahi hain
+            if (uName === "" || pWord === "") {
+                alert("Kripya Username aur Password dono bharein!");
+                return;
+            }
+
+            // ID aur Password ki jaanch
+            if (uName === 'admin' && pWord === '12345') {
+                errorDiv.style.display = 'none';
+                // Direct redirect to index.html dashboard
+                window.location.replace('index.html');
             } else {
-                // Agar galat hai toh error dikhayega
                 errorDiv.style.display = 'block';
             }
         }
