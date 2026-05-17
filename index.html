@@ -398,16 +398,29 @@
                         <span class="nav-text">Dashboard</span>
                     </a>
                 </li>
+                
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(event)">
                         <span class="nav-icon">📦</span>
                         <span class="nav-text">Inventory</span>
+                        <span class="arrow-icon" style="margin-left: auto; transition: 0.3s; font-size: 12px;">▼</span>
                     </a>
+                    
+                    <ul class="submenu" id="inventorySubmenu" style="list-style: none; padding-left: 32px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out;">
+                        <li style="margin-top: 8px;"><a href="#" class="sub-nav-link" style="color: var(--text-muted); text-decoration: none; display: block; padding: 8px 0; font-size: 14px; font-weight: 500;">🛒 Sale</a></li>
+                        <li><a href="#" class="sub-nav-link" style="color: var(--text-muted); text-decoration: none; display: block; padding: 8px 0; font-size: 14px; font-weight: 500;">🛍️ Purchase</a></li>
+                        <li><a href="#" class="sub-nav-link" style="color: var(--text-muted); text-decoration: none; display: block; padding: 8px 0; font-size: 14px; font-weight: 500;">💳 Payment</a></li>
+                        <li><a href="#" class="sub-nav-link" style="color: var(--text-muted); text-decoration: none; display: block; padding: 8px 0; font-size: 14px; font-weight: 500;">🧾 Payment Receipt</a></li>
+                        <li><a href="#" class="sub-nav-link" style="color: var(--text-muted); text-decoration: none; display: block; padding: 8px 0; font-size: 14px; font-weight: 500;">📤 Material Issue</a></li>
+                        <li><a href="#" class="sub-nav-link" style="color: var(--text-muted); text-decoration: none; display: block; padding: 8px 0; font-size: 14px; font-weight: 500;">📥 Material Received</a></li>
+                        <li><a href="#" class="sub-nav-link" style="color: var(--text-muted); text-decoration: none; display: block; padding: 8px 0; font-size: 14px; font-weight: 500;">🔄 Contra</a></li>
+                    </ul>
                 </li>
+                
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <span class="nav-icon">💳</span>
-                        <span class="nav-text">Cash</span>
+                        <span class="nav-text">Wallet</span>
                     </a>
                 </li>
             </ul>
@@ -532,6 +545,22 @@
                 toggle.classList.add('active');
             }
         });
+    </script>
+    <script>
+        function toggleDropdown(event) {
+            const submenu = document.getElementById('inventorySubmenu');
+            const arrow = event.currentTarget.querySelector('.arrow-icon');
+            
+            if (submenu.style.maxHeight === '0px' || submenu.style.maxHeight === '') {
+                submenu.style.maxHeight = submenu.scrollHeight + 'px';
+                arrow.style.transform = 'rotate(180deg)';
+                arrow.style.color = '#ff9800';
+            } else {
+                submenu.style.maxHeight = '0px';
+                arrow.style.transform = 'rotate(0deg)';
+                arrow.style.color = 'inherit';
+            }
+        }
     </script>
 </body>
 </html>
