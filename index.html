@@ -18,22 +18,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="templatemo-crypto-style.css">
     <link rel="stylesheet" href="templatemo-crypto-dashboard.css">
-
     <style>
-        /* Light mode ka 100% force color inversion rule */
+        /* Light mode active hone par ekdam clean aur original colors settings */
         [data-theme="light"] {
-            filter: invert(1) hue-rotate(180deg) !important;
+            --bg-color: #f4f6f9 !important;
+            --text-color: #1a1f36 !important;
+            background-color: #f4f6f9 !important;
+            color: #1a1f36 !important;
         }
-        /* Images, Canvas aur SVGs ko invert hone se bachane ke liye */
-        [data-theme="light"] img, 
-        [data-theme="light"] svg, 
-        [data-theme="light"] canvas,
-        [data-theme="light"] .chart-container,
-        [data-theme="light"] .apexcharts-canvas,
-        [data-theme="light"] .branding-logo {
-            filter: invert(1) hue-rotate(180deg) !important;
+        
+        /* Sidebar ka background light mode mein safed karne ke liye */
+        [data-theme="light"] .sidebar, 
+        [data-theme="light"] aside {
+            background-color: #ffffff !important;
+            border-right: 1px solid #e2e8f0 !important;
         }
-        /* Toggle switch dabne par usko orange background dene ke liye */
+        
+        /* Main cards aur chart panels ko white karne ke liye */
+        [data-theme="light"] .dashboard-card,
+        [data-theme="light"] .card,
+        [data-theme="light"] main,
+        [data-theme="light"] .main-content,
+        [data-theme="light"] [class*="card"] {
+            background-color: #ffffff !important;
+            color: #1a1f36 !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        /* Saare texts aur headings ko dark black karne ke liye */
+        [data-theme="light"] h1, 
+        [data-theme="light"] h2, 
+        [data-theme="light"] h3, 
+        [data-theme="light"] p, 
+        [data-theme="light"] span,
+        [data-theme="light"] .nav-text {
+            color: #1a1f36 !important;
+        }
+
+        /* Menu links jo active nahi hain unka color adjust karne ke liye */
+        [data-theme="light"] .nav-link:not(.active) {
+            color: #4a5568 !important;
+        }
+
+        /* Toggle button active status custom look */
         .theme-switch.active {
             background-color: #ff9800 !important;
         }
