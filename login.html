@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SS ENTERPRISES</title>
+    <title>Auth - SS ENTERPRISES</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
             min-height: 100vh;
         }
 
-        .login-container {
+        .auth-container {
             background-color: #131419;
             padding: 40px;
             border-radius: 14px;
@@ -40,7 +40,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .logo-box {
@@ -61,6 +61,13 @@
             font-weight: 700;
             margin-left: 12px;
             letter-spacing: 0.5px;
+        }
+
+        .form-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #ff9800;
+            font-weight: 600;
         }
 
         .form-group {
@@ -92,7 +99,7 @@
             border-color: #ff9800;
         }
 
-        .login-btn {
+        .auth-btn {
             width: 100%;
             background: #ff9800;
             color: #000;
@@ -106,61 +113,154 @@
             transition: 0.2s;
         }
 
-        .login-btn:hover {
+        .auth-btn:hover {
             background: #e68a00;
         }
 
-        .error-msg {
-            color: #e74c3c;
+        .switch-mode-text {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #717579;
+        }
+
+        .switch-link {
+            color: #ff9800;
+            cursor: pointer;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .msg {
             font-size: 14px;
             margin-top: 15px;
             display: none;
         }
+        .error-msg { color: #e74c3c; }
+        .success-msg { color: #2ece71; }
     </style>
 </head>
 <body>
 
-    <div class="login-container">
+    <div class="auth-container">
         <div class="logo-area">
             <div class="logo-box">SS</div>
             <span class="brand-title">ENTERPRISES</span>
         </div>
 
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">Username / Email</label>
-                <input type="text" id="username" placeholder="Enter your username" required>
+        <div id="loginSection">
+            <div class="form-title">Log In</div>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Gmail / Username</label>
+                    <input type="text" id="loginUser" placeholder="name@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPass" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="auth-btn">Log In</button>
+            </form>
+            <div class="switch-mode-text">
+                Naya account banana hai? <span class="switch-link" onclick="toggleForm('signup')">Sign Up karein</span>
             </div>
-            
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter your password" required>
-            </div>
+        </div>
 
-            <button type="button" class="login-btn" onclick="checkCredentials()">Log In</button>
-            <div id="error" class="error-msg">Galat Username ya Password!</div>
-        </form>
+        <div id="signupSection" style="display: none;">
+            <div class="form-title">Create Account (Sign Up)</div>
+            <form onsubmit="handleSignUp(event)">
+                <div class="form-group">
+                    <label>Gmail ID</label>
+                    <input type="email" id="signupEmail" placeholder="example@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Naya Password</label>
+                    <input type="password" id="signupPass" placeholder="Choose a strong password" required>
+                </div>
+                <button type="submit" class="auth-btn">Sign Up / Register</button>
+            </form>
+            <div class="switch-mode-text">
+                Pehle se account hai? <span class="switch-link" onclick="toggleForm('login')">Login karein</span>
+            </div>
+        </div>
+
+        <div id="errorBox" class="msg error-msg"></div>
+        <div id="successBox" class="msg success-msg"></div>
     </div>
 
     <script>
-        function checkCredentials() {
-            const uName = document.getElementById('username').value.trim();
-            const pWord = document.getElementById('password').value.trim();
-            const errorDiv = document.getElementById('error');
+        // Form switch karne ke liye (Login <-> Sign Up)
+        function toggleForm(mode) {
+            const loginSec = document.getElementById('loginSection');
+            const signupSec = document.getElementById('signupSection');
+            const errorBox = document.getElementById('errorBox');
+            const successBox = document.getElementById('successBox');
+            
+            errorBox.style.display = 'none';
+            successBox.style.display = 'none';
 
-            // Dono fields check karne ke liye ki khali toh nahi hain
-            if (uName === "" || pWord === "") {
-                alert("Kripya Username aur Password dono bharein!");
+            if(mode === 'signup') {
+                loginSec.style.display = 'none';
+                signupSec.style.display = 'block';
+            } else {
+                loginSec.style.display = 'block';
+                signupSec.style.display = 'none';
+            }
+        }
+
+        // SIGN UP FUNCTION (Data save karne ke liye)
+        function handleSignUp(event) {
+            event.preventDefault();
+            const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+            const pass = document.getElementById('signupPass').value.trim();
+            const errorBox = document.getElementById('errorBox');
+            const successBox = document.getElementById('successBox');
+
+            errorBox.style.display = 'none';
+
+            // Check ki ye email pehle se register toh nahi hai
+            if(localStorage.getItem(email)) {
+                errorBox.innerText = "Yeh Gmail ID pehle se registered hai!";
+                errorBox.style.display = 'block';
                 return;
             }
 
-            // ID aur Password ki jaanch
-            if (uName === 'admin' && pWord === '12345') {
-                errorDiv.style.display = 'none';
-                // Direct redirect to index.html dashboard
-                window.location.replace('index.html');
+            // LocalStorage mein email aur password save kar rahe hain
+            localStorage.setItem(email, pass);
+            
+            successBox.innerText = "Account kamyabi se ban gaya! Ab Login karein.";
+            successBox.style.display = 'block';
+            
+            // 1.5 second baad wapas login form par bhej dega
+            setTimeout(() => {
+                toggleForm('login');
+                document.getElementById('loginUser').value = email;
+            }, 1500);
+        }
+
+        // LOGIN FUNCTION (Data verify karne ke liye)
+        function handleLogin(event) {
+            event.preventDefault();
+            const user = document.getElementById('loginUser').value.trim().toLowerCase();
+            const pass = document.getElementById('loginPass').value.trim();
+            const errorBox = document.getElementById('errorBox');
+            const successBox = document.getElementById('successBox');
+
+            errorBox.style.display = 'none';
+            successBox.style.display = 'none';
+
+            // LocalStorage se password fetch karna
+            const savedPassword = localStorage.getItem(user);
+
+            if(savedPassword && savedPassword === pass) {
+                successBox.innerText = "Login Successful! Redirecting...";
+                successBox.style.display = 'block';
+                // Dashboard screen par bhej dega
+                setTimeout(() => {
+                    window.location.replace('index.html');
+                }, 1000);
             } else {
-                errorDiv.style.display = 'block';
+                errorBox.innerText = "Galat Gmail ID ya Password!";
+                errorBox.style.display = 'block';
             }
         }
     </script>
