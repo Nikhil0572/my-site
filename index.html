@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,22 +6,298 @@
   <title>Prime Air Services | Premium 3D Recruitment & Career Portal</title>
   <meta name="description" content="Your career journey starts here. Prime Air Services is a premier job portal connecting top talent with world-class employers across 15+ industries.">
   
-  <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --bg-color: #04060c;
+      --text-color: #ffffff;
+      --text-muted: #8a99ad;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --secondary: rgba(255, 255, 255, 0.05);
+      --secondary-hover: rgba(255, 255, 255, 0.1);
+      --glass-bg: rgba(10, 15, 30, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --card-bg: rgba(15, 22, 42, 0.6);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Aurora Glow Elements */
+    .glow-blur {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(0,0,0,0) 70%);
+      filter: blur(60px);
+      z-index: -1;
+      pointer-events: none;
+    }
+    .glow-1 { top: 10%; left: 10%; }
+    .glow-2 { top: 50%; right: 10%; background: radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, rgba(0,0,0,0) 70%); }
+
+    /* STICKY NAVBAR */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 1rem 0;
+    }
+    .navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    .logo span { color: var(--primary); }
+    .logo svg { width: 28px; height: 28px; fill: var(--primary); }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; }
+    .hamburger span { display: block; width: 25px; height: 3px; background: #fff; margin: 5px 0; }
+
+    /* HERO SECTION */
+    .hero-3d-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 80px;
+    }
+    .hero-3d-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    .hero-overlay {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 2rem;
+    }
+    .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -1px; }
+    .hero-tagline { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 2.5rem; }
+    
+    /* Search Bar */
+    .hero-search-wrap {
+      display: flex;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--glass-border);
+      padding: 0.5rem;
+      border-radius: 50px;
+      gap: 0.5rem;
+      backdrop-filter: blur(8px);
+      margin-bottom: 1.5rem;
+    }
+    .search-input-group {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      padding: 0 1rem;
+      gap: 0.5rem;
+    }
+    .search-input-group svg { width: 20px; height: 20px; fill: var(--text-muted); }
+    .search-input-group input {
+      background: none;
+      border: none;
+      color: #fff;
+      width: 100%;
+      outline: none;
+      font-size: 1rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-secondary { background: var(--secondary); color: #fff; border: 1px solid var(--glass-border); }
+    .btn-secondary:hover { background: var(--secondary-hover); }
+
+    .hero-tags-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-bottom: 2rem; align-items: center;}
+    .hero-tags-label { color: var(--text-muted); font-size: 0.9rem; }
+    .hero-tag { background: rgba(255,255,255,0.05); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.85rem; cursor: pointer; border: 1px solid var(--glass-border); }
+    .hero-tag:hover { background: rgba(255,255,255,0.1); }
+    .scrub-instruction { position: absolute; bottom: 2rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--text-muted); z-index: 2; }
+    .scrub-instruction svg { width: 18px; height: 18px; fill: var(--text-muted); }
+
+    /* SECTIONS COMMON */
+    .section { padding: 5rem 0; position: relative; }
+    .section-subtitle { color: var(--primary); font-weight: 600; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px; display: block; margin-bottom: 0.5rem; }
+    .section-title { font-size: 2.5rem; font-weight: 700; }
+    .section-title span { color: var(--primary); }
+    .section-title-wrap { text-align: center; margin-bottom: 3rem; }
+
+    /* ABOUT GRID */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-content p { color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.7; }
+    .about-badges { display: flex; gap: 2rem; margin-bottom: 2rem; }
+    .about-badge { background: var(--card-bg); border: 1px solid var(--glass-border); padding: 1.5rem; border-radius: 12px; flex: 1; }
+    .badge-num { font-size: 2rem; font-weight: 700; color: var(--primary); display: block; }
+    .badge-text { color: var(--text-muted); font-size: 0.9rem; }
+    .about-visual { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--glass-border); }
+    .about-visual img { width: 100%; display: block; height: auto; }
+
+    /* HOW IT WORKS */
+    .how-it-works-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .step-card { background: var(--card-bg); border: 1px solid var(--glass-border); padding: 2.5rem 2rem; border-radius: 16px; position: relative; }
+    .step-number-wrap { width: 40px; height: 40px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; margin-bottom: 1.5rem; }
+    .step-title { margin-bottom: 1rem; font-size: 1.25rem; }
+    .step-desc { color: var(--text-muted); line-height: 1.6; font-size: 0.95rem; }
+
+    /* CATEGORIES GRID */
+    .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    .category-card { background: var(--card-bg); border: 1px solid var(--glass-border); padding: 2rem 1.5rem; border-radius: 12px; cursor: pointer; transition: transform 0.3s, background 0.3s; }
+    .category-card:hover { transform: translateY(-5px); background: rgba(15, 22, 42, 0.9); border-color: var(--primary); }
+    .category-icon { width: 50px; height: 50px; background: rgba(59, 130, 246, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
+    .category-icon svg { width: 24px; height: 24px; fill: var(--primary); }
+    .category-name { font-size: 1.15rem; margin-bottom: 0.5rem; }
+    .category-count { color: var(--text-muted); font-size: 0.85rem; }
+
+    /* JOBS GRID */
+    .jobs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .job-card { background: var(--card-bg); border: 1px solid var(--glass-border); padding: 2rem; border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 2rem; }
+    .job-card-header { display: flex; gap: 1rem; align-items: center; }
+    .company-logo { width: 48px; height: 48px; background: #2563eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; }
+    .job-meta-top h4 { font-size: 1.1rem; margin-bottom: 0.2rem; }
+    .job-meta-top span { color: var(--text-muted); font-size: 0.9rem; }
+    .job-badges-row { display: flex; gap: 0.5rem; margin-top: 1rem; }
+    .tag-badge { padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; }
+    .tag-badge.remote { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+    .tag-badge.fulltime { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+    .tag-badge.parttime { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+    .job-details-block { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .job-spec-item { display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.9rem; }
+    .job-spec-item svg { width: 16px; height: 16px; fill: var(--text-muted); }
+
+    /* COMPANIES */
+    .companies-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+    .company-card { background: var(--card-bg); border: 1px solid var(--glass-border); padding: 2rem 1.5rem; border-radius: 12px; text-align: center; }
+    .company-badge-logo { width: 50px; height: 50px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-weight: 700; font-size: 1.2rem; border: 1px solid var(--glass-border); }
+    .company-card h3 { font-size: 1.1rem; margin-bottom: 0.2rem; }
+    .company-open-positions { color: var(--primary); font-size: 0.85rem; }
+
+    /* STATS Full Width */
+    .stats-section { background: linear-gradient(90deg, #1d4ed8 0%, #6b21a8 100%); padding: 3rem 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+    .stat-num { font-size: 2.5rem; font-weight: 800; display: block; margin-bottom: 0.2rem; }
+    .stat-label { color: rgba(255,255,255,0.8); font-size: 0.95rem; }
+
+    /* TESTIMONIALS */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;}
+    .testimonial-card { background: var(--card-bg); border: 1px solid var(--glass-border); padding: 2rem; border-radius: 16px; position: relative; }
+    .quote-icon { font-size: 4rem; color: rgba(59, 130, 246, 0.1); position: absolute; top: 1rem; right: 1rem; line-height: 1; }
+    .rating { display: flex; gap: 0.2rem; margin-bottom: 1rem; }
+    .rating svg { width: 16px; height: 16px; fill: #f59e0b; }
+    .testimonial-text { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; position: relative; z-index: 2; }
+    .client-info { display: flex; align-items: center; gap: 1rem; }
+    .client-avatar { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; }
+    .client-avatar img { width: 100%; height: 100%; object-fit: crop; }
+    .client-details h4 { font-size: 0.95rem; }
+    .client-details span { color: var(--text-muted); font-size: 0.8rem; }
+
+    /* APPLICATION FORM MODAL (Fallback styling) */
+    .modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);
+      display: none; align-items: center; justify-content: center; z-index: 2000; padding: 1rem;
+    }
+    .modal-content {
+      background: #0f172a; border: 1px solid var(--glass-border); padding: 2.5rem; border-radius: 16px;
+      width: 100%; max-width: 500px; position: relative;
+    }
+    .close-modal { position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem; color: #fff; cursor: pointer; background:none; border:none;}
+    .form-group { margin-bottom: 1.25rem; }
+    .form-label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted); }
+    .form-control { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 0.8rem 1rem; border-radius: 6px; color: #fff; outline: none; font-size: 1rem; }
+    .form-control:focus { border-color: var(--primary); }
+
+    /* FOOTER */
+    .main-footer { background: #020408; border-top: 1px solid var(--glass-border); padding: 4rem 0 2rem; margin-top: 3rem;}
+    .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand p { color: var(--text-muted); margin-top: 1rem; font-size: 0.95rem; line-height: 1.6; }
+    .footer-links h4 { font-size: 1.1rem; margin-bottom: 1.25rem; }
+    .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-bottom { border-top: 1px solid var(--glass-border); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--text-muted); }
+
+    /* RESPONSIVE RESPONSIVENESS */
+    @media (max-width: 1024px) {
+      .categories-grid, .companies-grid { grid-template-columns: repeat(2, 1fr); }
+      .jobs-grid, .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .about-grid, .how-it-works-row, .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .categories-grid, .companies-grid, .jobs-grid, .testimonials-grid, .stats-grid { grid-template-columns: 1fr; }
+      .hero-search-wrap { flex-direction: column; border-radius: 20px; padding: 1rem; }
+      .hero-title { font-size: 2.5rem; }
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Aurora Glow Elements -->
   <div class="glow-blur glow-1"></div>
   <div class="glow-blur glow-2"></div>
 
-  <!-- =========================================
-       STICKY NAVBAR
-       ========================================= -->
   <nav class="navbar" id="main-nav">
     <div class="container">
       <a href="#home" class="logo">
-        <!-- SVG Briefcase Logo -->
         <svg viewBox="0 0 24 24">
           <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/>
         </svg>
@@ -34,11 +309,10 @@
         <li><a href="#about">About</a></li>
         <li><a href="#categories">Categories</a></li>
         <li><a href="#jobs">Jobs</a></li>
-        <li><a href="#careers">Career Tips</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
 
-      <button class="hamburger" aria-label="Toggle Navigation">
+      <button class="hamburger" aria-label="Toggle Navigation" onclick="toggleMobileMenu()">
         <span></span>
         <span></span>
         <span></span>
@@ -46,12 +320,9 @@
     </div>
   </nav>
 
-  <!-- =========================================
-       HERO SECTION WITH 3D GLOBAL TALENT NETWORK
-       ========================================= -->
   <section class="hero-3d-section" id="home">
     <div class="hero-3d-container" id="hero-canvas-container">
-      <!-- 3D Canvas element will be dynamically generated here by landing-3d.js -->
+      <canvas id="animated-hero-canvas" style="width:100%; height:100%; display:block; opacity:0.6;"></canvas>
     </div>
     
     <div class="cloud-particles"></div>
@@ -60,7 +331,6 @@
       <h1 class="hero-title">Find Your Dream Career</h1>
       <p class="hero-tagline">Prime Air Services — Connecting Talent With Opportunity</p>
       
-      <!-- Interactive Job Search Bar -->
       <div class="hero-search-wrap">
         <div class="search-input-group">
           <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
@@ -70,35 +340,29 @@
           <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
           <input type="text" placeholder="City, state, or remote..." id="search-bar-location">
         </div>
-        <a href="main.html" class="btn btn-primary" id="btn-search-redirect">Search Jobs</a>
+        <button class="btn btn-primary" id="btn-search-redirect">Search Jobs</button>
       </div>
 
       <div class="hero-tags-row">
         <span class="hero-tags-label">Trending Searches:</span>
-        <span class="hero-tag" onclick="location.href='main.html?search=Remote'">Remote</span>
-        <span class="hero-tag" onclick="location.href='main.html?type=fulltime'">Full Time</span>
-        <span class="hero-tag" onclick="location.href='main.html?search=tech'">Tech</span>
-        <span class="hero-tag" onclick="location.href='main.html?search=finance'">Finance</span>
-        <span class="hero-tag" onclick="location.href='main.html?search=healthcare'">Healthcare</span>
-        <span class="hero-tag" onclick="location.href='main.html?search=marketing'">Marketing</span>
+        <span class="hero-tag" onclick="alert('Searching for Remote roles...')">Remote</span>
+        <span class="hero-tag" onclick="alert('Searching for Full Time roles...')">Full Time</span>
+        <span class="hero-tag" onclick="alert('Searching for Tech roles...')">Tech</span>
+        <span class="hero-tag" onclick="alert('Searching for Finance roles...')">Finance</span>
       </div>
 
-      <a href="main.html" class="btn btn-primary">Get Started &rarr;</a>
+      <a href="#jobs" class="btn btn-primary">Get Started &rarr;</a>
     </div>
 
     <div class="scrub-instruction">
-      <!-- Drag Icon -->
       <svg viewBox="0 0 24 24">
         <path d="M9.01 21H15v-2H9.01v2zM18 9.01c0-3.31-2.69-6-6-6S6 5.7 6 9.01c0 2 1.01 3.77 2.58 4.84L9 19h6l.42-5.15C16.99 12.78 18 11.01 18 9.01zM12 5.5c1.93 0 3.5 1.57 3.5 3.5H8.5c0-1.93 1.57-3.5 3.5-3.5z"/>
       </svg>
-      Drag left/right to rotate 3D Talent Network
+      Interactive dynamic 3D network loaded below
     </div>
   </section>
 
-  <!-- =========================================
-       ABOUT SECTION
-       ========================================= -->
-  <section class="section reveal" id="about">
+  <section class="section" id="about">
     <div class="container">
       <div class="about-grid">
         <div class="about-content">
@@ -122,7 +386,7 @@
             </div>
           </div>
 
-          <a href="main.html" class="btn btn-secondary">Discover Careers</a>
+          <a href="#jobs" class="btn btn-secondary">Discover Careers</a>
         </div>
 
         <div class="about-visual">
@@ -133,10 +397,7 @@
     </div>
   </section>
 
-  <!-- =========================================
-       HOW IT WORKS SECTION
-       ========================================= -->
-  <section class="section reveal" style="background-color: rgba(4,6,12,0.3); border-top: 1px solid var(--glass-border);">
+  <section class="section" style="background-color: rgba(4,6,12,0.3); border-top: 1px solid var(--glass-border);">
     <div class="container">
       <div class="section-title-wrap">
         <span class="section-subtitle">Seamless Steps</span>
@@ -144,21 +405,18 @@
       </div>
 
       <div class="how-it-works-row">
-        <!-- Step 1 -->
         <div class="step-card">
           <div class="step-number-wrap">1</div>
           <h3 class="step-title">Create Your Profile</h3>
           <p class="step-desc">Establish your professional digital signature. Showcase your skills, experiences, and structural requirements.</p>
         </div>
 
-        <!-- Step 2 -->
         <div class="step-card">
           <div class="step-number-wrap">2</div>
           <h3 class="step-title">Browse & Apply</h3>
           <p class="step-desc">Scan our database of 50,000+ live jobs. Filter by role, salary bounds, location, and apply with one click.</p>
         </div>
 
-        <!-- Step 3 -->
         <div class="step-card">
           <div class="step-number-wrap">3</div>
           <h3 class="step-title">Get Hired</h3>
@@ -168,10 +426,7 @@
     </div>
   </section>
 
-  <!-- =========================================
-       JOB CATEGORIES SECTION (8 GRID CARDS)
-       ========================================= -->
-  <section class="section reveal" id="categories">
+  <section class="section" id="categories">
     <div class="container">
       <div class="section-title-wrap">
         <span class="section-subtitle">Career Sectors</span>
@@ -179,8 +434,7 @@
       </div>
 
       <div class="categories-grid">
-        <!-- Cat 1 -->
-        <div class="category-card" onclick="location.href='main.html?search=tech'">
+        <div class="category-card" onclick="alert('Filtering jobs by Technology')">
           <div class="category-icon">
             <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
           </div>
@@ -188,8 +442,7 @@
           <span class="category-count">12,400+ Active Jobs</span>
         </div>
 
-        <!-- Cat 2 -->
-        <div class="category-card" onclick="location.href='main.html?search=finance'">
+        <div class="category-card" onclick="alert('Filtering jobs by Finance')">
           <div class="category-icon">
             <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
           </div>
@@ -197,8 +450,7 @@
           <span class="category-count">8,200+ Active Jobs</span>
         </div>
 
-        <!-- Cat 3 -->
-        <div class="category-card" onclick="location.href='main.html?search=healthcare'">
+        <div class="category-card" onclick="alert('Filtering jobs by Healthcare')">
           <div class="category-icon">
             <svg viewBox="0 0 24 24"><path d="M19 10.5h-5.5V5h-3v5.5H5v3h5.5V19h3v-5.5H19v-3z"/></svg>
           </div>
@@ -206,44 +458,7 @@
           <span class="category-count">9,100+ Active Jobs</span>
         </div>
 
-        <!-- Cat 4 -->
-        <div class="category-card" onclick="location.href='main.html?search=marketing'">
-          <div class="category-icon">
-            <svg viewBox="0 0 24 24"><path d="M20 12c0-1.1.9-2 2-2V8c-1.1 0-2-.9-2-2h-3c0 1.1-.9 2-2 2s-2-.9-2-2H8c0 1.1-.9 2-2 2s-2-.9-2-2H1v12c0 1.1.9 2 2 2h3c0-1.1.9-2 2-2s2 .9 2 2h3c0-1.1.9-2 2-2s2 .9 2 2h3c0-1.1.9-2 2-2v-2c-1.1 0-2-.9-2-2zm-8 4c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>
-          </div>
-          <h3 class="category-name">Marketing & Sales</h3>
-          <span class="category-count">6,500+ Active Jobs</span>
-        </div>
-
-        <!-- Cat 5 -->
-        <div class="category-card" onclick="location.href='main.html?search=tech'">
-          <div class="category-icon">
-            <svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
-          </div>
-          <h3 class="category-name">Engineering</h3>
-          <span class="category-count">7,300+ Active Jobs</span>
-        </div>
-
-        <!-- Cat 6 -->
-        <div class="category-card" onclick="location.href='main.html?search=education'">
-          <div class="category-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5.89 12.57L12 15.9l6.11-3.33L12 9.24l-6.11 3.33zM12 18.5c-3.31 0-6-2.69-6-6h12c0 3.31-2.69 6-6 6z"/></svg>
-          </div>
-          <h3 class="category-name">Education</h3>
-          <span class="category-count">4,800+ Active Jobs</span>
-        </div>
-
-        <!-- Cat 7 -->
-        <div class="category-card" onclick="location.href='main.html?search=legal'">
-          <div class="category-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 11.9 13 12.5 13 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-          </div>
-          <h3 class="category-name">Legal & Compliance</h3>
-          <span class="category-count">3,200+ Active Jobs</span>
-        </div>
-
-        <!-- Cat 8 -->
-        <div class="category-card" onclick="location.href='main.html?type=remote'">
+        <div class="category-card" onclick="alert('Filtering jobs by Remote & Freelance')">
           <div class="category-icon">
             <svg viewBox="0 0 24 24"><path d="M12.01 21.49L23.64 7c-.45-.34-4.93-4-11.64-4C5.28 3 .81 6.66.36 7l11.63 14.49.01.01.01-.01z"/></svg>
           </div>
@@ -254,10 +469,7 @@
     </div>
   </section>
 
-  <!-- =========================================
-       FEATURED JOBS SECTION (6 CARDS GRID)
-       ========================================= -->
-  <section class="section reveal" id="jobs" style="background-color: rgba(4,6,12,0.3); border-top: 1px solid var(--glass-border);">
+  <section class="section" id="jobs" style="background-color: rgba(4,6,12,0.3); border-top: 1px solid var(--glass-border);">
     <div class="container">
       <div class="section-title-wrap">
         <span class="section-subtitle">Explore Roles</span>
@@ -265,7 +477,6 @@
       </div>
 
       <div class="jobs-grid">
-        <!-- Card 1 -->
         <div class="job-card">
           <div>
             <div class="job-card-header">
@@ -290,10 +501,9 @@
               </div>
             </div>
           </div>
-          <button class="btn btn-primary apply-trigger" data-id="1">Apply Now</button>
+          <button class="btn btn-primary" onclick="openApplyModal('Senior Frontend Developer')">Apply Now</button>
         </div>
 
-        <!-- Card 2 -->
         <div class="job-card">
           <div>
             <div class="job-card-header">
@@ -317,16 +527,15 @@
               </div>
             </div>
           </div>
-          <button class="btn btn-primary apply-trigger" data-id="2">Apply Now</button>
+          <button class="btn btn-primary" onclick="openApplyModal('Product Manager')">Apply Now</button>
         </div>
 
-        <!-- Card 3 -->
         <div class="job-card">
           <div>
             <div class="job-card-header">
               <div class="company-logo">F</div>
               <div class="job-meta-top">
-                <h4>Data Scientist & Analyst</h4>
+                <h4>Data Scientist</h4>
                 <span>FinMetrics</span>
               </div>
             </div>
@@ -344,198 +553,13 @@
               </div>
             </div>
           </div>
-          <button class="btn btn-primary apply-trigger" data-id="3">Apply Now</button>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="job-card">
-          <div>
-            <div class="job-card-header">
-              <div class="company-logo">P</div>
-              <div class="job-meta-top">
-                <h4>HR Director</h4>
-                <span>PeopleFirst Corp</span>
-              </div>
-            </div>
-            <div class="job-badges-row">
-              <span class="tag-badge fulltime">Full Time</span>
-            </div>
-            <div class="job-details-block">
-              <div class="job-spec-item">
-                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                San Francisco, CA
-              </div>
-              <div class="job-spec-item">
-                <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                $90,000 - $110,000 / yr
-              </div>
-            </div>
-          </div>
-          <button class="btn btn-primary apply-trigger" data-id="4">Apply Now</button>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="job-card">
-          <div>
-            <div class="job-card-header">
-              <div class="company-logo">M</div>
-              <div class="job-meta-top">
-                <h4>Content Marketing Lead</h4>
-                <span>MediaGrow Agencies</span>
-              </div>
-            </div>
-            <div class="job-badges-row">
-              <span class="tag-badge remote">Remote</span>
-              <span class="tag-badge parttime">Part Time</span>
-            </div>
-            <div class="job-details-block">
-              <div class="job-spec-item">
-                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                Austin / Remote
-              </div>
-              <div class="job-spec-item">
-                <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                $70,000 - $85,000 / yr
-              </div>
-            </div>
-          </div>
-          <button class="btn btn-primary apply-trigger" data-id="5">Apply Now</button>
-        </div>
-
-        <!-- Card 6 -->
-        <div class="job-card">
-          <div>
-            <div class="job-card-header">
-              <div class="company-logo">P</div>
-              <div class="job-meta-top">
-                <h4>Senior Investment Analyst</h4>
-                <span>Prime Capitals</span>
-              </div>
-            </div>
-            <div class="job-badges-row">
-              <span class="tag-badge fulltime">Full Time</span>
-            </div>
-            <div class="job-details-block">
-              <div class="job-spec-item">
-                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                Mumbai, India
-              </div>
-              <div class="job-spec-item">
-                <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                $75,000 - $90,000 / yr
-              </div>
-            </div>
-          </div>
-          <button class="btn btn-primary apply-trigger" data-id="6">Apply Now</button>
+          <button class="btn btn-primary" onclick="openApplyModal('Data Scientist')">Apply Now</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- =========================================
-       TOP COMPANIES HIRING
-       ========================================= -->
-  <section class="section reveal">
-    <div class="container">
-      <div class="section-title-wrap">
-        <span class="section-subtitle">Market Leaders</span>
-        <h2 class="section-title">Top <span>Companies Hiring</span></h2>
-      </div>
-
-      <div class="companies-grid">
-        <!-- Comp 1 -->
-        <div class="company-card">
-          <div class="company-badge-logo">G</div>
-          <h3>Google</h3>
-          <span class="company-open-positions">124 open roles</span>
-        </div>
-
-        <!-- Comp 2 -->
-        <div class="company-card">
-          <div class="company-badge-logo">M</div>
-          <h3>Microsoft</h3>
-          <span class="company-open-positions">98 open roles</span>
-        </div>
-
-        <!-- Comp 3 -->
-        <div class="company-card">
-          <div class="company-badge-logo">M</div>
-          <h3>Meta</h3>
-          <span class="company-open-positions">82 open roles</span>
-        </div>
-
-        <!-- Comp 4 -->
-        <div class="company-card">
-          <div class="company-badge-logo">A</div>
-          <h3>Amazon</h3>
-          <span class="company-open-positions">143 open roles</span>
-        </div>
-
-        <!-- Comp 5 -->
-        <div class="company-card">
-          <div class="company-badge-logo">N</div>
-          <h3>Netflix</h3>
-          <span class="company-open-positions">41 open roles</span>
-        </div>
-
-        <!-- Comp 6 -->
-        <div class="company-card">
-          <div class="company-badge-logo">A</div>
-          <h3>Apple</h3>
-          <span class="company-open-positions">65 open roles</span>
-        </div>
-
-        <!-- Comp 7 -->
-        <div class="company-card">
-          <div class="company-badge-logo">U</div>
-          <h3>Uber</h3>
-          <span class="company-open-positions">37 open roles</span>
-        </div>
-
-        <!-- Comp 8 -->
-        <div class="company-card">
-          <div class="company-badge-logo">A</div>
-          <h3>Airbnb</h3>
-          <span class="company-open-positions">29 open roles</span>
-        </div>
-      </div>
-
-      <div style="text-align: center;">
-        <a href="main.html" class="btn btn-secondary">View All Companies</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================
-       STATS SECTION (FULL WIDTH BAND)
-       ========================================= -->
-  <section class="stats-section reveal">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat-item">
-          <span class="stat-num" data-target="50000" data-suffix="+">0</span>
-          <span class="stat-label">Active Jobs</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num" data-target="10000" data-suffix="+">0</span>
-          <span class="stat-label">Partner Companies</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num" data-target="2000000" data-suffix="+">0</span>
-          <span class="stat-label">Registered Candidates</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num" data-target="95" data-suffix="%">0</span>
-          <span class="stat-label">Success Placement</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================
-       TESTIMONIALS SECTION
-       ========================================= -->
-  <section class="section reveal" style="background-color: rgba(4,6,12,0.3); border-bottom: 1px solid var(--glass-border);">
+  <section class="section">
     <div class="container">
       <div class="section-title-wrap">
         <span class="section-subtitle">Testimonials</span>
@@ -543,12 +567,9 @@
       </div>
 
       <div class="testimonials-grid">
-        <!-- Quote 1 -->
         <div class="testimonial-card">
           <span class="quote-icon">&ldquo;</span>
           <div class="rating">
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
             <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
             <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
             <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
@@ -557,415 +578,35 @@
             "Prime Air Services made landing my Senior Frontend Developer job completely effortless. I searched, applied, and signed my dream remote offer within 2 weeks. The UI is spectacular."
           </p>
           <div class="client-info">
-            <div class="client-avatar">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" alt="Aleksei V.">
-            </div>
             <div class="client-details">
               <h4>Aleksei Vance</h4>
               <span>Placed as Sr. Frontend Architect</span>
             </div>
           </div>
         </div>
-
-        <!-- Quote 2 -->
-        <div class="testimonial-card">
-          <span class="quote-icon">&ldquo;</span>
-          <div class="rating">
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          </div>
-          <p class="testimonial-text">
-            "We filled our core Product Manager roles through Prime Air Services with absolute ease. The quality of candidate profiles and structural matching accuracy is unmatched on other platforms."
-          </p>
-          <div class="client-info">
-            <div class="client-avatar">
-              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&auto=format&fit=crop" alt="Elena R.">
-            </div>
-            <div class="client-details">
-              <h4>Elena Rostova</h4>
-              <span>HR Director, InnovateX</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quote 3 -->
-        <div class="testimonial-card">
-          <span class="quote-icon">&ldquo;</span>
-          <div class="rating">
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          </div>
-          <p class="testimonial-text">
-            "As a freelance designer, the high-paying remote job category has been completely transformational. Secured direct corporate design briefs in a week without intermediary fees."
-          </p>
-          <div class="client-info">
-            <div class="client-avatar">
-              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop" alt="Julian C.">
-            </div>
-            <div class="client-details">
-              <h4>Julian Croft</h4>
-              <span>UX Consultant, Creative Labs</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- =========================================
-       CAREER TIPS / BLOG SECTION
-       ========================================= -->
-  <section class="section reveal" id="careers">
-    <div class="container">
-      <div class="section-title-wrap">
-        <span class="section-subtitle">Industry Insights</span>
-        <h2 class="section-title">Career <span>Tips & Blog</span></h2>
-      </div>
-
-      <div class="blog-grid">
-        <!-- Blog 1 -->
-        <div class="blog-card">
-          <div class="blog-img">
-            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=500&auto=format&fit=crop" alt="Modern Resume Layout">
-          </div>
-          <div class="blog-info">
-            <div class="blog-meta">
-              <span>Resume</span>
-              <span>4 min read</span>
-            </div>
-            <h4 class="blog-card-title">How to Write a Standout Resume in 2025</h4>
-            <p class="blog-excerpt">Discover how automated ATS filters read resumes and how to structure keywords to bypass filters and land human reviews...</p>
-            <a href="#" class="blog-link">
-              Read More
-              <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Blog 2 -->
-        <div class="blog-card">
-          <div class="blog-img">
-            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=500&auto=format&fit=crop" alt="Remote workspace setup">
-          </div>
-          <div class="blog-info">
-            <div class="blog-meta">
-              <span>Trends</span>
-              <span>6 min read</span>
-            </div>
-            <h4 class="blog-card-title">Top 10 Remote Jobs Hiring Now</h4>
-            <p class="blog-excerpt">We outline the highest-paying freelance and full-time remote opportunities currently expanding across Europe and North America...</p>
-            <a href="#" class="blog-link">
-              Read More
-              <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Blog 3 -->
-        <div class="blog-card">
-          <div class="blog-img">
-            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=500&auto=format&fit=crop" alt="Job Interview preparation">
-          </div>
-          <div class="blog-info">
-            <div class="blog-meta">
-              <span>INTERVIEW PREP</span>
-              <span>8 min read</span>
-            </div>
-            <h4 class="blog-card-title">Interview Prep: Questions You Must Know</h4>
-            <p class="blog-excerpt">Prepare for typical behavioral and technical interview traps with expert responses structured through the STAR framework...</p>
-            <a href="#" class="blog-link">
-              Read More
-              <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================
-       SOCIAL MEDIA & COMMUNITY SECTION
-       ========================================= -->
-  <section class="section social-community reveal">
-    <div class="container">
-      <div class="section-title-wrap">
-        <span class="section-subtitle">Careers Community</span>
-        <h2 class="section-title">Join Our <span>Talent Circle</span></h2>
-      </div>
-
-      <!-- Social Row -->
-      <div class="social-button-row">
-        <!-- Instagram -->
-        <a href="https://instagram.com/primeairservices" target="_blank" rel="noopener" class="social-btn instagram">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-          <span class="social-btn-title">Instagram</span>
-          <span class="social-btn-count">240k+ followers</span>
-        </a>
-        <!-- YouTube -->
-        <a href="https://youtube.com/@primeairservices" target="_blank" rel="noopener" class="social-btn youtube">
-          <svg viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.516 0-9.387.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.507 9.387.507 9.387.507s7.517 0 9.387-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-          <span class="social-btn-title">YouTube</span>
-          <span class="social-btn-count">500k+ subscribers</span>
-        </a>
-        <!-- Twitter/X -->
-        <a href="https://twitter.com/primeairsvcs" target="_blank" rel="noopener" class="social-btn twitter">
-          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          <span class="social-btn-title">Twitter/X</span>
-          <span class="social-btn-count">120k+ followers</span>
-        </a>
-        <!-- LinkedIn -->
-        <a href="https://linkedin.com/company/primeairservices" target="_blank" rel="noopener" class="social-btn linkedin">
-          <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg>
-          <span class="social-btn-title">LinkedIn</span>
-          <span class="social-btn-count">900k+ members</span>
-        </a>
-      </div>
-
-      <!-- Simulated Instagram Feed Grid -->
-      <div class="insta-feed-grid">
-        <div class="insta-tile">
-          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=500&auto=format&fit=crop" alt="Corporate Glass Hangar Office">
-          <div class="insta-overlay">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
-            <span>VIEW POST</span>
-          </div>
-        </div>
-
-        <div class="insta-tile">
-          <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=500&auto=format&fit=crop" alt="Premium Workspace Layout">
-          <div class="insta-overlay">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
-            <span>VIEW POST</span>
-          </div>
-        </div>
-
-        <div class="insta-tile">
-          <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=500&auto=format&fit=crop" alt="Premium Career Strategy Setup">
-          <div class="insta-overlay">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
-            <span>VIEW POST</span>
-          </div>
-        </div>
-
-        <div class="insta-tile">
-          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=500&auto=format&fit=crop" alt="Business Meeting Conference Room">
-          <div class="insta-overlay">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
-            <span>VIEW POST</span>
-          </div>
-        </div>
-
-        <div class="insta-tile">
-          <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=500&auto=format&fit=crop" alt="Executive Leadership Meeting">
-          <div class="insta-overlay">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
-            <span>VIEW POST</span>
-          </div>
-        </div>
-
-        <div class="insta-tile">
-          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=500&auto=format&fit=crop" alt="Agile Software Dev Team">
-          <div class="insta-overlay">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
-            <span>VIEW POST</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================
-       CONTACT SECTION
-       ========================================= -->
-  <section class="section reveal" id="contact">
-    <div class="container">
-      <div class="contact-grid">
-        <div class="contact-info">
-          <span class="section-subtitle">Get In Touch</span>
-          <h2 class="contact-title section-title">Operational <span>Command Desk</span></h2>
-          <p style="margin-top: 1.5rem; margin-bottom: 3rem;">
-            Our support coordinates with corporate partner clients 24/7. Connect with us instantly for premium recruiting inquiries, resume briefings, and compliance checks.
-          </p>
-
-          <div class="contact-info-block">
-            <!-- Item 1 -->
-            <div class="info-item">
-              <div class="info-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-              </div>
-              <div class="info-text">
-                <h4>Global Headquarters</h4>
-                <p>Floor 28, Premium Corporate Hangar Wing B, Executive Dr, NY 10019</p>
-              </div>
-            </div>
-
-            <!-- Item 2 -->
-            <div class="info-item">
-              <div class="info-icon">
-                <svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
-              </div>
-              <div class="info-text">
-                <h4>Support Center Desk</h4>
-                <p>+1 (800) 555-PRIME &nbsp;|&nbsp; +1 (212) 555-7799</p>
-              </div>
-            </div>
-
-            <!-- Item 3 -->
-            <div class="info-item">
-              <div class="info-icon">
-                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-              </div>
-              <div class="info-text">
-                <h4>Secure Communications</h4>
-                <p>careers@primeairservices.com</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Embedded Map Grayscale Mockup -->
-          <div class="map-mockup">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.2528082184!2d-74.11976373099955!3d40.69767006338165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1m3!1d3022.6175399587425!2d-73.985428!3d40.748817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1680000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-        </div>
-
-        <!-- Contact Form Card -->
-        <div class="contact-form-wrap">
-          <h3 class="form-title">Concierge Briefing</h3>
-          <p class="form-subtitle">Submit your VVIP routing parameters below. Our support team will respond to your recruitment manifest within 15 minutes.</p>
-
-          <form id="contact-form">
-            <div class="form-group-row">
-              <div class="form-group">
-                <label class="form-label" for="c-name">Full Name *</label>
-                <input class="form-control" type="text" id="c-name" placeholder="Johnathan Doe" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="c-email">Email Address *</label>
-                <input class="form-control" type="email" id="c-email" placeholder="client@domain.com" required>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="c-subject">Subject</label>
-              <input class="form-control" type="text" id="c-subject" placeholder="Recruitment briefing or candidate search request">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="c-message">VVIP Briefing details *</label>
-              <textarea class="form-control" id="c-message" placeholder="Provide specialized details regarding your hiring parameters or resume inquiries..." required></textarea>
-            </div>
-
-            <button class="btn btn-gold" style="width: 100%; border-radius: 4px;" type="submit">Submit Briefing</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================
-       FOOTER
-       ========================================= -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-logo-col">
-          <a href="#home" class="logo" style="font-size: 1.8rem; margin-bottom: 1rem; display: inline-flex;">
-            <svg viewBox="0 0 24 24">
-              <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/>
-            </svg>
-            Prime <span>Air</span>
-          </a>
-          <p>
-            Your career journey starts here. Providing recruitment compliance safety, absolute matching privacy, and bespoke talent design for over 15 years.
-          </p>
-          <div class="footer-social-row">
-            <a href="https://instagram.com/primeairservices" class="footer-social-icon" target="_blank" aria-label="Instagram">
-              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-            </a>
-            <a href="https://youtube.com/@primeairservices" class="footer-social-icon" target="_blank" aria-label="YouTube">
-              <svg viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.516 0-9.387.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.507 9.387.507 9.387.507s7.517 0 9.387-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            </a>
-            <a href="https://twitter.com/primeairsvcs" class="footer-social-icon" target="_blank" aria-label="Twitter">
-              <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <div class="footer-links-col">
-          <h4 class="footer-title">Quick Links</h4>
-          <ul class="footer-links">
-            <li><a href="#home">Home Base</a></li>
-            <li><a href="#about">About Team</a></li>
-            <li><a href="#categories">Job Sectors</a></li>
-            <li><a href="#jobs">Featured Jobs</a></li>
-            <li><a href="#careers">Career Insights</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-links-col">
-          <h4 class="footer-title">Job Categories</h4>
-          <ul class="footer-links">
-            <li><a href="main.html?search=tech">Technology Ops</a></li>
-            <li><a href="main.html?search=finance">Finance & Banking</a></li>
-            <li><a href="main.html?search=healthcare">Healthcare Jobs</a></li>
-            <li><a href="main.html?search=marketing">Marketing & Sales</a></li>
-            <li><a href="main.html?search=legal">Legal & Compliance</a></li>
-            <li><a href="main.html?type=remote">Remote & Freelance</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-links-col">
-          <h4 class="footer-title">VVIP Recruitment Desk</h4>
-          <p style="font-size: 0.95rem; margin-bottom: 1.5rem;">
-            Reach recruiters directly for secure candidate profiling and FBO briefs.
-          </p>
-          <a href="main.html" class="btn btn-secondary" style="width: 100%; border-radius: 4px; padding: 0.85rem;">Portal Dashboard</a>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2025 Prime Air Services. All Rights Reserved. Designed to ultimate precision.</p>
-        <div class="footer-legal-links">
-          <a href="#">Privacy Agreement</a>
-          <a href="#">Safety Directives</a>
-          <a href="#">Terms of Operations</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- =========================================
-       APPLICATION VVIP GLASS MODAL
-       ========================================= -->
-  <div class="modal-overlay" id="apply-modal">
-    <div class="modal-content-wrap">
-      <span class="modal-close" id="apply-modal-close">&times;</span>
-      <h2 class="form-title" style="margin-bottom: 0.25rem;">Apply for Role</h2>
-      <h3 id="apply-job-title" style="font-size: 1.4rem; color: var(--accent); margin-bottom: 0.25rem;">Senior Frontend Developer</h3>
-      <span id="apply-company-name" style="font-size: 0.95rem; color: var(--text-muted); display: block; margin-bottom: 2.5rem;">at Techcorp Solutions</span>
+  <div class="modal" id="apply-modal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeApplyModal()">&times;</button>
+      <h3 style="margin-bottom: 1.5rem;">Apply for <span id="modal-job-title" style="color:var(--primary);">Job</span></h3>
       
-      <form id="apply-job-form">
-        <div class="form-group-row">
-          <div class="form-group">
-            <label class="form-label" for="app-name">Full Name *</label>
-            <input class="form-control" type="text" id="app-name" placeholder="Johnathan Doe" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="app-email">Email Address *</label>
-            <input class="form-control" type="email" id="app-email" placeholder="john@domain.com" required>
-          </div>
+      <form onsubmit="submitForm(event)">
+        <div class="form-group">
+          <label class="form-label" for="app-name">Full Name *</label>
+          <input class="form-control" type="text" id="app-name" required placeholder="John Doe">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="app-email">Email Address *</label>
+          <input class="form-control" type="email" id="app-email" required placeholder="john@example.com">
         </div>
 
         <div class="form-group">
           <label class="form-label" for="app-file">Upload Resume Portfolio (PDF) *</label>
-          <input class="form-control" type="file" id="app-file" accept=".pdf,.doc,.docx" required style="padding-top: 0.8rem;">
+          <input class="form-control" type="file" id="app-file" accept=".pdf,.doc,.docx" required style="padding-top: 0.5rem;">
         </div>
 
         <div class="form-group">
@@ -978,24 +619,130 @@
     </div>
   </div>
 
-  <!-- =========================================
-       SCRIPTS SETUP
-       ========================================= -->
-  <script src="landing-3d.js"></script>
-  <script src="main.js"></script>
-  
-  <script>
-    // Initialize 3D Vector Global Talent Network Fallback / Frame loop
-    ImageSequence.init('hero-canvas-container', 60);
+  <footer class="main-footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#home" class="logo">Prime <span>Air</span></a>
+          <p>Connecting elite professionals with top-tier organizations globally.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#jobs">Find Jobs</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Prime Air Services. All Rights Reserved.</p>
+        <p>Premium 3D Career Hub</p>
+      </div>
+    </div>
+  </footer>
 
-    // Redirect landing page search bar queries beautifully to portal feed
+  <script>
+    // 1. Interactive Mobile Hamburger Menu Trigger
+    function toggleMobileMenu() {
+      const links = document.querySelector('.nav-links');
+      if (links.style.display === 'flex') {
+        links.style.display = 'none';
+      } else {
+        links.style.display = 'flex';
+        links.style.flexDirection = 'column';
+        links.style.position = 'absolute';
+        links.style.top = '70px';
+        links.style.left = '0';
+        links.style.width = '100%';
+        links.style.background = '#0f172a';
+        links.style.padding = '1rem';
+      }
+    }
+
+    // 2. Redirect / Search Button Handler
     document.getElementById('btn-search-redirect').addEventListener('click', (e) => {
       e.preventDefault();
-      const keyword = encodeURIComponent(document.getElementById('search-bar-keyword').value);
-      const loc = encodeURIComponent(document.getElementById('search-bar-location').value);
-      location.href = `main.html?search=${keyword}&location=${loc}`;
+      const keyword = document.getElementById('search-bar-keyword').value;
+      const loc = document.getElementById('search-bar-location').value;
+      if(keyword || loc) {
+        alert(`Searching portal for:\nKeyword: ${keyword}\nLocation: ${loc}`);
+      } else {
+        alert('Please enter a job title or location to search.');
+      }
     });
-  </script>
 
+    // 3. Application Modal Handlers
+    function openApplyModal(jobTitle) {
+      document.getElementById('modal-job-title').innerText = jobTitle;
+      document.getElementById('apply-modal').style.display = 'flex';
+    }
+
+    function closeApplyModal() {
+      document.getElementById('apply-modal').style.display = 'none';
+    }
+
+    function submitForm(event) {
+      event.preventDefault();
+      alert('Success! Your job application has been successfully submitted to Prime Air Services.');
+      closeApplyModal();
+    }
+
+    // 4. Dynamic Interactive Canvas Loop Background (Fallback for missing 3D script)
+    const canvas = document.getElementById('animated-hero-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    let dots = [];
+    const numDots = 65;
+    
+    function initCanvas() {
+      canvas.width = canvas.parentElement.offsetWidth;
+      canvas.height = canvas.parentElement.offsetHeight;
+      dots = [];
+      for(let i=0; i<numDots; i++) {
+        dots.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 2 + 1,
+          dx: (Math.random() - 0.5) * 0.8,
+          dy: (Math.random() - 0.5) * 0.8
+        });
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(59, 130, 246, 0.7)";
+      ctx.strokeStyle = "rgba(59, 130, 246, 0.08)";
+      
+      dots.forEach((dot, index) => {
+        dot.x += dot.dx;
+        dot.y += dot.dy;
+        
+        if(dot.x < 0 || dot.x > canvas.width) dot.dx *= -1;
+        if(dot.y < 0 || dot.y > canvas.height) dot.dy *= -1;
+        
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+        ctx.fill();
+        
+        for(let j = index + 1; j < dots.length; j++) {
+          const target = dots[j];
+          const dist = Math.hypot(dot.x - target.x, dot.y - target.y);
+          if(dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(dot.x, dot.y);
+            ctx.lineTo(target.x, target.y);
+            ctx.stroke();
+          }
+        }
+      });
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', initCanvas);
+    initCanvas();
+    animate();
+  </script>
 </body>
 </html>
