@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - Cute Ghost Theme</title>
+    <title>Auth - Cute Ghost Theme</title>
     <!-- Tailwind CSS for beautiful styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,7 +72,7 @@
 <body class="flex items-center justify-center min-h-screen p-4">
 
     <!-- Main Card Container -->
-    <div class="bg-white rounded-[2rem] shadow-2xl flex flex-col md:flex-row overflow-hidden max-w-4xl w-full border-4 border-gray-100 min-h-[500px]">
+    <div class="bg-white rounded-[2rem] shadow-2xl flex flex-col md:flex-row overflow-hidden max-w-4xl w-full border-4 border-gray-100 min-h-[550px]">
         
         <!-- LEFT PANEL: Animated Cute Ghosts & Speech Bubble -->
         <div class="w-full md:w-1/2 p-8 flex flex-col items-center justify-center relative bg-white select-none">
@@ -144,45 +144,110 @@
             </div>
         </div>
 
-        <!-- RIGHT PANEL: Sign In Form with exact interactive features -->
-        <div class="w-full md:w-1/2 p-8 md:p-12 bg-[#fafafa] flex flex-col justify-center border-t md:border-t-0 md:border-l border-gray-100">
+        <!-- RIGHT PANEL: Switchable forms with modern responsive styling -->
+        <div class="w-full md:w-1/2 p-8 md:p-12 bg-[#fafafa] flex flex-col justify-center border-t md:border-t-0 md:border-l border-gray-100 relative">
             
-            <h2 class="text-3xl font-extrabold text-gray-800 mb-8 text-left heading-font tracking-wide">Sign In</h2>
-            
-            <form id="loginForm" onsubmit="handleFormSubmit(event)" class="space-y-5">
-                <!-- Email Input Field -->
-                <div class="flex flex-col text-left">
-                    <label class="text-gray-500 font-semibold text-sm mb-2" for="emailInput">Email Address</label>
-                    <input 
-                        type="text" 
-                        id="emailInput" 
-                        placeholder="user1" 
-                        required
-                        class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-white text-gray-800 font-medium transition duration-200"
-                    >
-                </div>
+            <!-- ====== SIGN IN VIEW ====== -->
+            <div id="signInContainer" class="space-y-6">
+                <h2 class="text-3xl font-extrabold text-gray-800 text-left heading-font tracking-wide">Sign In</h2>
+                
+                <form id="loginForm" onsubmit="handleFormSubmit(event)" class="space-y-5">
+                    <!-- Email Input Field -->
+                    <div class="flex flex-col text-left">
+                        <label class="text-gray-500 font-semibold text-sm mb-2" for="emailInput">Email Address</label>
+                        <input 
+                            type="text" 
+                            id="emailInput" 
+                            placeholder="user1" 
+                            required
+                            class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-white text-gray-800 font-medium transition duration-200"
+                        >
+                    </div>
 
-                <!-- Password Input Field -->
-                <div class="flex flex-col text-left">
-                    <label class="text-gray-500 font-semibold text-sm mb-2" for="passwordInput">Password</label>
-                    <input 
-                        type="password" 
-                        id="passwordInput" 
-                        placeholder="••••" 
-                        required
-                        class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-white text-gray-800 font-medium transition duration-200"
-                    >
-                </div>
+                    <!-- Password Input Field -->
+                    <div class="flex flex-col text-left">
+                        <label class="text-gray-500 font-semibold text-sm mb-2" for="passwordInput">Password</label>
+                        <input 
+                            type="password" 
+                            id="passwordInput" 
+                            placeholder="••••" 
+                            required
+                            class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-white text-gray-800 font-medium transition duration-200"
+                        >
+                    </div>
 
-                <!-- Sign In Button (Purple Gradient) -->
-                <button 
-                    type="submit" 
-                    id="signInBtn"
-                    class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-extrabold py-3.5 px-6 rounded-xl transition duration-200 transform active:scale-[0.98] shadow-lg shadow-purple-100 text-base tracking-wide"
-                >
-                    Sign In
-                </button>
-            </form>
+                    <!-- Sign In Button (Purple Gradient) -->
+                    <button 
+                        type="submit" 
+                        id="signInBtn"
+                        class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-extrabold py-3.5 px-6 rounded-xl transition duration-200 transform active:scale-[0.98] shadow-lg shadow-purple-100 text-base tracking-wide"
+                    >
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="text-center text-sm font-semibold text-gray-500 mt-4">
+                    Don't have an account? 
+                    <button onclick="toggleFormMode('signup')" class="text-purple-600 hover:underline font-bold ml-1">Sign Up</button>
+                </div>
+            </div>
+
+            <!-- ====== SIGN UP VIEW ====== -->
+            <div id="signUpContainer" class="hidden space-y-6">
+                <h2 class="text-3xl font-extrabold text-gray-800 text-left heading-font tracking-wide">Sign Up</h2>
+                
+                <form id="registerForm" onsubmit="handleSignUpSubmit(event)" class="space-y-4">
+                    <!-- Email Input Field -->
+                    <div class="flex flex-col text-left">
+                        <label class="text-gray-500 font-semibold text-sm mb-1.5" for="signUpEmailInput">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="signUpEmailInput" 
+                            placeholder="example@gmail.com" 
+                            required
+                            class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-white text-gray-800 font-medium transition duration-200"
+                        >
+                    </div>
+
+                    <!-- Password Input Field -->
+                    <div class="flex flex-col text-left">
+                        <label class="text-gray-500 font-semibold text-sm mb-1.5" for="signUpPasswordInput">Password</label>
+                        <input 
+                            type="password" 
+                            id="signUpPasswordInput" 
+                            placeholder="Min 6 characters" 
+                            required
+                            class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-white text-gray-800 font-medium transition duration-200"
+                        >
+                    </div>
+
+                    <!-- Confirm Password Input Field -->
+                    <div class="flex flex-col text-left">
+                        <label class="text-gray-500 font-semibold text-sm mb-1.5" for="signUpConfirmPasswordInput">Confirm Password</label>
+                        <input 
+                            type="password" 
+                            id="signUpConfirmPasswordInput" 
+                            placeholder="Repeat password" 
+                            required
+                            class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-white text-gray-800 font-medium transition duration-200"
+                        >
+                    </div>
+
+                    <!-- Register Button (Purple Gradient) -->
+                    <button 
+                        type="submit" 
+                        id="signUpBtn"
+                        class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-extrabold py-3 px-6 rounded-xl transition duration-200 transform active:scale-[0.98] shadow-lg shadow-purple-100 text-base tracking-wide"
+                    >
+                        Sign Up
+                    </button>
+                </form>
+
+                <div class="text-center text-sm font-semibold text-gray-500 mt-4">
+                    Already have an account? 
+                    <button onclick="toggleFormMode('signin')" class="text-purple-600 hover:underline font-bold ml-1">Sign In</button>
+                </div>
+            </div>
 
             <!-- Status Alerts Area (Initially hidden/Interactive) -->
             <div class="mt-4 space-y-3">
@@ -191,7 +256,7 @@
                     id="successBanner" 
                     class="hidden items-center justify-center bg-[#e8f5e9] border-l-4 border-[#2ece71] text-gray-800 font-bold py-3.5 px-4 rounded-xl shadow-sm animate-bounce"
                 >
-                    <span class="text-[#2ece71] mr-2">✔</span> Login Successful!
+                    <span class="text-[#2ece71] mr-2">✔</span> <span id="successMessageText">Login Successful!</span>
                 </div>
 
                 <!-- 2. Try Again Button (Gray style exactly like image) -->
@@ -210,7 +275,40 @@
 
     <!-- JavaScript to handle interactive state changes -->
     <script>
-        // Form states aur validations handle karne ka funtion
+        // System state logic
+        let currentMode = 'signin';
+
+        // Sign In / Sign Up toggler
+        function toggleFormMode(mode) {
+            currentMode = mode;
+            const signInContainer = document.getElementById('signInContainer');
+            const signUpContainer = document.getElementById('signUpContainer');
+            const speechText = document.getElementById('speechText');
+            
+            // Clear any alerts
+            hideAlerts();
+
+            if (mode === 'signup') {
+                signInContainer.classList.add('hidden');
+                signUpContainer.classList.remove('hidden');
+                speechText.innerText = "Join our squad! 👻";
+            } else {
+                signInContainer.classList.remove('hidden');
+                signUpContainer.classList.add('hidden');
+                speechText.innerText = "Sign In please!";
+            }
+            resetGhostFaces();
+        }
+
+        function hideAlerts() {
+            const successBanner = document.getElementById('successBanner');
+            const tryAgainBtn = document.getElementById('tryAgainBtn');
+            successBanner.classList.add('hidden');
+            successBanner.classList.remove('flex');
+            tryAgainBtn.classList.add('hidden');
+        }
+
+        // SIGN IN SUBMISSION
         function handleFormSubmit(event) {
             event.preventDefault();
 
@@ -219,6 +317,7 @@
             
             const speechText = document.getElementById('speechText');
             const successBanner = document.getElementById('successBanner');
+            const successMessageText = document.getElementById('successMessageText');
             const tryAgainBtn = document.getElementById('tryAgainBtn');
             const signInBtn = document.getElementById('signInBtn');
 
@@ -230,6 +329,7 @@
                 speechText.parentElement.classList.add('border-green-500', 'text-green-600');
                 
                 // Success Green Notification Bar show karein
+                successMessageText.innerText = "Login Successful!";
                 successBanner.classList.remove('hidden');
                 successBanner.classList.add('flex');
 
@@ -240,10 +340,10 @@
                 signInBtn.disabled = true;
                 signInBtn.classList.add('opacity-50', 'cursor-not-allowed');
 
-                // Cute Ghost faces change to extra happy (SVG Face alteration)
+                // Cute Ghost faces change to extra happy
                 setGhostFace('happy');
 
-                // Successful redirect to dashboard after a delay (optional but professional)
+                // Successful redirect to dashboard after a delay
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 2000);
@@ -256,6 +356,60 @@
                 tryAgainBtn.classList.remove('hidden');
                 
                 setGhostFace('sad');
+            }
+        }
+
+        // SIGN UP SUBMISSION
+        function handleSignUpSubmit(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('signUpEmailInput').value.trim();
+            const password = document.getElementById('signUpPasswordInput').value.trim();
+            const confirmPassword = document.getElementById('signUpConfirmPasswordInput').value.trim();
+            
+            const speechText = document.getElementById('speechText');
+            const successBanner = document.getElementById('successBanner');
+            const successMessageText = document.getElementById('successMessageText');
+            const tryAgainBtn = document.getElementById('tryAgainBtn');
+            const signUpBtn = document.getElementById('signUpBtn');
+
+            if (password.length < 6) {
+                speechText.innerText = "Too short! Min 6 chars.";
+                speechText.parentElement.classList.add('border-red-500', 'text-red-500');
+                tryAgainBtn.classList.remove('hidden');
+                setGhostFace('sad');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                // Password match nahi karta
+                speechText.innerText = "Passwords don't match!";
+                speechText.parentElement.classList.add('border-red-500', 'text-red-500');
+                tryAgainBtn.classList.remove('hidden');
+                setGhostFace('sad');
+            } else {
+                // Registration successful!
+                speechText.innerText = "Welcome aboard! 😍";
+                speechText.parentElement.classList.remove('border-black');
+                speechText.parentElement.classList.add('border-green-500', 'text-green-600');
+
+                successMessageText.innerText = "Account Created Successfully!";
+                successBanner.classList.remove('hidden');
+                successBanner.classList.add('flex');
+
+                tryAgainBtn.classList.remove('hidden');
+
+                signUpBtn.disabled = true;
+                signUpBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+                setGhostFace('happy');
+
+                // Auto shift to login form after 2 seconds
+                setTimeout(() => {
+                    toggleFormMode('signin');
+                    document.getElementById('emailInput').value = email;
+                    document.getElementById('passwordInput').value = password;
+                }, 2000);
             }
         }
 
@@ -299,29 +453,8 @@
             }
         }
 
-        // Form ko pehle jaisa (Reset) karne ka function
-        function resetForm() {
-            document.getElementById('loginForm').reset();
-            
-            const speechText = document.getElementById('speechText');
-            const successBanner = document.getElementById('successBanner');
-            const tryAgainBtn = document.getElementById('tryAgainBtn');
-            const signInBtn = document.getElementById('signInBtn');
-
-            // Reset Speech bubble
-            speechText.innerText = "Sign In please!";
-            speechText.parentElement.className = "speech-bubble bg-white border-[3px] border-black text-black px-6 py-2.5 rounded-full font-extrabold text-lg tracking-wide shadow-md text-center min-w-[160px]";
-
-            // Hide Alerts
-            successBanner.classList.add('hidden');
-            successBanner.classList.remove('flex');
-            tryAgainBtn.classList.add('hidden');
-
-            // Enable Sign In Button
-            signInBtn.disabled = false;
-            signInBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-
-            // Reset Ghost Faces to default
+        // Default look of ghosts restore karne ke liye
+        function resetGhostFaces() {
             document.getElementById('ghost1Face').innerHTML = `
                 <path d="M38,50 C38,46 44,46 44,50" fill="none" stroke="#000000" stroke-width="4.5" stroke-linecap="round"/>
                 <path d="M56,50 C56,46 62,46 62,50" fill="none" stroke="#000000" stroke-width="4.5" stroke-linecap="round"/>
@@ -336,6 +469,39 @@
                 <ellipse cx="70" cy="51" rx="5" ry="2.5" fill="#ff7c7c" />
                 <path d="M44,52 C44,60 56,60 56,52 Z" fill="#ff7c7c" stroke="#000000" stroke-width="3.5" stroke-linejoin="round"/>
             `;
+        }
+
+        // Form ko completely clear aur pre-state me laane ka logic
+        function resetForm() {
+            document.getElementById('loginForm').reset();
+            document.getElementById('registerForm').reset();
+            
+            const speechText = document.getElementById('speechText');
+            const successBanner = document.getElementById('successBanner');
+            const tryAgainBtn = document.getElementById('tryAgainBtn');
+            const signInBtn = document.getElementById('signInBtn');
+            const signUpBtn = document.getElementById('signUpBtn');
+
+            // Reset Alerts
+            successBanner.classList.add('hidden');
+            successBanner.classList.remove('flex');
+            tryAgainBtn.classList.add('hidden');
+
+            // Re-enable buttons
+            signInBtn.disabled = false;
+            signInBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            signUpBtn.disabled = false;
+            signUpBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+
+            // Set default messages according to active mode
+            if (currentMode === 'signin') {
+                speechText.innerText = "Sign In please!";
+            } else {
+                speechText.innerText = "Join our squad! 👻";
+            }
+            speechText.parentElement.className = "speech-bubble bg-white border-[3px] border-black text-black px-6 py-2.5 rounded-full font-extrabold text-lg tracking-wide shadow-md text-center min-w-[160px]";
+
+            resetGhostFaces();
         }
     </script>
 </body>
