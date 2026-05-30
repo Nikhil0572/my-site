@@ -308,7 +308,7 @@
             tryAgainBtn.classList.add('hidden');
         }
 
-        // SIGN IN SUBMISSION
+        // SIGN IN SUBMISSION (Verified with local storage or default user1)
         function handleFormSubmit(event) {
             event.preventDefault();
 
@@ -321,45 +321,49 @@
             const tryAgainBtn = document.getElementById('tryAgainBtn');
             const signInBtn = document.getElementById('signInBtn');
 
-            // Image ke according dynamic behavior check karein
-            if (email === "user1" && password === "1234") {
-                // Sahi password input karne par
+            // Fetch saved password from local storage for custom registered users
+            const savedPassword = localStorage.getItem('ghost_user_' + email);
+
+            // Verify with default user1/1234 OR custom saved credentials
+            if ((email === "user1" && password === "1234") || (savedPassword && savedPassword === password)) {
+                // Sahi credentials enter karne par
                 speechText.innerText = "Correct Password!";
                 speechText.parentElement.classList.remove('border-black');
                 speechText.parentElement.classList.add('border-green-500', 'text-green-600');
                 
-                // Success Green Notification Bar show karein
+                // Show Success Banner immediately without double password prompt
                 successMessageText.innerText = "Login Successful!";
                 successBanner.classList.remove('hidden');
                 successBanner.classList.add('flex');
 
-                // Try Again button dikhayein
+                // Try Again button active to reset if needed
                 tryAgainBtn.classList.remove('hidden');
 
-                // Disable submit button
+                // Disable Sign In button during redirect sequence
                 signInBtn.disabled = true;
                 signInBtn.classList.add('opacity-50', 'cursor-not-allowed');
 
-                // Cute Ghost faces change to extra happy
+                // Make Ghosts happy
                 setGhostFace('happy');
 
-                // Successful redirect to dashboard after a delay
+                // Save logged in user session and redirect
+                localStorage.setItem('active_user', email);
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 2000);
             } else {
-                // Galat password input karne par
+                // Galat credentials enter karne par
                 speechText.innerText = "Wrong Password! ☹";
                 speechText.parentElement.classList.add('border-red-500', 'text-red-500');
 
-                // Try Again button active karein bina success banner ke
+                // Try again toggler active
                 tryAgainBtn.classList.remove('hidden');
                 
                 setGhostFace('sad');
             }
         }
 
-        // SIGN UP SUBMISSION
+        // SIGN UP SUBMISSION (Instantly logs in the user)
         function handleSignUpSubmit(event) {
             event.preventDefault();
 
@@ -382,18 +386,22 @@
             }
 
             if (password !== confirmPassword) {
-                // Password match nahi karta
+                // Passwords match fail validation
                 speechText.innerText = "Passwords don't match!";
                 speechText.parentElement.classList.add('border-red-500', 'text-red-500');
                 tryAgainBtn.classList.remove('hidden');
                 setGhostFace('sad');
             } else {
-                // Registration successful!
+                // Database save in LocalStorage (ghost_user_email => password)
+                localStorage.setItem('ghost_user_' + email, password);
+                localStorage.setItem('active_user', email); // Auto set active session
+
+                // Success triggers instantly, no secondary login/password screens asked!
                 speechText.innerText = "Welcome aboard! 😍";
                 speechText.parentElement.classList.remove('border-black');
                 speechText.parentElement.classList.add('border-green-500', 'text-green-600');
 
-                successMessageText.innerText = "Account Created Successfully!";
+                successMessageText.innerText = "Account Created & Logged In!";
                 successBanner.classList.remove('hidden');
                 successBanner.classList.add('flex');
 
@@ -404,11 +412,9 @@
 
                 setGhostFace('happy');
 
-                // Auto shift to login form after 2 seconds
+                // Direct instant redirect to dashboard! No more asking passwords twice.
                 setTimeout(() => {
-                    toggleFormMode('signin');
-                    document.getElementById('emailInput').value = email;
-                    document.getElementById('passwordInput').value = password;
+                    window.location.href = 'index.html';
                 }, 2000);
             }
         }
