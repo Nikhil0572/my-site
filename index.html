@@ -17,12 +17,13 @@
             --accent-color: #ff9800; /* SS Enterprises Orange */
             --border-color: rgba(255, 255, 255, 0.1);
             --input-bg: rgba(255, 255, 255, 0.05);
+            --window-header-bg: #ff9800;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Instrument Sans', sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* ================= TOP MENU BAR (BUSY STYLE) ================= */
+        /* ================= TOP MENU BAR ================= */
         .top-menubar { background-color: var(--menu-bg); border-bottom: 2px solid var(--accent-color); display: flex; align-items: center; padding: 0 15px; position: relative; z-index: 1000; }
         .brand-logo { font-weight: bold; color: var(--accent-color); font-size: 18px; margin-right: 30px; letter-spacing: 1px; }
         
@@ -31,38 +32,91 @@
         .menu-item:hover { background-color: var(--accent-color); color: #000; }
 
         /* DROPDOWN MENU */
-        .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background-color: var(--card-bg); border: 1px solid var(--border-color); min-width: 200px; box-shadow: 0 8px 16px rgba(0,0,0,0.5); list-style: none; padding: 5px 0; }
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background-color: var(--card-bg); border: 1px solid var(--border-color); min-width: 200px; box-shadow: 0 8px 16px rgba(0,0,0,0.5); list-style: none; padding: 5px 0; z-index: 2000; }
         .menu-item:hover .dropdown-menu { display: block; }
         .dropdown-menu li { padding: 8px 15px; font-size: 13px; color: var(--text-main); border-bottom: 1px solid var(--border-color); }
         .dropdown-menu li:hover { background-color: rgba(255,152,0,0.2); color: var(--accent-color); }
         .dropdown-menu li:last-child { border-bottom: none; }
         .dropdown-submenu-indicator { float: right; font-size: 10px; margin-top: 3px; }
 
-        /* ================= MAIN CONTENT AREA ================= */
-        .main-container { flex: 1; padding: 25px; overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; }
+        /* ================= MAIN WORKSPACE & WATERMARK ================= */
+        .main-workspace { flex: 1; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; background-color: var(--bg-color); }
         
-        /* CARDS & FORMS */
-        .busy-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; width: 100%; max-width: 900px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .busy-card h2 { color: var(--accent-color); font-size: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 20px; }
-        .form-section-title { font-size: 14px; color: var(--accent-color); margin: 15px 0 10px; font-weight: 600; text-transform: uppercase; }
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8vw;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.03); /* Very transparent */
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 0;
+            display: none; /* Shows after company creation */
+            user-select: none;
+        }
+
+        /* ================= BUSY WINDOW STYLE (POP-UPS) ================= */
+        .busy-window {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            z-index: 100;
+            display: none;
+            overflow: hidden;
+            animation: windowOpen 0.2s ease-out;
+        }
+        @keyframes windowOpen { from { opacity: 0; transform: translate(-50%, -48%) scale(0.98); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+
+        .window-header {
+            background: var(--window-header-bg);
+            color: #000;
+            padding: 8px 15px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+        .window-close { cursor: pointer; font-weight: bold; font-size: 16px; padding: 0 5px; transition: 0.2s; }
+        .window-close:hover { color: #fff; background: red; border-radius: 3px; }
+
+        .window-body { padding: 20px; max-height: 80vh; overflow-y: auto; }
         
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        /* FORMS & TABLES INSIDE WINDOWS */
+        .form-section-title { font-size: 14px; color: var(--accent-color); margin: 15px 0 10px; font-weight: 600; text-transform: uppercase; border-bottom: 1px dotted var(--border-color); padding-bottom: 5px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
         .form-field { display: flex; flex-direction: column; gap: 5px; }
         .form-field label { font-size: 12px; color: var(--text-muted); font-weight: 600; }
         .form-field input, .form-field select { background: var(--input-bg); border: 1px solid var(--border-color); padding: 8px 10px; border-radius: 4px; color: var(--text-main); outline: none; font-size: 13px; }
         .form-field input:focus, .form-field select:focus { border-color: var(--accent-color); }
 
-        .btn { padding: 10px 25px; border-radius: 4px; border: none; font-weight: 600; cursor: pointer; font-size: 14px; transition: 0.2s; }
+        .voucher-table-wrapper { background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); overflow-x: auto; margin-bottom: 20px; }
+        .voucher-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .voucher-table th { background: rgba(255, 255, 255, 0.05); padding: 10px; font-size: 12px; font-weight: 600; color: var(--accent-color); border-bottom: 1px solid var(--border-color); }
+        .voucher-table td { padding: 8px 10px; border-bottom: 1px solid var(--border-color); }
+        .table-input { width: 100%; background: transparent; border: none; color: var(--text-main); outline: none; font-size: 13px; }
+        .table-input:focus { border-bottom: 1px solid var(--accent-color); }
+
+        .btn { padding: 8px 20px; border-radius: 4px; border: none; font-weight: 600; cursor: pointer; font-size: 13px; transition: 0.2s; }
         .btn-primary { background: var(--accent-color); color: #000; }
         .btn-primary:hover { opacity: 0.9; }
 
         /* TOAST NOTIFICATION */
-        .toast { position: fixed; bottom: 30px; right: 30px; background: #1c1d24; color: #fff; padding: 15px 20px; border-left: 4px solid var(--accent-color); border-radius: 4px; z-index: 2000; display: none; }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #1c1d24; color: #fff; padding: 15px 20px; border-left: 4px solid var(--accent-color); border-radius: 4px; z-index: 3000; display: none; }
     </style>
 </head>
 <body>
 
-    <!-- TOP MENU BAR (Hidden initially until Company is created/opened) -->
+    <!-- TOP MENU BAR (Hidden initially until Company is created) -->
     <nav class="top-menubar" id="topMenuBar" style="display: none;">
         <div class="brand-logo">SS ENTERPRISES</div>
         <ul class="menu-list">
@@ -71,26 +125,22 @@
                     <li>Edit Company</li>
                     <li>Backup Data</li>
                     <li>Restore Data</li>
-                    <li onclick="logoutUser()" style="color: #ff4757;">Close Company / Log Out</li>
+                    <li onclick="logoutUser()" style="color: #ff4757;">Close Company</li>
                 </ul>
             </li>
             <li class="menu-item">Administration
                 <ul class="dropdown-menu">
-                    <li onclick="openScreen('mastersScreen')">Masters <span class="dropdown-submenu-indicator">▶</span></li>
+                    <li onclick="openWindow('mastersWindow')">Masters <span class="dropdown-submenu-indicator">▶</span></li>
                     <li>Configuration</li>
                     <li>Users</li>
-                    <li>Utilities</li>
                 </ul>
             </li>
             <li class="menu-item">Transactions
                 <ul class="dropdown-menu">
-                    <li onclick="openScreen('voucherScreen')">Sales</li>
-                    <li>Purchase</li>
-                    <li>Sales Return</li>
-                    <li>Purchase Return</li>
+                    <li onclick="openWindow('voucherWindow')">Sales</li>
+                    <li onclick="openWindow('voucherWindow')">Purchase</li>
                     <li>Payment</li>
                     <li>Receipt</li>
-                    <li>Journal</li>
                     <li>Contra</li>
                 </ul>
             </li>
@@ -99,102 +149,115 @@
                     <li>Day Book</li>
                     <li>Account Ledgers</li>
                     <li>Trial Balance</li>
-                    <li>Stock Status</li>
-                    <li>GST Reports</li>
                 </ul>
             </li>
-            <li class="menu-item">Print/Email/SMS
-                <ul class="dropdown-menu">
-                    <li>Outstanding Reports</li>
-                    <li>Print Utilities</li>
-                </ul>
-            </li>
-            <li class="menu-item">Housekeeping
-                <ul class="dropdown-menu">
-                    <li>Update Balances</li>
-                    <li>Re-index Data</li>
-                </ul>
-            </li>
-            <li class="menu-item">Help</li>
         </ul>
     </nav>
 
-    <div class="main-container">
+    <!-- MAIN WORKSPACE (Holds Watermark & Windows) -->
+    <div class="main-workspace">
         
-        <!-- ================= 1. CREATE COMPANY SCREEN ================= -->
-        <div id="createCompanyScreen" class="busy-card">
-            <h2>Create Company</h2>
-            
-            <div class="form-section-title">General Information</div>
-            <div class="form-grid">
-                <div class="form-field"><label>Company Name</label><input type="text" id="compName" placeholder="SS ENTERPRISES" value="SS ENTERPRISES"></div>
-                <div class="form-field"><label>Print Name</label><input type="text" value="SS ENTERPRISES"></div>
-                <div class="form-field"><label>Short Name</label><input type="text" value="SSE"></div>
-                <div class="form-field"><label>Country</label>
-                    <select><option>India</option><option>UAE</option><option>Other</option></select>
-                </div>
-                <div class="form-field"><label>State</label>
-                    <select><option>Uttar Pradesh (09)</option><option>Delhi (07)</option><option>Haryana (06)</option></select>
-                </div>
-                <div class="form-field"><label>Financial Year Beginning From</label><input type="date" value="2026-04-01"></div>
-                <div class="form-field"><label>Books Commencing From</label><input type="date" value="2026-04-01"></div>
-            </div>
+        <!-- WATERMARK -->
+        <div class="watermark" id="bgWatermark">S.S. ENTERPRISES</div>
 
-            <div class="form-section-title">Address & Contact Details</div>
-            <div class="form-grid">
-                <div class="form-field" style="grid-column: span 2;"><label>Address</label><input type="text" placeholder="Street, City, Pincode"></div>
-                <div class="form-field"><label>CIN</label><input type="text"></div>
-                <div class="form-field"><label>IT PAN</label><input type="text"></div>
-                <div class="form-field"><label>Ward</label><input type="text"></div>
-                <div class="form-field"><label>Email</label><input type="email"></div>
+        <!-- 1. CREATE COMPANY WINDOW -->
+        <div id="createCompanyWindow" class="busy-window" style="display: block;">
+            <div class="window-header">
+                <span>Create Company</span>
+                <!-- No close button here as it's mandatory -->
             </div>
-
-            <div class="form-section-title">Currency & GST Information</div>
-            <div class="form-grid">
-                <div class="form-field"><label>Currency Symbol</label><input type="text" value="₹"></div>
-                <div class="form-field"><label>Currency String</label><input type="text" value="Rupees"></div>
-                <div class="form-field"><label>Enable GST/VAT</label>
-                    <select><option>Y - GST</option><option>N - None</option></select>
+            <div class="window-body">
+                <div class="form-section-title">General Information</div>
+                <div class="form-grid">
+                    <div class="form-field"><label>Company Name</label><input type="text" id="compName" value="SS ENTERPRISES"></div>
+                    <div class="form-field"><label>Print Name</label><input type="text" value="SS ENTERPRISES"></div>
+                    <div class="form-field"><label>State</label>
+                        <select><option>Uttar Pradesh (09)</option><option>Delhi (07)</option></select>
+                    </div>
+                    <div class="form-field"><label>Financial Year From</label><input type="date" value="2026-04-01"></div>
+                    <div class="form-field"><label>Books Commencing</label><input type="date" value="2026-04-01"></div>
                 </div>
-                <div class="form-field"><label>GSTIN / UIN</label><input type="text" placeholder="09XXXXX0000X1Z5"></div>
-            </div>
 
-            <div style="text-align: right; margin-top: 20px;">
-                <button class="btn btn-primary" onclick="saveCompany()">Save (F2)</button>
+                <div class="form-section-title">Tax & Currency</div>
+                <div class="form-grid">
+                    <div class="form-field"><label>Enable GST</label><select><option>Yes</option><option>No</option></select></div>
+                    <div class="form-field"><label>GSTIN</label><input type="text" placeholder="09XXXXX0000X1Z5"></div>
+                    <div class="form-field"><label>Currency Symbol</label><input type="text" value="₹"></div>
+                </div>
+
+                <div style="text-align: right; margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="saveCompany()">Save (F2)</button>
+                </div>
             </div>
         </div>
 
-        <!-- ================= 2. DASHBOARD WELCOME SCREEN ================= -->
-        <div id="dashboardScreen" style="display: none; text-align: center; margin-top: 100px;">
-            <div style="font-size: 80px; margin-bottom: 20px;">📊</div>
-            <h1 style="color: var(--accent-color); margin-bottom: 10px;" id="welcomeCompName">SS ENTERPRISES</h1>
-            <p style="color: var(--text-muted); font-size: 16px;">Financial Year: 01-04-2026 to 31-03-2027</p>
-            <p style="color: var(--text-muted); margin-top: 30px;">Use the top menu bar to navigate (Masters, Transactions, Display).</p>
+        <!-- 2. MASTERS WINDOW (Account / Item) -->
+        <div id="mastersWindow" class="busy-window">
+            <div class="window-header">
+                <span>Add Master</span>
+                <span class="window-close" onclick="closeWindow('mastersWindow')">✖</span>
+            </div>
+            <div class="window-body">
+                <div class="form-grid">
+                    <div class="form-field"><label>Master Type</label><select><option>Account</option><option>Item</option></select></div>
+                    <div class="form-field"><label>Name</label><input type="text" placeholder="Party Name or Item Name"></div>
+                    <div class="form-field"><label>Group</label><input type="text" placeholder="e.g. Sundry Debtors"></div>
+                    <div class="form-field"><label>Opening Bal / Qty</label><input type="number" placeholder="0.00"></div>
+                </div>
+                <div style="text-align: right; margin-top: 15px;">
+                    <button class="btn btn-primary" onclick="showToast('Master Saved Successfully'); closeWindow('mastersWindow')">Save Master (F2)</button>
+                </div>
+            </div>
         </div>
 
-        <!-- ================= 3. MASTERS SCREEN (Sample) ================= -->
-        <div id="mastersScreen" class="busy-card" style="display: none;">
-            <h2>Add Master (Account / Item)</h2>
-            <div class="form-grid">
-                <div class="form-field"><label>Type</label><select><option>Account</option><option>Item</option></select></div>
-                <div class="form-field"><label>Name</label><input type="text"></div>
-                <div class="form-field"><label>Group</label><input type="text"></div>
-                <div class="form-field"><label>Opening Bal</label><input type="number"></div>
+        <!-- 3. VOUCHER WINDOW (Sales/Purchase) -->
+        <div id="voucherWindow" class="busy-window" style="max-width: 900px;">
+            <div class="window-header">
+                <span>Add Voucher (Sales / Purchase)</span>
+                <span class="window-close" onclick="closeWindow('voucherWindow')">✖</span>
             </div>
-            <button class="btn btn-primary" onclick="showToast('Master Saved Successfully')">Save (F2)</button>
-        </div>
+            <div class="window-body">
+                <div class="form-grid">
+                    <div class="form-field"><label>Party Name</label><input type="text" placeholder="Select Party Account"></div>
+                    <div class="form-field"><label>Voucher Date</label><input type="date" value="2026-05-31"></div>
+                    <div class="form-field"><label>Sale Type</label><select><option>L/GST 18%</option><option>I/GST 18%</option><option>Exempt</option></select></div>
+                </div>
 
-         <!-- ================= 4. VOUCHER SCREEN (Sample) ================= -->
-         <div id="voucherScreen" class="busy-card" style="display: none;">
-            <h2>Sales Voucher</h2>
-            <div class="form-grid">
-                <div class="form-field"><label>Party Name</label><input type="text"></div>
-                <div class="form-field"><label>Date</label><input type="date" value="2026-05-31"></div>
-                <div class="form-field"><label>Sale Type</label><input type="text" value="L/GST 18%"></div>
+                <div class="voucher-table-wrapper">
+                    <table class="voucher-table" id="voucherTable">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th style="width: 80px;">Qty</th>
+                                <th style="width: 80px;">Unit</th>
+                                <th style="width: 100px;">Price</th>
+                                <th style="width: 120px;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" class="table-input" placeholder="Enter Item"></td>
+                                <td><input type="number" class="table-input" value="1"></td>
+                                <td><input type="text" class="table-input" value="Pcs"></td>
+                                <td><input type="number" class="table-input" value="0"></td>
+                                <td><input type="number" class="table-input" value="0" readonly></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="table-input" placeholder="Enter Item"></td>
+                                <td><input type="number" class="table-input"></td>
+                                <td><input type="text" class="table-input"></td>
+                                <td><input type="number" class="table-input"></td>
+                                <td><input type="number" class="table-input" readonly></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-size: 13px; color: var(--text-muted);">Press F3 to add new master</div>
+                    <button class="btn btn-primary" onclick="showToast('Voucher Saved Successfully'); closeWindow('voucherWindow')">Save Voucher (F2)</button>
+                </div>
             </div>
-            <p style="color: var(--text-muted); font-size: 13px; margin-top: 10px;">Item grid will appear here...</p>
-            <br>
-            <button class="btn btn-primary" onclick="showToast('Voucher Saved Successfully')">Save (F2)</button>
         </div>
 
     </div>
@@ -203,31 +266,36 @@
     <div id="toastMsg" class="toast">Action completed successfully.</div>
 
     <script>
-        // FUNCTION TO SAVE COMPANY & OPEN DASHBOARD
+        // SAVE COMPANY -> OPEN WORKSPACE
         function saveCompany() {
-            const compName = document.getElementById('compName').value || 'SS ENTERPRISES';
+            showToast("Company Created Successfully! Opening Workspace...");
             
-            showToast("Company Created Successfully! Initializing Dashboard...");
-            
-            // Hide Create Company, Show Top Menu and Dashboard
             setTimeout(() => {
-                document.getElementById('createCompanyScreen').style.display = 'none';
+                // Close the Create Company Window
+                document.getElementById('createCompanyWindow').style.display = 'none';
+                
+                // Show the Top Menu
                 document.getElementById('topMenuBar').style.display = 'flex';
-                document.getElementById('dashboardScreen').style.display = 'block';
-                document.getElementById('welcomeCompName').innerText = compName;
-            }, 1000);
+                
+                // Show the Watermark in the background
+                document.getElementById('bgWatermark').style.display = 'block';
+            }, 800);
         }
 
-        // FUNCTION TO SWITCH SCREENS FROM TOP MENU
-        function openScreen(screenId) {
-            // Hide all main screens
-            document.getElementById('createCompanyScreen').style.display = 'none';
-            document.getElementById('dashboardScreen').style.display = 'none';
-            document.getElementById('mastersScreen').style.display = 'none';
-            document.getElementById('voucherScreen').style.display = 'none';
+        // WINDOW MANAGEMENT LOGIC (Like BUSY)
+        function openWindow(windowId) {
+            // First, close all other windows to keep it clean (optional, but good for focus)
+            document.querySelectorAll('.busy-window').forEach(win => {
+                if(win.id !== 'createCompanyWindow') win.style.display = 'none';
+            });
             
-            // Show selected screen
-            document.getElementById(screenId).style.display = 'block';
+            // Open the requested window
+            const targetWindow = document.getElementById(windowId);
+            targetWindow.style.display = 'block';
+        }
+
+        function closeWindow(windowId) {
+            document.getElementById(windowId).style.display = 'none';
         }
 
         // TOAST NOTIFICATION
@@ -238,13 +306,12 @@
             setTimeout(() => { toast.style.display = 'none'; }, 3000);
         }
 
-        // LOGOUT LOGIC (CLOSE COMPANY)
+        // LOGOUT LOGIC
         function logoutUser() {
-            showToast("Closing Company... Redirecting to Login!");
+            showToast("Closing Company... Redirecting!");
             setTimeout(() => {
-                // Here it goes back to your login page
                 window.location.href = 'login.html'; 
-            }, 1500);
+            }, 1000);
         }
     </script>
 </body>
