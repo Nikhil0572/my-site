@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BUSY Web ERP - SS ENTERPRISES</title>
+    <title>SS ENTERPRISES - Dashboard</title>
     <script>
         // Check active session (Login Protection)
         const activeUser = localStorage.getItem('active_user');
         if(!activeUser && window.location.pathname.includes('index.html')) {
-            // window.location.href = 'login.html'; // Uncomment to enforce strict login
+            // window.location.href = 'login.html'; 
         }
 
         (function() {
@@ -21,19 +21,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* === THEME VARIABLES === */
+        /* === ORIGINAL THEME VARIABLES === */
         :root {
             --bg-color: #0b0c10;
             --sidebar-bg: #131419;
             --card-bg: #181920;
             --text-main: #ffffff;
             --text-muted: #717579;
-            --accent-orange: #ff9800;
+            --accent-color: #ff9800; /* Original Orange Accent */
             --border-color: rgba(255, 255, 255, 0.05);
             --input-bg: rgba(255, 255, 255, 0.03);
             --danger-color: #e74c3c;
             --success-color: #2ece71;
-            --busy-blue: #2980b9;
         }
 
         [data-theme="light"] {
@@ -46,7 +45,7 @@
             --input-bg: #f8fafc;
             --danger-color: #d9381e;
             --success-color: #1b9e52;
-            --busy-blue: #3498db;
+            --accent-color: #ff9800;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -54,58 +53,54 @@
         
         .dashboard-container { display: flex; min-height: 100vh; }
 
-        /* SIDEBAR STYLING */
-        .sidebar { width: 260px; background-color: var(--sidebar-bg); padding: 25px 20px; display: flex; flex-direction: column; border-right: 1px solid var(--border-color); flex-shrink: 0; transition: transform 0.3s ease; z-index: 100; }
+        /* ORIGINAL SIDEBAR STYLING */
+        .sidebar { width: 260px; background-color: var(--sidebar-bg); padding: 25px 20px; display: flex; flex-direction: column; border-right: 1px solid var(--border-color); flex-shrink: 0; z-index: 100; }
         .sidebar-header { display: flex; align-items: center; margin-bottom: 25px; }
-        .branding-logo { background: #ff9800; color: #000; font-weight: bold; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 18px; }
+        .branding-logo { background: var(--accent-color); color: #000; font-weight: bold; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 18px; }
         .brand-name { font-weight: 700; margin-left: 12px; font-size: 16px; letter-spacing: 0.5px; }
+        
         .menu-category { font-size: 11px; letter-spacing: 1px; color: var(--text-muted); margin: 15px 0 8px 5px; font-weight: 700; }
         .nav-menu { list-style: none; }
         .nav-link { display: flex; align-items: center; padding: 12px 15px; color: var(--text-muted); text-decoration: none; border-radius: 8px; font-weight: 500; font-size: 14px; transition: all 0.2s; cursor: pointer; }
-        .nav-link:hover { color: #ff9800; background: rgba(255,152,0,0.05); }
-        .nav-link.active, .sub-nav-link.active-sub { background-color: #ff9800; color: #000000 !important; font-weight: 600; }
+        .nav-link:hover { color: var(--accent-color); background: rgba(255,152,0,0.05); }
+        .nav-link.active { background-color: var(--accent-color); color: #000000 !important; font-weight: 600; }
         .nav-icon { margin-right: 12px; font-size: 16px; }
-        
-        .sub-nav-link { color: var(--text-muted); text-decoration: none; display: block; padding: 10px 12px; font-size: 13px; font-weight: 500; border-radius: 6px; transition: 0.2s; cursor: pointer; }
-        .sub-nav-link:hover { color: #ff9800; background: rgba(255,152,0,0.05); }
 
-        /* LOGOUT BUTTON SPECIFIC */
         .logout-btn { color: #ff4757; background: rgba(255, 71, 87, 0.05); font-weight: 600; margin-top: auto; border: 1px solid rgba(255, 71, 87, 0.2); }
         .logout-btn:hover { background: rgba(255, 71, 87, 0.15); color: #ff4757; }
 
         /* CONTENT PANEL */
         .main-content { flex: 1; padding: 25px; display: flex; flex-direction: column; overflow-y: auto; height: 100vh; }
         .top-header { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 25px; background: var(--card-bg); padding: 15px 20px; border-radius: 12px; border: 1px solid var(--border-color); }
-        .mobile-toggle { display: none; background: none; border: none; color: var(--text-main); font-size: 24px; cursor: pointer; }
         
-        /* BUSY STYLE FORMS */
         .page-section { display: none; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         
+        /* FEATURE-RICH FORMS (BUSY LOGIC, ORIGINAL LOOK) */
         .voucher-header-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; background: var(--card-bg); padding: 20px; border-radius: 10px; border: 1px solid var(--border-color); }
         .form-field { display: flex; flex-direction: column; gap: 6px; }
         .form-field label { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
         .form-field input, .form-field select { background: var(--input-bg); border: 1px solid var(--border-color); padding: 10px; border-radius: 6px; color: var(--text-main); outline: none; font-size: 14px; }
-        .form-field input:focus, .form-field select:focus { border-color: var(--busy-blue); }
+        .form-field input:focus, .form-field select:focus { border-color: var(--accent-color); }
 
-        /* TABLE */
+        /* TABLES */
         .voucher-table-wrapper { background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border-color); overflow-x: auto; margin-bottom: 20px; }
         .voucher-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .voucher-table th { background: rgba(41, 128, 185, 0.1); padding: 12px; font-size: 13px; font-weight: 600; color: var(--busy-blue); border-bottom: 1px solid var(--border-color); }
+        .voucher-table th { background: rgba(255, 255, 255, 0.03); padding: 12px; font-size: 13px; font-weight: 600; color: var(--text-muted); border-bottom: 1px solid var(--border-color); }
         .voucher-table td { padding: 10px 12px; border-bottom: 1px solid var(--border-color); }
         .table-input { width: 100%; background: transparent; border: none; color: var(--text-main); outline: none; font-size: 14px; }
-        .table-input:focus { border-bottom: 1px solid var(--busy-blue); }
+        .table-input:focus { border-bottom: 1px solid var(--accent-color); }
 
         .btn { padding: 10px 20px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; font-size: 14px; transition: 0.2s; }
-        .btn-primary { background: var(--busy-blue); color: #fff; }
+        .btn-primary { background: var(--accent-color); color: #000; }
         .btn-primary:hover { opacity: 0.9; }
-        .btn-warning { background: #ff9800; color: #000; }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: var(--text-main); }
         
-        .shortcut-hint { font-size: 11px; color: var(--text-muted); margin-left: 8px; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; }
+        .shortcut-hint { font-size: 11px; color: var(--text-muted); margin-left: 8px; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; font-weight: normal; }
 
         /* TOAST NOTIFICATION */
         .toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
-        .toast { background: #1c1d24; color: #fff; padding: 16px 24px; border-radius: 8px; border-left: 4px solid var(--success-color); box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 12px; transform: translateY(50px); opacity: 0; animation: slideIn 0.3s forwards; }
+        .toast { background: #1c1d24; color: #fff; padding: 16px 24px; border-radius: 8px; border-left: 4px solid var(--accent-color); box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 12px; transform: translateY(50px); opacity: 0; animation: slideIn 0.3s forwards; }
         @keyframes slideIn { to { transform: translateY(0); opacity: 1; } }
 
     </style>
@@ -113,16 +108,16 @@
 <body>
 
     <div class="dashboard-container">
-        <!-- SIDEBAR -->
+        <!-- ORIGINAL SIDEBAR -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <div class="branding-logo">BUSY</div>
+                <div class="branding-logo">SS</div>
                 <span class="brand-name">SS ENTERPRISES</span>
             </div>
             
             <p class="menu-category">ADMINISTRATION</p>
             <ul class="nav-menu">
-                <li class="nav-item"><a onclick="switchPage('masters')" id="nav-masters" class="nav-link"><span class="nav-icon">📁</span><span class="nav-text">Masters (F3)</span></a></li>
+                <li class="nav-item"><a onclick="switchPage('masters')" id="nav-masters" class="nav-link"><span class="nav-icon">📁</span><span class="nav-text">Masters <span class="shortcut-hint">F3</span></span></a></li>
             </ul>
 
             <p class="menu-category">TRANSACTIONS</p>
@@ -132,7 +127,7 @@
                 <li class="nav-item"><a onclick="switchPage('payment')" id="nav-payment" class="nav-link"><span class="nav-icon">💳</span><span class="nav-text">Payment / Receipt</span></a></li>
             </ul>
             
-            <p class="menu-category">DISPLAY / REPORTS</p>
+            <p class="menu-category">REPORTS</p>
             <ul class="nav-menu">
                 <li class="nav-item"><a class="nav-link" onclick="switchPage('daybook')" id="nav-daybook"><span class="nav-icon">📅</span><span class="nav-text">Day Book</span></a></li>
                 <li class="nav-item"><a class="nav-link" onclick="switchPage('ledger')" id="nav-ledger"><span class="nav-icon">📖</span><span class="nav-text">Account Ledgers</span></a></li>
@@ -149,18 +144,17 @@
 
         <!-- MAIN PANEL -->
         <main class="main-content">
-            <!-- TOP HEADER -->
+            <!-- ORIGINAL TOP HEADER -->
             <div class="top-header">
                 <div style="display:flex; align-items:center; gap:15px;">
-                    <button class="mobile-toggle" onclick="toggleMobileSidebar()">☰</button>
-                    <h2 style="font-size: 18px; color: var(--busy-blue);">BUSY ERP <span style="font-size:12px; color:var(--text-muted); font-weight:normal;">Fin. Year: 2026-2027</span></h2>
+                    <h2 style="font-size: 18px;">Dashboard <span style="font-size:12px; color:var(--text-muted); font-weight:normal; margin-left:10px;">Fin. Year: 2026-2027</span></h2>
                 </div>
-                <div style="font-size: 14px; font-weight: 600;">User: Admin</div>
+                <div style="font-size: 14px; font-weight: 600;">Welcome, Admin</div>
             </div>
 
             <!-- MASTERS PAGE (F3) -->
             <div id="mastersPage" class="page-section" style="display: block;">
-                <h2 style="margin-bottom: 20px; color: var(--busy-blue);">Create Masters <span class="shortcut-hint">Shortcut: F3</span></h2>
+                <h2 style="margin-bottom: 20px;">Create Masters <span class="shortcut-hint">Press F3 from anywhere</span></h2>
                 
                 <div class="voucher-header-grid">
                     <div class="form-field">
@@ -174,12 +168,12 @@
                     <div class="form-field"><label>Group / Tax Rate</label><input type="text" id="masterGroup" placeholder="Sundry Debtors or 18% GST"></div>
                     <div class="form-field"><label>Opening Bal. / Qty</label><input type="number" id="masterBal" placeholder="0.00"></div>
                 </div>
-                <button class="btn btn-primary" onclick="saveMaster()">Save Master <span class="shortcut-hint">F2</span></button>
+                <button class="btn btn-primary" onclick="saveMaster()">Save Master <span class="shortcut-hint" style="color:#000;">F2</span></button>
             </div>
 
             <!-- SALE VOUCHER PAGE -->
             <div id="salePage" class="page-section">
-                <h2 style="margin-bottom: 20px; color: var(--busy-blue);">Add Sales Voucher</h2>
+                <h2 style="margin-bottom: 20px;">Sales Voucher</h2>
                 <div class="voucher-header-grid">
                     <div class="form-field"><label>Party A/c Name</label><input type="text" placeholder="Select Party (Press F3 to create)"></div>
                     <div class="form-field"><label>Voucher Date</label><input type="date" value="2026-05-31"></div>
@@ -211,33 +205,32 @@
                     </table>
                 </div>
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <button class="btn btn-warning" onclick="addRow('saleTable')">+ Add Row</button>
-                    <button class="btn btn-primary" onclick="showNotification('Voucher Saved Successfully', 'success')">Save Voucher <span class="shortcut-hint">F2</span></button>
+                    <button class="btn btn-secondary" onclick="addRow('saleTable')">+ Add Row</button>
+                    <button class="btn btn-primary" onclick="showNotification('Voucher Saved Successfully', 'success')">Save Voucher <span class="shortcut-hint" style="color:#000;">F2</span></button>
                 </div>
             </div>
 
              <!-- PURCHASE VOUCHER PAGE -->
              <div id="purchasePage" class="page-section">
-                <h2 style="margin-bottom: 20px; color: var(--busy-blue);">Add Purchase Voucher</h2>
-                <!-- Same layout as Sale -->
+                <h2 style="margin-bottom: 20px;">Purchase Voucher</h2>
                 <p style="color: var(--text-muted);">Purchase entry structure identical to Sales...</p>
             </div>
 
             <!-- PAYMENT PAGE -->
             <div id="paymentPage" class="page-section">
-                <h2 style="margin-bottom: 20px; color: var(--busy-blue);">Payment / Receipt Voucher</h2>
+                <h2 style="margin-bottom: 20px;">Payment / Receipt Voucher</h2>
                 <div class="voucher-header-grid">
                     <div class="form-field"><label>Type</label><select><option>Payment</option><option>Receipt</option></select></div>
                     <div class="form-field"><label>Cash/Bank A/c</label><input type="text" value="Cash In Hand"></div>
                     <div class="form-field"><label>Party A/c</label><input type="text" placeholder="Party Name"></div>
                     <div class="form-field"><label>Amount</label><input type="number" placeholder="0.00"></div>
                 </div>
-                <button class="btn btn-primary" onclick="showNotification('Transaction Saved Successfully', 'success')">Save Entry <span class="shortcut-hint">F2</span></button>
+                <button class="btn btn-primary" onclick="showNotification('Transaction Saved Successfully', 'success')">Save Entry <span class="shortcut-hint" style="color:#000;">F2</span></button>
             </div>
 
             <!-- DAY BOOK -->
             <div id="daybookPage" class="page-section">
-                <h2 style="margin-bottom: 20px; color: var(--busy-blue);">Day Book (Daily Log)</h2>
+                <h2 style="margin-bottom: 20px;">Day Book (Daily Log)</h2>
                 <div class="voucher-table-wrapper">
                     <table class="voucher-table">
                         <thead><tr><th>Date</th><th>Vch Type</th><th>Vch No.</th><th>Party Name</th><th>Amount</th></tr></thead>
@@ -251,7 +244,7 @@
 
              <!-- LEDGER -->
              <div id="ledgerPage" class="page-section">
-                <h2 style="margin-bottom: 20px; color: var(--busy-blue);">Account Ledger</h2>
+                <h2 style="margin-bottom: 20px;">Account Ledger</h2>
                 <div class="voucher-header-grid" style="margin-bottom: 10px;">
                     <div class="form-field"><label>Select Account</label><input type="text" value="Rahul Traders"></div>
                     <div style="display:flex; align-items:flex-end;"><button class="btn btn-primary">Load Ledger</button></div>
@@ -328,11 +321,7 @@
         // LOGOUT FUNCTIONALITY 
         function logoutUser() {
             showNotification("Logging out securely...", "success");
-            
-            // Clear the active session from Local Storage
             localStorage.removeItem('active_user');
-            
-            // Redirect to login page after a short delay
             setTimeout(() => {
                 window.location.href = 'login.html';
             }, 1200);
