@@ -15,13 +15,13 @@
             --accent-color: #ff9800; /* SS Enterprises Orange */
             --border-color: #2a2c33;
             --status-bg: #1c1d24;
-            --watermark-color: #d35400; /* Darker orange/reddish for bottom text */
+            --watermark-color: #d35400; 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; font-size: 13px; }
         
-        /* ================= 1. TITLE BAR (Topmost) ================= */
+        /* ================= 1. TITLE BAR ================= */
         .title-bar { 
             background-color: var(--menu-bg); 
             padding: 4px 10px; 
@@ -35,7 +35,7 @@
         .window-controls { display: flex; gap: 15px; cursor: pointer; }
         .window-controls span:hover { color: var(--accent-color); }
 
-        /* ================= 2. MENU BAR (BUSY Style) ================= */
+        /* ================= 2. MENU BAR & DROPDOWNS ================= */
         .top-menubar { 
             background-color: var(--menu-bg); 
             display: flex; 
@@ -50,16 +50,37 @@
         .menu-item { position: relative; padding: 6px 12px; cursor: pointer; font-weight: 500; border-bottom: 2px solid transparent; }
         .menu-item:hover { border-bottom: 2px solid var(--accent-color); color: var(--accent-color); background: rgba(255, 152, 0, 0.05); }
 
-        /* Dropdown Menu */
+        /* Level 1: Main Dropdown */
         .dropdown-menu { 
             display: none; position: absolute; top: 100%; left: 0; 
             background-color: var(--menu-bg); border: 1px solid var(--border-color); 
-            min-width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.8); list-style: none; padding: 2px 0; z-index: 2000; 
+            min-width: 250px; box-shadow: 0 8px 16px rgba(0,0,0,0.8); list-style: none; padding: 2px 0; z-index: 2000; 
         }
         .menu-item:hover .dropdown-menu { display: block; }
-        .dropdown-menu li { padding: 6px 15px; color: var(--text-main); border-bottom: 1px solid rgba(255,255,255,0.02); }
+        
+        .dropdown-menu li { 
+            position: relative; /* Critical for Level 2 placement */
+            padding: 6px 15px; 
+            color: var(--text-main); 
+            border-bottom: 1px solid rgba(255,255,255,0.02); 
+            cursor: pointer;
+        }
         .dropdown-menu li:hover { background-color: var(--accent-color); color: #000; }
+        
+        /* Level 2: Sub Menu (Add/Modify/List) */
+        .sub-menu { 
+            display: none; position: absolute; top: -1px; left: 100%; 
+            background-color: var(--menu-bg); border: 1px solid var(--border-color); 
+            min-width: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.8); list-style: none; padding: 2px 0; z-index: 2001; 
+        }
+        .dropdown-menu li:hover > .sub-menu { display: block; }
+        
+        .sub-menu li { padding: 6px 15px; color: var(--text-main); }
+        .sub-menu li:hover { background-color: var(--accent-color); color: #000; }
+
+        /* Utility classes for menus */
         .shortcut { float: right; color: inherit; opacity: 0.7; font-size: 11px; margin-top: 2px;}
+        .has-sub::after { content: '▸'; float: right; font-size: 11px; margin-top: 2px; opacity: 0.8; }
 
         /* ================= 3. MAIN WORKSPACE ================= */
         .main-workspace { 
@@ -68,7 +89,6 @@
             background-color: var(--bg-color); 
         }
         
-        /* Bottom Center Watermark (As seen in screenshot) */
         .workspace-watermark {
             position: absolute;
             bottom: 20px;
@@ -81,48 +101,7 @@
             user-select: none;
         }
 
-        /* ================= 4. PATH BAR & STATUS BAR ================= */
-        .path-bar {
-            background-color: var(--menu-bg);
-            text-align: center;
-            padding: 3px 0;
-            font-size: 11px;
-            color: var(--text-main);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .status-bar {
-            background-color: var(--status-bg);
-            display: flex;
-            align-items: center;
-            height: 45px;
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-        .status-section {
-            padding: 5px 15px;
-            border-right: 1px solid var(--border-color);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            white-space: nowrap;
-        }
-        .status-section:last-child { border-right: none; flex: 1; align-items: flex-end; }
-        
-        .status-row { display: flex; gap: 10px; margin-bottom: 2px; }
-        .status-label { display: inline-block; width: 45px; }
-        .status-val { color: var(--text-main); font-weight: 500; }
-
-        /* Logo box in status bar */
-        .status-logo {
-            background: var(--card-bg); border: 1px solid var(--border-color); 
-            color: var(--accent-color); font-weight: bold; padding: 2px 10px; text-align: center; font-size: 14px;
-            display: flex; flex-direction: column; line-height: 1.2;
-        }
-
-        /* ================= POPUP WINDOWS (From Previous) ================= */
+        /* POPUP WINDOWS */
         .busy-window {
             position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
             background: var(--card-bg); border: 1px solid var(--accent-color);
@@ -142,6 +121,24 @@
         .btn { padding: 6px 15px; background: var(--accent-color); color: #000; border: none; font-weight: bold; cursor: pointer; font-size: 12px; }
         .btn:hover { opacity: 0.9; }
 
+        /* ================= 4. PATH BAR & STATUS BAR ================= */
+        .path-bar {
+            background-color: var(--menu-bg); text-align: center; padding: 3px 0; font-size: 11px;
+            color: var(--text-main); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);
+        }
+
+        .status-bar { background-color: var(--status-bg); display: flex; align-items: center; height: 45px; font-size: 11px; color: var(--text-muted); }
+        .status-section { padding: 5px 15px; border-right: 1px solid var(--border-color); height: 100%; display: flex; flex-direction: column; justify-content: center; white-space: nowrap; }
+        .status-section:last-child { border-right: none; flex: 1; align-items: flex-end; }
+        .status-row { display: flex; gap: 10px; margin-bottom: 2px; }
+        .status-label { display: inline-block; width: 45px; }
+        .status-val { color: var(--text-main); font-weight: 500; }
+
+        .status-logo {
+            background: var(--card-bg); border: 1px solid var(--border-color); 
+            color: var(--accent-color); font-weight: bold; padding: 2px 10px; text-align: center; font-size: 14px;
+            display: flex; flex-direction: column; line-height: 1.2;
+        }
     </style>
 </head>
 <body>
@@ -149,7 +146,7 @@
     <!-- 1. TITLE BAR -->
     <div class="title-bar">
         <div class="title-bar-text">
-            BUSY Web ERP | Rel 1.0 | Model : EC | SS ENTERPRISES (F.Y. 2026-27) | 24x7 Support : +91-8282828282
+            SS ENTERPRISES | F.Y. (2026-27) | SUPPORT : 8171904861
         </div>
         <div class="window-controls">
             <span>—</span>
@@ -162,38 +159,136 @@
     <div class="top-menubar">
         <span class="nav-arrows">&gt;&gt;</span>
         <ul class="menu-list">
+            
             <li class="menu-item"><u>C</u>ompany
                 <ul class="dropdown-menu">
                     <li>Edit Company</li>
                     <li>Backup Data</li>
-                    <li onclick="alert('Logged Out!')">Close Company</li>
+                    <li>Restore Data</li>
+                    <li>Split Financial Year</li>
+                    <li>Delete Company</li>
+                    <li onclick="alert('Company Closed!')">Close Company</li>
                 </ul>
             </li>
+
             <li class="menu-item"><u>A</u>dministration
                 <ul class="dropdown-menu">
-                    <li onclick="openWindow('mastersWindow')">Masters <span class="shortcut">F3</span></li>
-                    <li>Configuration</li>
+                    <li class="has-sub">Masters <span class="shortcut">F3</span>
+                        <ul class="sub-menu">
+                            <li onclick="openWindow('mastersWindow')">Add</li>
+                            <li>Modify</li>
+                            <li>List</li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">Configuration
+                        <ul class="sub-menu">
+                            <li>Features / Options</li>
+                            <li>Hardware Configuration</li>
+                        </ul>
+                    </li>
+                    <li>Utilities</li>
+                    <li>Bulk Updations</li>
+                    <li>Data Export/Import</li>
+                    <li>Change Password</li>
                 </ul>
             </li>
+
             <li class="menu-item"><u>T</u>ransactions
                 <ul class="dropdown-menu">
-                    <li onclick="openWindow('voucherWindow')">Sales <span class="shortcut">Alt+S</span></li>
-                    <li>Purchase <span class="shortcut">Alt+P</span></li>
-                    <li>Payment</li>
-                    <li>Receipt</li>
+                    <li class="has-sub">Sales <span class="shortcut">Alt+S</span>
+                        <ul class="sub-menu">
+                            <li onclick="openWindow('voucherWindow')">Add</li><li>Modify</li><li>List</li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">Purchase <span class="shortcut">Alt+P</span>
+                        <ul class="sub-menu"><li>Add</li><li>Modify</li><li>List</li></ul>
+                    </li>
+                    <li class="has-sub">Sales Return
+                        <ul class="sub-menu"><li>Add</li><li>Modify</li><li>List</li></ul>
+                    </li>
+                    <li class="has-sub">Purchase Return
+                        <ul class="sub-menu"><li>Add</li><li>Modify</li><li>List</li></ul>
+                    </li>
+                    <li class="has-sub">Payment <span class="shortcut">F5</span>
+                        <ul class="sub-menu"><li>Add</li><li>Modify</li><li>List</li></ul>
+                    </li>
+                    <li class="has-sub">Receipt <span class="shortcut">F6</span>
+                        <ul class="sub-menu"><li>Add</li><li>Modify</li><li>List</li></ul>
+                    </li>
+                    <li class="has-sub">Journal <span class="shortcut">F7</span>
+                        <ul class="sub-menu"><li>Add</li><li>Modify</li><li>List</li></ul>
+                    </li>
+                    <li class="has-sub">Contra <span class="shortcut">F4</span>
+                        <ul class="sub-menu"><li>Add</li><li>Modify</li><li>List</li></ul>
+                    </li>
+                    <li class="has-sub">Debit Note
+                        <ul class="sub-menu"><li>Add</li><li>Modify</li><li>List</li></ul>
+                    </li>
+                    <li class="has-sub">Credit Note
+                        <ul class="sub-menu"><li>Add</li><li>Modify</li><li>List</li></ul>
+                    </li>
+                    <li class="has-sub">Stock Journal <span class="shortcut">Alt+J</span>
+                        <ul class="sub-menu"><li>Add</li><li>Modify</li><li>List</li></ul>
+                    </li>
+                    <li class="has-sub">Production
+                        <ul class="sub-menu"><li>Add</li><li>Modify</li><li>List</li></ul>
+                    </li>
+                    <li class="has-sub">Material Issue to Party
+                        <ul class="sub-menu"><li>Add</li><li>Modify</li><li>List</li></ul>
+                    </li>
+                    <li class="has-sub">Material Rcvd. from Party
+                        <ul class="sub-menu"><li>Add</li><li>Modify</li><li>List</li></ul>
+                    </li>
                 </ul>
             </li>
+
             <li class="menu-item"><u>D</u>isplay
                 <ul class="dropdown-menu">
-                    <li>Day Book</li>
-                    <li>Account Ledgers <span class="shortcut">Alt+L</span></li>
+                    <li class="has-sub">Final Results
+                        <ul class="sub-menu"><li>Balance Sheet</li><li>Profit & Loss A/c</li></ul>
+                    </li>
+                    <li>Trial Balance</li>
+                    <li class="has-sub">Account Books
+                        <ul class="sub-menu"><li>Day Book</li><li>Ledger <span class="shortcut">Alt+L</span></li><li>Cash/Bank Book</li></ul>
+                    </li>
+                    <li>Account Summaries</li>
+                    <li>Outstanding Analysis</li>
+                    <li>Stock Status</li>
+                    <li>Sales Analysis</li>
+                    <li>Purchase Analysis</li>
+                    <li>GST Reports</li>
+                    <li>MIS Reports</li>
                 </ul>
             </li>
-            <li class="menu-item"><u>P</u>rint/Email/SMS</li>
-            <li class="menu-item"><u>H</u>ouse-Keeping</li>
-            <li class="menu-item">H<u>e</u>lp</li>
+
+            <li class="menu-item"><u>P</u>rint/Email/SMS
+                <ul class="dropdown-menu">
+                    <li>Sales Invoice</li>
+                    <li>Outstanding Reminder</li>
+                    <li>Account Ledger</li>
+                    <li>Print Utilities</li>
+                </ul>
+            </li>
+
+            <li class="menu-item"><u>H</u>ouse-Keeping
+                <ul class="dropdown-menu">
+                    <li>Update Masters</li>
+                    <li>Re-Index Data</li>
+                    <li>Check Data Accuracy</li>
+                </ul>
+            </li>
+
+            <li class="menu-item">H<u>e</u>lp
+                <ul class="dropdown-menu">
+                    <li>Shortcut Keys</li>
+                    <li>BUSY Help</li>
+                    <li>About BUSY</li>
+                </ul>
+            </li>
+
             <li class="menu-item"><u>F</u>avourites</li>
             <li class="menu-item">A<u>d</u>d-On</li>
+
         </ul>
         <span class="nav-arrows">&lt;&lt;</span>
     </div>
@@ -204,7 +299,7 @@
         <!-- Bottom Center Watermark -->
         <div class="workspace-watermark">SS ENTERPRISES (F.Y. 2026-27)</div>
 
-        <!-- POPUP WINDOWS (Hidden by default) -->
+        <!-- POPUP WINDOWS -->
         <div id="mastersWindow" class="busy-window">
             <div class="window-header"><span>Add Master</span><span class="window-close" onclick="closeWindow('mastersWindow')">✖</span></div>
             <div class="window-body">
@@ -218,7 +313,7 @@
         </div>
 
         <div id="voucherWindow" class="busy-window">
-            <div class="window-header"><span>Sales Voucher</span><span class="window-close" onclick="closeWindow('voucherWindow')">✖</span></div>
+            <div class="window-header"><span>Sales Voucher - Add</span><span class="window-close" onclick="closeWindow('voucherWindow')">✖</span></div>
             <div class="window-body">
                 <div class="form-grid">
                     <div class="form-field"><label>Party Name</label><input type="text" placeholder="Cash"></div>
@@ -233,44 +328,37 @@
         </div>
     </div>
 
-    <!-- 4. PATH BAR (Just above status bar) -->
+    <!-- 4. PATH BAR -->
     <div class="path-bar" id="pathBar">
         Company --&gt; Close Company
     </div>
 
-    <!-- 5. STATUS BAR (Matches screenshot blocks) -->
+    <!-- 5. STATUS BAR -->
     <div class="status-bar">
-        
-        <!-- Block 1: Logo -->
         <div class="status-section" style="padding: 2px 10px;">
             <div class="status-logo">SS<br><span style="font-size: 8px; font-weight: normal; color: white;">ERP WEB</span></div>
         </div>
         
-        <!-- Block 2: Company -->
         <div class="status-section" style="width: 180px; align-items: center; justify-content: center;">
             <div class="status-val">SS ENTERPRISES</div>
             <div style="font-size: 10px;">(Comp0003)</div>
         </div>
         
-        <!-- Block 3: F.Y. and GSTIN -->
         <div class="status-section" style="width: 220px;">
             <div class="status-row"><span class="status-label">F.Y.</span> : <span class="status-val">2026-27</span></div>
             <div class="status-row"><span class="status-label">GSTIN</span> : <span class="status-val">09ADWPJ8639H1ZP</span></div>
         </div>
         
-        <!-- Block 4: User and State -->
         <div class="status-section" style="width: 180px;">
             <div class="status-row"><span class="status-label">User</span> : <span class="status-val">Admin</span></div>
             <div class="status-row"><span class="status-label">State</span> : <span class="status-val">Uttar Pradesh</span></div>
         </div>
         
-        <!-- Block 5: Port and BLS -->
         <div class="status-section" style="width: 250px;">
             <div class="status-row"><span class="status-label" style="width: 80px;">Listening Port</span> : <span class="status-val">981</span></div>
             <div class="status-row"><span class="status-label" style="width: 80px;">BLS Valid Upto</span> : <span class="status-val">30-09-2027 (Active)</span></div>
         </div>
         
-        <!-- Block 6: Date & Time (Right aligned) -->
         <div class="status-section">
             <div class="status-val" id="currentDate">Sunday</div>
             <div id="currentDateTime">31-05-2026</div>
@@ -292,8 +380,9 @@
         function openWindow(id) {
             document.querySelectorAll('.busy-window').forEach(w => w.style.display = 'none');
             document.getElementById(id).style.display = 'block';
-            document.getElementById('pathBar').innerText = `Transactions --> ${id === 'voucherWindow' ? 'Sales' : 'Masters'}`;
+            document.getElementById('pathBar').innerText = `Transactions --> ${id === 'voucherWindow' ? 'Sales --> Add' : 'Masters --> Add'}`;
         }
+        
         function closeWindow(id) {
             document.getElementById(id).style.display = 'none';
             document.getElementById('pathBar').innerText = 'Company --> Close Company';
