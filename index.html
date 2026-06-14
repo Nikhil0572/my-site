@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -14,10 +12,10 @@
             --card-bg: #181920;
             --text-main: #ffffff;
             --text-muted: #8b9298;
-            --accent-color: #ff9800; /* SS Enterprises Orange */
+            --accent-color: #ff9800;
             --border-color: #2a2c33;
             --status-bg: #1c1d24;
-            --watermark-color: #d35400; 
+            --watermark-color: #d35400;
             --success-color: #2ece71;
             --danger-color: #e74c3c;
         }
@@ -25,7 +23,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; font-size: 13px; }
         
-        /* ================= 1. TITLE BAR ================= */
         .title-bar { 
             background-color: var(--menu-bg); 
             padding: 4px 10px; 
@@ -40,7 +37,6 @@
         .window-controls { display: flex; gap: 15px; cursor: pointer; }
         .window-controls span:hover { color: var(--accent-color); }
 
-        /* ================= 2. MENU BAR & DROPDOWNS ================= */
         .top-menubar { 
             background-color: var(--menu-bg); 
             display: flex; 
@@ -55,7 +51,6 @@
         .menu-item { position: relative; padding: 6px 12px; cursor: pointer; font-weight: 500; border-bottom: 2px solid transparent; }
         .menu-item:hover { border-bottom: 2px solid var(--accent-color); color: var(--accent-color); background: rgba(255, 152, 0, 0.05); }
 
-        /* Level 1: Main Dropdown */
         .dropdown-menu { 
             display: none; position: absolute; top: 100%; left: 0; 
             background-color: var(--menu-bg); border: 1px solid var(--border-color); 
@@ -72,7 +67,6 @@
         }
         .dropdown-menu li:hover { background-color: var(--accent-color); color: #000; }
         
-        /* Level 2: Sub Menu */
         .sub-menu { 
             display: none; position: absolute; top: -1px; left: 100%; 
             background-color: var(--menu-bg); border: 1px solid var(--border-color); 
@@ -83,7 +77,6 @@
         .shortcut { float: right; color: inherit; opacity: 0.7; font-size: 11px; margin-top: 2px;}
         .has-sub::after { content: '▸'; float: right; font-size: 11px; margin-top: 2px; opacity: 0.8; }
 
-        /* ================= 3. MAIN WORKSPACE ================= */
         .main-workspace { 
             flex: 1; 
             position: relative; 
@@ -100,16 +93,37 @@
             color: var(--watermark-color);
             letter-spacing: 0.5px;
             user-select: none;
+            pointer-events: none;
         }
 
-        /* POPUP WINDOWS */
         .busy-window {
-            position: absolute; top: 48%; left: 50%; transform: translate(-50%, -50%);
-            background: var(--card-bg); border: 1px solid var(--accent-color);
-            width: 800px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 100; display: none;
-            max-height: 85vh; display: flex; flex-direction: column;
+            position: absolute;
+            background: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            z-index: 100;
+            display: none;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            max-width: 90vw;
         }
-        .window-header { background: var(--accent-color); color: #000; padding: 6px 12px; font-weight: bold; display: flex; justify-content: space-between; font-size: 13px; user-select: none; }
+        
+        .busy-window.show {
+            display: flex;
+        }
+
+        .window-header { 
+            background: var(--accent-color); 
+            color: #000; 
+            padding: 6px 12px; 
+            font-weight: bold; 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 13px; 
+            user-select: none;
+            cursor: move;
+        }
         .window-close { cursor: pointer; padding: 0 5px; font-weight: bold; }
         .window-close:hover { background: red; color: white; }
         .window-body { padding: 15px; overflow-y: auto; flex: 1; }
@@ -125,94 +139,202 @@
         .btn-secondary { background: transparent; color: white; border: 1px solid var(--border-color); margin-right: 5px; }
         .btn-secondary:hover { background: rgba(255,255,255,0.05); }
 
-        /* ================= VOUCHER FULL SCREEN WINDOW (BUSY STYLE) ================= */
         .busy-window.maximized {
-            top: 5px; left: 5px; right: 5px; bottom: 5px;
-            transform: none; width: auto; height: auto; max-height: none;
+            top: 5px !important; 
+            left: 5px !important; 
+            right: 5px !important; 
+            bottom: 5px !important;
+            transform: none !important; 
+            width: auto !important; 
+            height: auto !important; 
+            max-height: none !important;
         }
         .busy-window.maximized .window-body {
-            flex: 1; display: flex; flex-direction: column; padding: 10px; overflow: hidden;
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            padding: 10px; 
+            overflow: hidden;
             background-color: var(--bg-color);
         }
         
         .voucher-header-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px 15px; margin-bottom: 8px;
-            padding-bottom: 8px; border-bottom: 1px dashed var(--border-color);
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 6px 15px; 
+            margin-bottom: 8px;
+            padding-bottom: 8px; 
+            border-bottom: 1px dashed var(--border-color);
         }
+        
         .v-field { display: flex; align-items: center; }
         .v-field label { width: 90px; font-size: 11px; color: var(--text-muted); font-weight: 600; white-space: nowrap; }
         .v-field input, .v-field select { 
-            flex: 1; padding: 3px 5px; background: var(--menu-bg); border: 1px solid #333; 
-            color: white; font-size: 12px; width: 100%; box-sizing: border-box;
+            flex: 1; 
+            padding: 3px 5px; 
+            background: var(--menu-bg); 
+            border: 1px solid #333; 
+            color: white; 
+            font-size: 12px; 
+            width: 100%; 
+            box-sizing: border-box;
         }
         .v-field input:focus, .v-field select:focus { border-color: var(--accent-color); outline: none; background: #000; }
 
         .busy-table-container {
-            flex: 1; overflow-y: auto; border: 1px solid var(--border-color); background: var(--menu-bg);
-            margin-bottom: 10px; display: block; min-height: 150px;
+            flex: 1; 
+            overflow-y: auto; 
+            border: 1px solid var(--border-color); 
+            background: var(--menu-bg);
+            margin-bottom: 10px; 
+            display: block; 
+            min-height: 150px;
         }
+        
         .busy-table { width: 100%; border-collapse: collapse; }
         .busy-table th { 
-            background: var(--card-bg); color: var(--accent-color); font-weight: bold; 
-            padding: 5px; border: 1px solid var(--border-color); font-size: 11px; 
-            position: sticky; top: 0; z-index: 10; text-align: left;
+            background: var(--card-bg); 
+            color: var(--accent-color); 
+            font-weight: bold; 
+            padding: 5px; 
+            border: 1px solid var(--border-color); 
+            font-size: 11px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 10; 
+            text-align: left;
         }
-        .busy-table td { padding: 0; border: 1px solid var(--border-color); border-top: none; font-size: 12px; }
+        .busy-table td { 
+            padding: 0; 
+            border: 1px solid var(--border-color); 
+            border-top: none; 
+            font-size: 12px; 
+        }
         .busy-table td input, .busy-table td select { 
-            width: 100%; height: 24px; padding: 0 4px; background: transparent; border: none; 
-            color: white; outline: none; box-sizing: border-box; font-size: 12px;
+            width: 100%; 
+            height: 24px; 
+            padding: 0 4px; 
+            background: transparent; 
+            border: none; 
+            color: white; 
+            outline: none; 
+            box-sizing: border-box; 
+            font-size: 12px;
         }
         .busy-table td select { background: var(--menu-bg); }
         .busy-table td input:focus, .busy-table td select:focus { background: rgba(255,152,0,0.15); }
         .busy-table tr:focus-within { background: rgba(255,255,255,0.03); }
         
         .voucher-footer-grid {
-            display: grid; grid-template-columns: 1fr 350px; gap: 10px; height: 110px;
+            display: grid; 
+            grid-template-columns: 1fr 350px; 
+            gap: 10px; 
+            height: 110px;
         }
-        .sundry-table-container { border: 1px solid var(--border-color); background: var(--menu-bg); overflow-y: auto; height: 100%; }
+        .sundry-table-container { 
+            border: 1px solid var(--border-color); 
+            background: var(--menu-bg); 
+            overflow-y: auto; 
+            height: 100%; 
+        }
         
         .totals-box { 
-            font-size: 16px; font-weight: bold; color: #fff; text-align: right; 
-            padding: 6px 15px; border: 1px solid var(--border-color); background: var(--card-bg); 
-            display: flex; justify-content: space-between; align-items: center; margin-top: 5px;
+            font-size: 16px; 
+            font-weight: bold; 
+            color: #fff; 
+            text-align: right; 
+            padding: 6px 15px; 
+            border: 1px solid var(--border-color); 
+            background: var(--card-bg); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-top: 5px;
         }
         .net-amount { color: #4ade80; font-size: 20px; letter-spacing: 1px;}
         .text-center { text-align: center !important; }
         .text-right { text-align: right !important; }
 
-        /* ================= REPORTS STYLING ================= */
         .report-toolbar {
-            display: flex; gap: 10px; background: var(--menu-bg); padding: 8px 12px; 
-            border: 1px solid var(--border-color); margin-bottom: 10px; align-items: center;
+            display: flex; 
+            gap: 10px; 
+            background: var(--menu-bg); 
+            padding: 8px 12px; 
+            border: 1px solid var(--border-color); 
+            margin-bottom: 10px; 
+            align-items: center;
         }
         .report-table-container {
-            background: var(--menu-bg); border: 1px solid var(--border-color); 
-            overflow-y: auto; flex: 1; min-height: 250px; max-height: 50vh;
+            background: var(--menu-bg); 
+            border: 1px solid var(--border-color); 
+            overflow-y: auto; 
+            flex: 1; 
+            min-height: 250px; 
+            max-height: 50vh;
         }
         .report-table { width: 100%; border-collapse: collapse; }
-        .report-table th { background: var(--card-bg); color: var(--accent-color); padding: 6px 10px; border: 1px solid var(--border-color); font-size: 11px; text-align: left; }
-        .report-table td { padding: 6px 10px; border: 1px solid var(--border-color); font-size: 12px; }
+        .report-table th { 
+            background: var(--card-bg); 
+            color: var(--accent-color); 
+            padding: 6px 10px; 
+            border: 1px solid var(--border-color); 
+            font-size: 11px; 
+            text-align: left; 
+            position: sticky;
+            top: 0;
+        }
+        .report-table td { 
+            padding: 6px 10px; 
+            border: 1px solid var(--border-color); 
+            font-size: 12px; 
+        }
         .report-table tr:hover { background: rgba(255,255,255,0.02); }
         .dr-text { color: #5dade2; font-weight: bold; }
         .cr-text { color: #f5b041; font-weight: bold; }
 
-        /* ================= PATH BAR & STATUS BAR ================= */
         .path-bar {
-            background-color: var(--menu-bg); text-align: center; padding: 3px 0; font-size: 11px;
-            color: var(--text-main); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);
+            background-color: var(--menu-bg); 
+            text-align: center; 
+            padding: 3px 0; 
+            font-size: 11px;
+            color: var(--text-main); 
+            border-top: 1px solid var(--border-color); 
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .status-bar { background-color: var(--status-bg); display: flex; align-items: center; height: 45px; font-size: 11px; color: var(--text-muted); }
-        .status-section { padding: 5px 15px; border-right: 1px solid var(--border-color); height: 100%; display: flex; flex-direction: column; justify-content: center; white-space: nowrap; }
+        .status-bar { 
+            background-color: var(--status-bg); 
+            display: flex; 
+            align-items: center; 
+            height: 45px; 
+            font-size: 11px; 
+            color: var(--text-muted); 
+        }
+        .status-section { 
+            padding: 5px 15px; 
+            border-right: 1px solid var(--border-color); 
+            height: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            white-space: nowrap; 
+        }
         .status-section:last-child { border-right: none; flex: 1; align-items: flex-end; }
         .status-row { display: flex; gap: 10px; margin-bottom: 2px; }
         .status-label { display: inline-block; width: 45px; }
         .status-val { color: var(--text-main); font-weight: 500; }
 
         .status-logo {
-            background: var(--card-bg); border: 1px solid var(--border-color); 
-            color: var(--accent-color); font-weight: bold; padding: 2px 10px; text-align: center; font-size: 14px;
-            display: flex; flex-direction: column; line-height: 1.2;
+            background: var(--card-bg); 
+            border: 1px solid var(--border-color); 
+            color: var(--accent-color); 
+            font-weight: bold; 
+            padding: 2px 10px; 
+            text-align: center; 
+            font-size: 14px;
+            display: flex; 
+            flex-direction: column; 
+            line-height: 1.2;
         }
         
         .toast-box {
@@ -237,7 +359,6 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* PRINT BILL STYLING */
         .printable-invoice {
             font-family: 'Courier New', Courier, monospace;
             background: #fff;
@@ -256,9 +377,32 @@
             font-size: 12px;
             text-align: left;
         }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 99;
+        }
+
+        .modal-overlay.show {
+            display: block;
+        }
+
+        .company-dependent-menu.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
+
+    <!-- MODAL OVERLAY -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeAllWindows()"></div>
 
     <!-- 1. TITLE BAR -->
     <div class="title-bar">
@@ -276,7 +420,6 @@
     <div class="top-menubar">
         <span class="nav-arrows">&gt;&gt;</span>
         <ul class="menu-list">
-            
             <li class="menu-item"><u>C</u>ompany
                 <ul class="dropdown-menu">
                     <li onclick="openWindow('createCompanyWindow')">Create Company</li>
@@ -298,69 +441,12 @@
                                     <li onclick="openMasterList('Account')">List</li>
                                 </ul>
                             </li>
-                            <li class="has-sub">Account Group
-                                <ul class="sub-menu">
-                                    <li onclick="openAddExtraMaster('Account Group')">Add</li>
-                                    <li onclick="openMasterList('Account Group')">List</li>
-                                </ul>
-                            </li>
                             <li class="has-sub">Item
                                 <ul class="sub-menu">
                                     <li onclick="openAddMaster('Item')">Add</li>
                                     <li onclick="openMasterList('Item')">List</li>
                                 </ul>
                             </li>
-                            <li class="has-sub">Item Group
-                                <ul class="sub-menu">
-                                    <li onclick="openAddExtraMaster('Item Group')">Add</li>
-                                    <li onclick="openMasterList('Item Group')">List</li>
-                                </ul>
-                            </li>
-                            <li class="has-sub">Bill Sundry
-                                <ul class="sub-menu">
-                                    <li onclick="openAddExtraMaster('Bill Sundry')">Add</li>
-                                    <li onclick="openMasterList('Bill Sundry')">List</li>
-                                </ul>
-                            </li>
-                            <li class="has-sub">Material Centre
-                                <ul class="sub-menu">
-                                    <li onclick="openAddExtraMaster('Material Centre')">Add</li>
-                                    <li onclick="openMasterList('Material Centre')">List</li>
-                                </ul>
-                            </li>
-                            <li class="has-sub">Unit
-                                <ul class="sub-menu">
-                                    <li onclick="openAddExtraMaster('Unit')">Add</li>
-                                    <li onclick="openMasterList('Unit')">List</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">Configuration
-                        <ul class="sub-menu">
-                            <li onclick="openWindow('voucherConfigWindow')">Voucher Configuration</li>
-                            <li onclick="openWindow('featuresOptionsWindow')">Features & Options</li>
-                            <li onclick="openWindow('gstConfigWindow')">GST / VAT Configuration</li>
-                            <li onclick="openWindow('hardwareConfigWindow')">Hardware Configuration</li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">Users
-                        <ul class="sub-menu">
-                            <li onclick="openWindow('usersWindow')">Add User</li>
-                            <li onclick="openWindow('usersWindow')">User Rights</li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">Bulk Updations
-                        <ul class="sub-menu">
-                            <li onclick="showCustomToast('Multiple Account Updation loaded.', '📂')">Multiple Account Updations</li>
-                            <li onclick="showCustomToast('Multiple Item Updation loaded.', '📦')">Multiple Item Updations</li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">Utilities
-                        <ul class="sub-menu">
-                            <li onclick="openHousekeepingWindow()">Check/Post/Update Balances</li>
-                            <li onclick="showCustomToast('Cleaned old records database caches.', '🧹')">Clean Data Caches</li>
-                            <li onclick="showCustomToast('Merge utility opened.', '🧬')">Merge Masters</li>
                         </ul>
                     </li>
                 </ul>
@@ -371,85 +457,25 @@
                     <li class="has-sub">Sales <span class="shortcut">Alt+S</span>
                         <ul class="sub-menu">
                             <li onclick="openVoucherWindow('Sales')">Add</li>
-                            <li onclick="openVoucherList('Sales', 'Modify')">Modify</li>
                             <li onclick="openVoucherList('Sales')">List</li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">Sales Return
-                        <ul class="sub-menu">
-                            <li onclick="openVoucherWindow('Sales Return')">Add</li>
-                            <li onclick="openVoucherList('Sales Return', 'Modify')">Modify</li>
-                            <li onclick="openVoucherList('Sales Return')">List</li>
                         </ul>
                     </li>
                     <li class="has-sub">Purchase <span class="shortcut">Alt+P</span>
                         <ul class="sub-menu">
                             <li onclick="openVoucherWindow('Purchase')">Add</li>
-                            <li onclick="openVoucherList('Purchase', 'Modify')">Modify</li>
                             <li onclick="openVoucherList('Purchase')">List</li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">Purchase Return
-                        <ul class="sub-menu">
-                            <li onclick="openVoucherWindow('Purchase Return')">Add</li>
-                            <li onclick="openVoucherList('Purchase Return', 'Modify')">Modify</li>
-                            <li onclick="openVoucherList('Purchase Return')">List</li>
                         </ul>
                     </li>
                     <li class="has-sub">Payment <span class="shortcut">F5</span>
                         <ul class="sub-menu">
                             <li onclick="openCashBankWindow('Payment')">Add</li>
-                            <li onclick="openVoucherList('Payment', 'Modify')">Modify</li>
                             <li onclick="openVoucherList('Payment')">List</li>
                         </ul>
                     </li>
                     <li class="has-sub">Receipt <span class="shortcut">F6</span>
                         <ul class="sub-menu">
                             <li onclick="openCashBankWindow('Receipt')">Add</li>
-                            <li onclick="openVoucherList('Receipt', 'Modify')">Modify</li>
                             <li onclick="openVoucherList('Receipt')">List</li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">Contra <span class="shortcut">F4</span>
-                        <ul class="sub-menu">
-                            <li onclick="openCashBankWindow('Contra')">Add</li>
-                            <li onclick="openVoucherList('Contra', 'Modify')">Modify</li>
-                            <li onclick="openVoucherList('Contra')">List</li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">Journal
-                        <ul class="sub-menu">
-                            <li onclick="openCashBankWindow('Journal')">Add</li>
-                            <li onclick="openVoucherList('Journal', 'Modify')">Modify</li>
-                            <li onclick="openVoucherList('Journal')">List</li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">Debit Note
-                        <ul class="sub-menu">
-                            <li onclick="openCashBankWindow('Debit Note')">Add</li>
-                            <li onclick="openVoucherList('Debit Note', 'Modify')">Modify</li>
-                            <li onclick="openVoucherList('Debit Note')">List</li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">Credit Note
-                        <ul class="sub-menu">
-                            <li onclick="openCashBankWindow('Credit Note')">Add</li>
-                            <li onclick="openVoucherList('Credit Note', 'Modify')">Modify</li>
-                            <li onclick="openVoucherList('Credit Note')">List</li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">Stock Journal
-                        <ul class="sub-menu">
-                            <li onclick="openVoucherWindow('Stock Journal')">Add</li>
-                            <li onclick="openVoucherList('Stock Journal', 'Modify')">Modify</li>
-                            <li onclick="openVoucherList('Stock Journal')">List</li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">Stock Transfer
-                        <ul class="sub-menu">
-                            <li onclick="openVoucherWindow('Stock Transfer')">Add</li>
-                            <li onclick="openVoucherList('Stock Transfer', 'Modify')">Modify</li>
-                            <li onclick="openVoucherList('Stock Transfer')">List</li>
                         </ul>
                     </li>
                 </ul>
@@ -458,89 +484,60 @@
             <li class="menu-item company-dependent-menu"><u>D</u>isplay
                 <ul class="dropdown-menu">
                     <li onclick="openDayBook()">Day Book</li>
-                    <li onclick="openLedgerReport()">Account Ledger <span class="shortcut">Alt+L</span></li>
+                    <li onclick="openLedgerReport()">Account Ledger</li>
                     <li onclick="openTrialBalance()">Trial Balance</li>
                     <li onclick="openStockStatus()">Stock Status</li>
                 </ul>
             </li>
             
-            <li class="menu-item company-dependent-menu"><u>P</u>rint/Email/SMS
-                <ul class="dropdown-menu">
-                    <li onclick="openPrintEmailWindow()">Print/Email GST Invoices</li>
-                    <li onclick="showCustomToast('Automated SMS Alerts loaded.', '📱')">SMS Campaign Logs</li>
-                </ul>
-            </li>
-            
-            <li class="menu-item company-dependent-menu"><u>H</u>ouse-Keeping
-                <ul class="dropdown-menu">
-                    <li onclick="openHousekeepingWindow()">Maintenance Utilities</li>
-                    <li onclick="showCustomToast('Database Indexed and Saved.', '💾')">Compact & Re-index Database</li>
-                </ul>
-            </li>
-            
             <li class="menu-item">H<u>e</u>lp
                 <ul class="dropdown-menu">
-                    <li onclick="openHelpWindow()">SS ERP Manual & Shortcuts</li>
-                    <li onclick="showCustomToast('SS ERP is already up-to-date!', '🚀')">Check for Updates</li>
+                    <li onclick="showCustomToast('SS ERP v1.0 - BUSY Compatible', '📖')">About</li>
                 </ul>
             </li>
         </ul>
         <span class="nav-arrows">&lt;&lt;</span>
     </div>
 
-    <!-- Hidden File Input for Restore Feature -->
     <input type="file" id="restoreFileInput" style="display: none;" onchange="restoreERPData(event)">
 
     <!-- 3. MAIN WORKSPACE -->
     <div class="main-workspace">
-        
-        <!-- Bottom Center Watermark -->
         <div class="workspace-watermark" id="workspaceWatermark">SS ENTERPRISES (F.Y. 2026-27)</div>
 
-        <!-- POPUP WINDOWS -->
-        
-        <!-- A. CREATE / EDIT COMPANY WINDOW -->
-        <div id="createCompanyWindow" class="busy-window" style="width: 550px; z-index: 2500;">
+        <!-- CREATE COMPANY WINDOW -->
+        <div id="createCompanyWindow" class="busy-window" style="width: 550px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
             <div class="window-header"><span>Create/Edit Company</span><span class="window-close" onclick="closeWindow('createCompanyWindow')">✖</span></div>
             <div class="window-body">
                 <div class="form-grid" style="grid-template-columns: 1fr; gap: 8px;">
                     <div class="form-field">
-                        <label>Company Name <span id="compNameErr" style="color:#ff4444; display:none; font-size:10px; margin-left:10px;">* Required</span></label>
+                        <label>Company Name</label>
                         <input type="text" id="compName" placeholder="Enter Company Name" style="font-weight:bold; font-size:14px; padding: 6px;">
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                         <div class="form-field"><label>Country</label><select id="compCountry"><option>India</option></select></div>
-                        <div class="form-field"><label>State</label><select id="compState"><option value="Uttar Pradesh">Uttar Pradesh</option><option value="Delhi">Delhi</option><option value="Haryana">Haryana</option><option value="Maharashtra">Maharashtra</option></select></div>
+                        <div class="form-field"><label>State</label><select id="compState"><option value="Uttar Pradesh">Uttar Pradesh</option></select></div>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <div class="form-field"><label>F.Y. Beginning From</label><input type="text" id="compFYStart" value="01-04-2026"></div>
-                        <div class="form-field"><label>Books Commencing From</label><input type="text" value="01-04-2026"></div>
-                    </div>
-                    <div class="form-field"><label>Address</label><input type="text" id="compAddress" placeholder="Company Complete Address" value="Industrial Area, Sector-4, Aligarh, UP"></div>
-                    <div class="form-field"><label>GSTIN / UIN</label><input type="text" id="compGSTIN" placeholder="e.g. 09AAAAA0000A1Z5" value="09ADWPJ8639H1ZP"></div>
+                    <div class="form-field"><label>Address</label><input type="text" id="compAddress" placeholder="Company Address"></div>
+                    <div class="form-field"><label>GSTIN / UIN</label><input type="text" id="compGSTIN" placeholder="e.g. 09AAAAA0000A1Z5"></div>
                 </div>
                 <div style="text-align: right; margin-top: 15px;">
                     <button class="btn btn-secondary" onclick="closeWindow('createCompanyWindow')">Quit</button>
-                    <button class="btn" onclick="saveNewCompany()">Save (F2)</button>
+                    <button class="btn" onclick="saveNewCompany()">Save</button>
                 </div>
             </div>
         </div>
 
-        <!-- B. ADD MASTERS WINDOW -->
-        <div id="mastersWindow" class="busy-window" style="width: 500px;">
+        <!-- MASTERS WINDOW -->
+        <div id="mastersWindow" class="busy-window" style="width: 500px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
             <div class="window-header"><span id="mastersWindowHeaderTitle">Add Master</span><span class="window-close" onclick="closeWindow('mastersWindow')">✖</span></div>
             <div class="window-body">
                 <div class="form-grid" style="grid-template-columns: 1fr; gap: 12px;">
                     <div class="form-field">
                         <label>Master Type</label>
                         <select id="mType" onchange="toggleMasterFields()">
-                            <option value="Account">Account (Ledger Party)</option>
-                            <option value="Item">Item (Stock Material)</option>
-                            <option value="Account Group">Account Group</option>
-                            <option value="Item Group">Item Group</option>
-                            <option value="Bill Sundry">Bill Sundry</option>
-                            <option value="Material Centre">Material Centre</option>
-                            <option value="Unit">Unit</option>
+                            <option value="Account">Account (Ledger)</option>
+                            <option value="Item">Item (Stock)</option>
                         </select>
                     </div>
                     <div class="form-field">
@@ -548,16 +545,14 @@
                         <input type="text" id="mName" placeholder="Enter Name">
                     </div>
                     
-                    <!-- Account Specific Fields -->
                     <div id="accountFields">
                         <div class="form-field" style="margin-bottom: 8px;">
                             <label>Group</label>
                             <select id="mAccountGroup">
-                                <option value="Sundry Debtors">Sundry Debtors (Customers)</option>
-                                <option value="Sundry Creditors">Sundry Creditors (Suppliers)</option>
-                                <option value="Bank Accounts">Bank Accounts</option>
-                                <option value="Cash Accounts">Cash Accounts</option>
-                                <option value="Capital Account">Capital Account</option>
+                                <option value="Sundry Debtors">Sundry Debtors</option>
+                                <option value="Sundry Creditors">Sundry Creditors</option>
+                                <option value="Bank Accounts">Bank</option>
+                                <option value="Cash Accounts">Cash</option>
                             </select>
                         </div>
                         <div class="form-field">
@@ -566,68 +561,46 @@
                         </div>
                     </div>
 
-                    <!-- Item Specific Fields -->
                     <div id="itemFields" style="display: none;">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
-                            <div class="form-field">
-                                <label>Unit</label>
-                                <select id="mItemUnit">
-                                    <option value="PCS">PCS</option>
-                                    <option value="BOX">BOX</option>
-                                    <option value="KGS">KGS</option>
-                                </select>
-                            </div>
-                            <div class="form-field">
-                                <label>Tax Category (GST)</label>
-                                <select id="mItemTax">
-                                    <option value="18">GST 18%</option>
-                                    <option value="12">GST 12%</option>
-                                    <option value="5">GST 5%</option>
-                                    <option value="0">Exempt</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <div class="form-field">
-                                <label>Sales Price (₹)</label>
-                                <input type="number" id="mItemSalePrice" value="0.00">
-                            </div>
-                            <div class="form-field">
-                                <label>Purchase Price (₹)</label>
-                                <input type="number" id="mItemPurPrice" value="0.00">
-                            </div>
-                        </div>
-                        <div class="form-field" style="margin-top: 8px;">
-                            <label>Opening Stock Qty</label>
-                            <input type="number" id="mItemOpQty" value="0">
-                        </div>
-                    </div>
-
-                    <!-- Extra Master fields (Group/Sundry/Centre/Unit) -->
-                    <div id="extraMasterFields" style="display: none;">
                         <div class="form-field">
-                            <label>Description/Under Group</label>
-                            <input type="text" id="mExtraDetails" placeholder="Details or Primary Category">
+                            <label>Unit</label>
+                            <select id="mItemUnit">
+                                <option value="PCS">PCS</option>
+                                <option value="BOX">BOX</option>
+                                <option value="KGS">KGS</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label>Tax (GST %)</label>
+                            <select id="mItemTax">
+                                <option value="18">18%</option>
+                                <option value="12">12%</option>
+                                <option value="5">5%</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label>Sale Price (₹)</label>
+                            <input type="number" id="mItemSalePrice" value="0.00">
                         </div>
                     </div>
                 </div>
                 <div style="text-align: right; margin-top: 15px;">
                     <button class="btn btn-secondary" onclick="closeWindow('mastersWindow')">Cancel</button>
-                    <button class="btn" onclick="saveMasterEntry()">Save (F2)</button>
+                    <button class="btn" onclick="saveMasterEntry()">Save</button>
                 </div>
             </div>
         </div>
 
-        <!-- C. MASTER LIST WINDOW -->
-        <div id="masterListWindow" class="busy-window" style="width: 700px;">
+        <!-- MASTER LIST WINDOW -->
+        <div id="masterListWindow" class="busy-window" style="width: 700px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
             <div class="window-header"><span>Master List Directory</span><span class="window-close" onclick="closeWindow('masterListWindow')">✖</span></div>
             <div class="window-body">
                 <div class="report-toolbar">
-                    <label>Filter Type: </label>
+                    <label>Filter: </label>
                     <select id="masterListFilter" onchange="renderMasterListTable()" style="background:#0b0c10; color:white; padding:4px; border:1px solid #333;">
-                        <option value="ALL">All Masters</option>
-                        <option value="Account">Accounts Only</option>
-                        <option value="Item">Items Only</option>
+                        <option value="ALL">All</option>
+                        <option value="Account">Accounts</option>
+                        <option value="Item">Items</option>
                     </select>
                 </div>
                 <div class="report-table-container">
@@ -636,28 +609,24 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Type</th>
-                                <th>Details / Group / Tax</th>
-                                <th class="text-right">Balance / Price</th>
+                                <th>Details</th>
+                                <th class="text-right">Amount</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Dynamic Content -->
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- D. SALES / PURCHASE / RETURN VOUCHER WINDOW -->
+        <!-- VOUCHER WINDOW -->
         <div id="voucherWindow" class="busy-window maximized">
-            <div class="window-header"><span id="vchWindowHeader">Sales Voucher - Add</span><span class="window-close" onclick="closeWindow('voucherWindow')">✖</span></div>
+            <div class="window-header"><span id="vchWindowHeader">Sales Voucher</span><span class="window-close" onclick="closeWindow('voucherWindow')">✖</span></div>
             <div class="window-body">
-                
-                <!-- 1. Header Details -->
                 <div class="voucher-header-grid">
                     <div class="v-field"><label>Series</label><select id="vchSeries"><option>Main</option></select></div>
                     <div class="v-field"><label>Date</label><input type="text" id="vchDate" value="31-05-2026"></div>
-                    <div class="v-field"><label>Vch No.</label><input type="text" id="vchNo" value="101" readonly></div>
+                    <div class="v-field"><label>Vch No.</label><input type="text" id="vchNo" readonly></div>
                     <div class="v-field"><label>Tax Type</label>
                         <select id="vchTaxType" onchange="calculateVoucherTotals()">
                             <option value="LGST18">L/GST 18%</option>
@@ -667,1441 +636,747 @@
                     </div>
                     
                     <div class="v-field" style="grid-column: span 2;">
-                        <label>Party A/c</label>
-                        <select id="vchParty" style="font-weight: bold; color: var(--accent-color);"></select>
+                        <label>Party</label>
+                        <select id="vchParty" onchange="calculateVoucherTotals()"></select>
                     </div>
-                    <div class="v-field" style="grid-column: span 2;"><label>Mat. Centre</label><select><option>Main Store</option></select></div>
-                    
-                    <div class="v-field" style="grid-column: span 4; display: flex; gap: 8px;">
-                        <label style="width: 90px;">Narration</label>
-                        <input type="text" id="vchNarration" placeholder="Enter Narration here..." style="flex: 1;">
-                    </div>
+                    <div class="v-field" style="grid-column: span 2;"><label>Narration</label><input type="text" id="vchNarration"></div>
                 </div>
 
-                <!-- 2. Main Item Grid -->
                 <div class="busy-table-container">
                     <table class="busy-table" id="vchItemGrid">
                         <thead>
                             <tr>
                                 <th class="text-center" style="width: 40px;">S.No.</th>
-                                <th>Item Name</th>
-                                <th class="text-right" style="width: 100px;">Qty.</th>
+                                <th>Item</th>
+                                <th class="text-right" style="width: 100px;">Qty</th>
                                 <th class="text-center" style="width: 80px;">Unit</th>
                                 <th class="text-right" style="width: 120px;">Price (₹)</th>
                                 <th class="text-right" style="width: 140px;">Amount (₹)</th>
                             </tr>
                         </thead>
-                        <tbody id="vchItemGridBody">
-                            <!-- Rows dynamically populated by JS -->
-                        </tbody>
+                        <tbody id="vchItemGridBody"></tbody>
                     </table>
                 </div>
 
-                <!-- 3. Footer / Sundries -->
                 <div class="voucher-footer-grid">
-                    <div>
-                        <div style="height: 100%; border: 1px dashed #333; background: #0f1015; padding: 10px; display: flex; flex-direction: column; justify-content: center;">
-                            <div class="v-field"><label style="width: 120px;">Transport</label><input type="text" value="Self"></div>
-                            <div class="v-field" style="margin-top: 5px;"><label style="width: 120px;">E-Way Bill No.</label><input type="text"></div>
-                        </div>
-                    </div>
+                    <div></div>
                     <div class="sundry-table-container">
                         <table class="busy-table" id="sundryTable">
                             <thead>
                                 <tr>
                                     <th>Bill Sundry</th>
-                                    <th class="text-center" style="width: 40px;">@</th>
                                     <th class="text-right" style="width: 100px;">Amount</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="text" id="sundryName1" value="CGST" readonly></td>
-                                    <td><input type="text" id="sundryRate1" class="text-center" value="9%" readonly></td>
-                                    <td><input type="text" class="text-right" id="cgstAmtVal" value="0.00" readonly></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" id="sundryName2" value="SGST" readonly></td>
-                                    <td><input type="text" id="sundryRate2" class="text-center" value="9%" readonly></td>
-                                    <td><input type="text" class="text-right" id="sgstAmtVal" value="0.00" readonly></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value="Round Off" readonly></td>
-                                    <td><input type="text" class="text-center" readonly></td>
-                                    <td><input type="text" class="text-right" id="roundOffVal" value="0.00" readonly></td>
-                                </tr>
-                            </tbody>
+                            <tbody id="sundryBody"></tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- 4. Save Buttons & Net Total -->
                 <div class="totals-box">
                     <div style="font-size: 13px; font-weight: normal;">
                         <button class="btn btn-secondary" onclick="closeWindow('voucherWindow')">Quit</button>
-                        <button class="btn" onclick="saveVoucher()" style="min-width: 100px;">Save (F2)</button>
+                        <button class="btn" onclick="saveVoucher()" style="min-width: 100px;">Save</button>
                     </div>
-                    <div>Net Payable: <span class="net-amount" id="netAmountVal">₹ 0.00</span></div>
+                    <div>Net: <span class="net-amount" id="netAmountVal">₹ 0.00</span></div>
                 </div>
-
             </div>
         </div>
 
-        <!-- E. PAYMENT / RECEIPT / CONTRA / JOURNAL WINDOW -->
-        <div id="cashBankWindow" class="busy-window" style="width: 650px;">
-            <div class="window-header"><span id="cbHeader">Cash/Bank Voucher</span><span class="window-close" onclick="closeWindow('cashBankWindow')">✖</span></div>
+        <!-- PAYMENT/RECEIPT WINDOW -->
+        <div id="cashBankWindow" class="busy-window" style="width: 650px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+            <div class="window-header"><span id="cbHeader">Cash/Bank</span><span class="window-close" onclick="closeWindow('cashBankWindow')">✖</span></div>
             <div class="window-body">
-                <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div class="form-field">
-                        <label>Voucher Date</label>
+                        <label>Date</label>
                         <input type="text" id="cbDate" value="31-05-2026">
                     </div>
                     <div class="form-field">
                         <label>Voucher No</label>
-                        <input type="text" id="cbVchNo" value="1" readonly>
+                        <input type="text" id="cbVchNo" readonly>
                     </div>
                 </div>
                 <div class="form-grid" style="grid-template-columns: 1fr; gap: 15px;">
                     <div class="form-field">
-                        <label id="cbAccountLabel1">Debit Account (Paid To)</label>
-                        <select id="cbAccount1" style="font-weight: bold; color: var(--accent-color);"></select>
+                        <label id="cbAccountLabel1">Debit Account</label>
+                        <select id="cbAccount1"></select>
                     </div>
                     <div class="form-field">
-                        <label id="cbAccountLabel2">Credit Account (Cash/Bank)</label>
-                        <select id="cbAccount2" style="font-weight: bold; color: var(--accent-color);"></select>
+                        <label id="cbAccountLabel2">Credit Account</label>
+                        <select id="cbAccount2"></select>
                     </div>
                     <div class="form-field">
                         <label>Amount (₹)</label>
-                        <input type="number" id="cbAmount" placeholder="0.00" style="font-size: 15px; font-weight: bold; padding: 8px;">
+                        <input type="number" id="cbAmount" placeholder="0.00" style="font-size: 15px; font-weight: bold;">
                     </div>
                     <div class="form-field">
                         <label>Narration</label>
-                        <input type="text" id="cbNarration" placeholder="Enter transaction narration">
+                        <input type="text" id="cbNarration">
                     </div>
                 </div>
                 <div style="text-align: right; margin-top: 20px;">
                     <button class="btn btn-secondary" onclick="closeWindow('cashBankWindow')">Close</button>
-                    <button class="btn" onclick="saveCashBankVoucher()">Save Entry (F2)</button>
+                    <button class="btn" onclick="saveCashBankVoucher()">Save</button>
                 </div>
             </div>
         </div>
 
-        <!-- F. DAY BOOK REPORT WINDOW -->
-        <div id="dayBookWindow" class="busy-window" style="width: 780px;">
-            <div class="window-header"><span>Display - Day Book</span><span class="window-close" onclick="closeWindow('dayBookWindow')">✖</span></div>
+        <!-- DAY BOOK WINDOW -->
+        <div id="dayBookWindow" class="busy-window" style="width: 780px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+            <div class="window-header"><span>Day Book</span><span class="window-close" onclick="closeWindow('dayBookWindow')">✖</span></div>
             <div class="window-body" style="display: flex; flex-direction: column;">
-                <div class="report-toolbar">
-                    <span style="font-weight: bold; color: var(--accent-color);">Standard Log of Daily Transactions</span>
-                </div>
                 <div class="report-table-container">
                     <table class="report-table" id="dayBookTable">
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                <th>Voucher Type</th>
-                                <th>Voucher No</th>
-                                <th>Account/Party Particulars</th>
-                                <th class="text-right">Debit (Dr) Amount</th>
-                                <th class="text-right">Credit (Cr) Amount</th>
+                                <th>Type</th>
+                                <th>No</th>
+                                <th>Particulars</th>
+                                <th class="text-right">Dr</th>
+                                <th class="text-right">Cr</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Dynamic Daybook rows -->
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- G. LEDGER STATEMENT REPORT WINDOW -->
-        <div id="ledgerReportWindow" class="busy-window" style="width: 780px;">
-            <div class="window-header"><span>Display - Account Ledger Statement</span><span class="window-close" onclick="closeWindow('ledgerReportWindow')">✖</span></div>
+        <!-- LEDGER WINDOW -->
+        <div id="ledgerReportWindow" class="busy-window" style="width: 780px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+            <div class="window-header"><span>Ledger</span><span class="window-close" onclick="closeWindow('ledgerReportWindow')">✖</span></div>
             <div class="window-body" style="display: flex; flex-direction: column;">
                 <div class="report-toolbar">
-                    <label style="font-weight: bold;">Select Ledger Account: </label>
-                    <select id="ledgerReportSelectAccount" onchange="renderLedgerReport()" style="background:#0b0c10; color:white; padding:6px; border:1px solid #333; width: 250px; font-weight: bold;"></select>
+                    <label>Account: </label>
+                    <select id="ledgerReportSelectAccount" onchange="renderLedgerReport()" style="background:#0b0c10; color:white; padding:6px; border:1px solid #333; width: 250px;"></select>
                 </div>
                 <div class="report-table-container">
                     <table class="report-table" id="ledgerReportTable">
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                <th>Voucher Type</th>
-                                <th>Vch No</th>
-                                <th>Opposite Account</th>
-                                <th class="text-right">Debit (Dr) Amount</th>
-                                <th class="text-right">Credit (Cr) Amount</th>
-                                <th class="text-right">Running Balance</th>
+                                <th>Type</th>
+                                <th>No</th>
+                                <th>Particulars</th>
+                                <th class="text-right">Dr</th>
+                                <th class="text-right">Cr</th>
+                                <th class="text-right">Balance</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Dynamic Ledger rows -->
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- H. TRIAL BALANCE WINDOW -->
-        <div id="trialBalanceWindow" class="busy-window" style="width: 700px;">
-            <div class="window-header"><span>Display - Trial Balance</span><span class="window-close" onclick="closeWindow('trialBalanceWindow')">✖</span></div>
+        <!-- TRIAL BALANCE WINDOW -->
+        <div id="trialBalanceWindow" class="busy-window" style="width: 700px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+            <div class="window-header"><span>Trial Balance</span><span class="window-close" onclick="closeWindow('trialBalanceWindow')">✖</span></div>
             <div class="window-body">
-                <div class="report-toolbar">
-                    <span style="font-weight: bold; color: var(--accent-color);">Double-Entry Debit and Credit Match Check</span>
-                </div>
                 <div class="report-table-container">
                     <table class="report-table" id="trialBalanceTable">
                         <thead>
                             <tr>
-                                <th>Account Particulars</th>
-                                <th>Group Name</th>
-                                <th class="text-right">Debit Balance (₹)</th>
-                                <th class="text-right">Credit Balance (₹)</th>
+                                <th>Account</th>
+                                <th class="text-right">Dr (₹)</th>
+                                <th class="text-right">Cr (₹)</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Dynamic Content -->
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- I. STOCK STATUS WINDOW -->
-        <div id="stockStatusWindow" class="busy-window" style="width: 750px;">
-            <div class="window-header"><span>Display - Closing Inventory Stock Status</span><span class="window-close" onclick="closeWindow('stockStatusWindow')">✖</span></div>
+        <!-- STOCK STATUS WINDOW -->
+        <div id="stockStatusWindow" class="busy-window" style="width: 750px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+            <div class="window-header"><span>Stock Status</span><span class="window-close" onclick="closeWindow('stockStatusWindow')">✖</span></div>
             <div class="window-body">
-                <div class="report-toolbar">
-                    <span style="font-weight: bold; color: var(--accent-color);">Live Inventory Valuations & Dynamic Quantity Controls</span>
-                </div>
                 <div class="report-table-container">
                     <table class="report-table" id="stockStatusTable">
                         <thead>
                             <tr>
-                                <th>Item Particulars</th>
+                                <th>Item</th>
                                 <th class="text-center">Unit</th>
-                                <th class="text-right">Inward Qty</th>
-                                <th class="text-right">Outward Qty</th>
-                                <th class="text-right">Closing Qty</th>
-                                <th class="text-right">Purchase Price</th>
-                                <th class="text-right">Valuation Value (₹)</th>
+                                <th class="text-right">In</th>
+                                <th class="text-right">Out</th>
+                                <th class="text-right">Qty</th>
+                                <th class="text-right">Price</th>
+                                <th class="text-right">Value (₹)</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Dynamic Stock Rows -->
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- J. LIST ALL VOUCHERS WINDOW -->
-        <div id="vchListWindow" class="busy-window" style="width: 750px;">
-            <div class="window-header"><span id="vchListHeader">Voucher Transaction List</span><span class="window-close" onclick="closeWindow('vchListWindow')">✖</span></div>
+        <!-- VOUCHER LIST WINDOW -->
+        <div id="vchListWindow" class="busy-window" style="width: 750px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+            <div class="window-header"><span id="vchListHeader">Voucher List</span><span class="window-close" onclick="closeWindow('vchListWindow')">✖</span></div>
             <div class="window-body">
                 <div class="report-table-container">
                     <table class="report-table" id="vchListTable">
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                <th>Voucher No</th>
+                                <th>No</th>
                                 <th>Particulars</th>
-                                <th>Reference/Narration</th>
-                                <th class="text-right">Net Amount</th>
-                                <th class="text-center" style="width: 100px;">Action</th>
+                                <th>Narration</th>
+                                <th class="text-right">Amount</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Dynamic table content -->
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
         </div>
-
-        <!-- K. VOUCHER CONFIGURATION WINDOW -->
-        <div id="voucherConfigWindow" class="busy-window" style="width: 500px;">
-            <div class="window-header"><span>Voucher Configuration</span><span class="window-close" onclick="closeWindow('voucherConfigWindow')">✖</span></div>
-            <div class="window-body">
-                <div class="form-grid" style="grid-template-columns: 1fr; gap: 12px;">
-                    <div class="form-field">
-                        <label>Enable Taxes in Sales</label>
-                        <select id="cfgEnableTaxSales">
-                            <option value="Y">Yes (CGST / SGST Auto Calc)</option>
-                            <option value="N">No (Direct Subtotal Mode)</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label>Enable Automatic Round-Off</label>
-                        <select id="cfgEnableRoundOff">
-                            <option value="Y">Yes (Round up/down to nearest Rupee)</option>
-                            <option value="N">No (Keep decimals as is)</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label>Default Voucher Narration</label>
-                        <input type="text" id="cfgDefaultNarration" value="Being transaction recorded as per books.">
-                    </div>
-                </div>
-                <div style="text-align: right; margin-top: 15px;">
-                    <button class="btn btn-secondary" onclick="closeWindow('voucherConfigWindow')">Cancel</button>
-                    <button class="btn" onclick="saveVoucherConfig()">Save Configurations</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- L. FEATURES & OPTIONS WINDOW -->
-        <div id="featuresOptionsWindow" class="busy-window" style="width: 550px;">
-            <div class="window-header"><span>Features & Options</span><span class="window-close" onclick="closeWindow('featuresOptionsWindow')">✖</span></div>
-            <div class="window-body">
-                <div class="form-grid" style="grid-template-columns: 1fr; gap: 12px;">
-                    <div class="form-field">
-                        <label>Inventory Valuation Method</label>
-                        <select id="cfgValuationMethod">
-                            <option value="FIFO">FIFO (First In First Out)</option>
-                            <option value="LIFO">LIFO (Last In First Out)</option>
-                            <option value="AVG">Weighted Average Cost</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label>Allow Negative Cash Balances</label>
-                        <select id="cfgNegativeCash">
-                            <option value="N">No (Strict cash validation checks)</option>
-                            <option value="Y">Yes (Allow accounting overdraft)</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label>Default Tax Slab for New Items</label>
-                        <select id="cfgDefaultTax">
-                            <option value="18">GST 18%</option>
-                            <option value="12">GST 12%</option>
-                            <option value="5">GST 5%</option>
-                        </select>
-                    </div>
-                </div>
-                <div style="text-align: right; margin-top: 15px;">
-                    <button class="btn btn-secondary" onclick="closeWindow('featuresOptionsWindow')">Cancel</button>
-                    <button class="btn" onclick="saveFeaturesOptions()">Apply Settings</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ADDITIONAL ADMINISTRATION WINDOWS -->
-        <!-- GST CONFIGURATION WINDOW -->
-        <div id="gstConfigWindow" class="busy-window" style="width: 500px;">
-            <div class="window-header"><span>GST / VAT Configuration Settings</span><span class="window-close" onclick="closeWindow('gstConfigWindow')">✖</span></div>
-            <div class="window-body">
-                <div class="form-grid" style="grid-template-columns: 1fr; gap: 12px;">
-                    <div class="form-field">
-                        <label>GST Registration Type</label>
-                        <select id="cfgGstRegType">
-                            <option value="Regular">Regular Registered Taxpayer</option>
-                            <option value="Composition">Composition Dealer Scheme</option>
-                            <option value="Unregistered">Unregistered</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label>State Jurisdiction Code</label>
-                        <input type="text" id="cfgGstStateCode" value="09 - Uttar Pradesh">
-                    </div>
-                    <div class="form-field">
-                        <label>Automated E-Invoicing Threshold</label>
-                        <select id="cfgGstEInvoicing">
-                            <option value="N">Disabled</option>
-                            <option value="Y">Enabled (Direct API Upload)</option>
-                        </select>
-                    </div>
-                </div>
-                <div style="text-align: right; margin-top: 15px;">
-                    <button class="btn btn-secondary" onclick="closeWindow('gstConfigWindow')">Quit</button>
-                    <button class="btn" onclick="showCustomToast('GST Parameter Configured!', '⚙️'); closeWindow('gstConfigWindow')">Apply GST Settings</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- HARDWARE CONFIGURATION WINDOW -->
-        <div id="hardwareConfigWindow" class="busy-window" style="width: 500px;">
-            <div class="window-header"><span>Hardware / Printer Configuration Settings</span><span class="window-close" onclick="closeWindow('hardwareConfigWindow')">✖</span></div>
-            <div class="window-body">
-                <div class="form-grid" style="grid-template-columns: 1fr; gap: 12px;">
-                    <div class="form-field">
-                        <label>Active Billing Invoice Printer</label>
-                        <select>
-                            <option>System Default Document Printer</option>
-                            <option>TVS Thermal Receipt 80mm Printer</option>
-                            <option>Epson Dot Matrix 80 Col Printer</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label>Barcode Scanner Interface Port</label>
-                        <input type="text" value="USB COM-3 Virtual Port" readonly>
-                    </div>
-                    <div class="form-field">
-                        <label>Print Preview Before Hard-Copy</label>
-                        <select>
-                            <option>Enabled (Highly Recommended)</option>
-                            <option>Direct Silent Printing</option>
-                        </select>
-                    </div>
-                </div>
-                <div style="text-align: right; margin-top: 15px;">
-                    <button class="btn btn-secondary" onclick="closeWindow('hardwareConfigWindow')">Quit</button>
-                    <button class="btn" onclick="showCustomToast('Printer Ports Mapping verified!', '🖨️'); closeWindow('hardwareConfigWindow')">Apply Hardware Configuration</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- USERS MANAGEMENT WINDOW -->
-        <div id="usersWindow" class="busy-window" style="width: 520px;">
-            <div class="window-header"><span>User Account Access Directory</span><span class="window-close" onclick="closeWindow('usersWindow')">✖</span></div>
-            <div class="window-body">
-                <div class="form-grid" style="grid-template-columns: 1fr; gap: 12px;">
-                    <div class="form-field">
-                        <label>User Account Role Profile</label>
-                        <select id="usrRole">
-                            <option value="Admin">Administrator (Full Rights)</option>
-                            <option value="Staff">Sub-User Account (Read/Write Voucher)</option>
-                            <option value="Operator">Data Entry Operator (Write Only)</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label>Sign In Login username</label>
-                        <input type="text" id="usrName" value="Admin" placeholder="Login account name">
-                    </div>
-                    <div class="form-field">
-                        <label>Password key code</label>
-                        <input type="password" value="••••" placeholder="Type password credential security">
-                    </div>
-                </div>
-                <div style="text-align: right; margin-top: 15px;">
-                    <button class="btn btn-secondary" onclick="closeWindow('usersWindow')">Cancel</button>
-                    <button class="btn" onclick="showCustomToast('User profiles permission table configured!', '🔑'); closeWindow('usersWindow')">Apply User Accounts Settings</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- M. PRINT / EMAIL / SMS UTILITIES WINDOW -->
-        <div id="printEmailSmsWindow" class="busy-window" style="width: 800px; max-height: 90vh;">
-            <div class="window-header"><span>Print / Email / SMS Dashboard</span><span class="window-close" onclick="closeWindow('printEmailSmsWindow')">✖</span></div>
-            <div class="window-body" style="display: flex; flex-direction: column; gap: 15px;">
-                <div class="report-toolbar" style="justify-content: space-between;">
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <label style="font-weight: bold;">Select Invoice/Bill: </label>
-                        <select id="printInvoiceSelect" onchange="renderInvoicePreview()" style="background:#0b0c10; color:white; padding:6px; border:1px solid #333; width: 250px; font-weight: bold;"></select>
-                    </div>
-                    <div style="display: flex; gap: 8px;">
-                        <button class="btn" onclick="triggerPrintInvoice()">🖨️ Print Document</button>
-                        <button class="btn btn-secondary" onclick="triggerEmailInvoice()">✉️ Send Email</button>
-                        <button class="btn btn-secondary" onclick="triggerSmsInvoice()">💬 Send SMS Alert</button>
-                    </div>
-                </div>
-                <div style="flex: 1; overflow-y: auto; background: #fff; padding: 15px; border-radius: 4px;" id="invoicePrintFrame">
-                    <!-- Dynamic Printable Invoice -->
-                </div>
-            </div>
-        </div>
-
-        <!-- N. HOUSEKEEPING & MAINTENANCE UTILITIES -->
-        <div id="housekeepingWindow" class="busy-window" style="width: 550px;">
-            <div class="window-header"><span>Housekeeping & Database Maintenance</span><span class="window-close" onclick="closeWindow('housekeepingWindow')">✖</span></div>
-            <div class="window-body" style="display: flex; flex-direction: column; gap: 20px;">
-                <p style="color: var(--text-muted); font-size: 12px; line-height: 1.5;">Ensure all active terminals are logged out before conducting batch processes or indexing data locally.</p>
-                
-                <!-- Action 1 -->
-                <div style="border: 1px solid var(--border-color); padding: 15px; background: rgba(255,255,255,0.02);">
-                    <h3 style="font-size: 14px; color: var(--accent-color); margin-bottom: 10px;">Re-index ERP Cache</h3>
-                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 15px;">Clears local temporary session logs and reorganizes master indexing indexes.</p>
-                    <button class="btn" onclick="startHousekeepingTask('Re-indexing database partitions...', 'Database Re-indexed successfully!')">Start Re-indexing</button>
-                </div>
-
-                <!-- Action 2 -->
-                <div style="border: 1px solid var(--border-color); padding: 15px; background: rgba(255,255,255,0.02);">
-                    <h3 style="font-size: 14px; color: var(--accent-color); margin-bottom: 10px;">Recalculate Ledger Run Balances</h3>
-                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 15px;">Scans full transaction records, rebuilding exact balance logs from ground-up matching double-entries.</p>
-                    <button class="btn" onclick="startHousekeepingTask('Scanning log and updating ledger sheets...', 'All accounts balance log audited successfully!')">Audit & Balance Recalculation</button>
-                </div>
-
-                <!-- Action 3 -->
-                <div style="border: 1px solid var(--border-color); padding: 15px; background: rgba(255,255,255,0.02);">
-                    <h3 style="font-size: 14px; color: var(--accent-color); margin-bottom: 10px;">Transaction Lock Date</h3>
-                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 10px;">Prevents backdated entries modifying database records before specified audit date.</p>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <input type="text" id="lockDateVal" value="31-03-2026" style="background:#0b0c10; border:1px solid #333; color: white; padding: 4px 10px; width: 150px;">
-                        <button class="btn btn-secondary" onclick="showCustomToast('Lock Date parameter registered!', '🔒')">Set Lock</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- O. HELP & KEYBOARD SHORTCUTS MANUAL -->
-        <div id="helpWindow" class="busy-window" style="width: 580px;">
-            <div class="window-header"><span>SS ERP - Help & System Guide</span><span class="window-close" onclick="closeWindow('helpWindow')">✖</span></div>
-            <div class="window-body" style="display: flex; flex-direction: column; gap: 15px;">
-                <h3 style="color: var(--accent-color); font-size: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;">Active Keyboard Shortcuts Directory</h3>
-                <div class="report-table-container" style="max-height: 250px;">
-                    <table class="report-table">
-                        <thead>
-                            <tr>
-                                <th>Keys</th>
-                                <th>System Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><strong>F2</strong></td><td>Save/Commit active Voucher or Master profile</td></tr>
-                            <tr><td><strong>F3</strong></td><td>Add/Create new Master ledger or stock item</td></tr>
-                            <tr><td><strong>F4</strong></td><td>Contra Entry form shortcut</td></tr>
-                            <tr><td><strong>F5</strong></td><td>Payment voucher shortcut</td></tr>
-                            <tr><td><strong>F6</strong></td><td>Receipt voucher shortcut</td></tr>
-                            <tr><td><strong>Alt + S</strong></td><td>Create Sales billing invoice</td></tr>
-                            <tr><td><strong>Alt + P</strong></td><td>Purchase entry log screen</td></tr>
-                            <tr><td><strong>Alt + L</strong></td><td>Query / Display Account ledger statements</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div style="background: rgba(255,255,255,0.02); padding: 15px; border: 1px solid var(--border-color); margin-top: 10px;">
-                    <h4 style="color: var(--accent-color); margin-bottom: 5px;">Technical Helpline Support</h4>
-                    <p style="font-size: 11px; line-height: 1.4; color: var(--text-muted);">Please call <strong>+91-8171904861</strong> for immediate queries or updates regarding license keys, GST summaries or offline backups.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- P. CUSTOM DIALOG CONFIRM WINDOW (To prevent standard Alert/Confirms) -->
-        <div id="confirmDialogWindow" class="busy-window" style="width: 450px; z-index: 6000;">
-            <div class="window-header"><span>System Confirmation</span><span class="window-close" onclick="closeConfirmDialog(false)">✖</span></div>
-            <div class="window-body">
-                <p id="confirmDialogText" style="font-size: 13px; line-height: 1.5; margin-bottom: 20px;"></p>
-                <div style="text-align: right;">
-                    <button class="btn btn-secondary" onclick="closeConfirmDialog(false)">No</button>
-                    <button class="btn" id="confirmDialogYesBtn" style="background-color: var(--danger-color); color: white;" onclick="closeConfirmDialog(true)">Yes, Proceed</button>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <!-- 4. PATH BAR -->
-    <div class="path-bar" id="pathBar">
-        Company --&gt; Close Company
-    </div>
-
-    <!-- 5. STATUS BAR -->
+    <div class="path-bar" id="pathBar">Company &gt; Dashboard</div>
     <div class="status-bar">
-        <div class="status-section" style="padding: 2px 10px;">
-            <div class="status-logo" id="statusLogo">SS<br><span style="font-size: 8px; font-weight: normal; color: white;">ERP WEB</span></div>
-        </div>
-        
-        <div class="status-section" style="width: 180px; align-items: center; justify-content: center;">
-            <div class="status-val" id="statusCompanyName" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 170px;">SS ENTERPRISES</div>
-            <div style="font-size: 10px;">(Comp0003)</div>
-        </div>
-        
-        <div class="status-section" style="width: 220px;">
-            <div class="status-row"><span class="status-label">F.Y.</span> : <span class="status-val">2026-27</span></div>
-            <div class="status-row"><span class="status-label">GSTIN</span> : <span class="status-val">09ADWPJ8639H1ZP</span></div>
-        </div>
-        
-        <div class="status-section" style="width: 180px;">
-            <div class="status-row"><span class="status-label">User</span> : <span class="status-val">Admin</span></div>
-            <div class="status-row"><span class="status-label">State</span> : <span class="status-val">Uttar Pradesh</span></div>
-        </div>
-        
-        <div class="status-section" style="width: 250px;">
-            <div class="status-row"><span class="status-label" style="width: 80px;">Listening Port</span> : <span class="status-val">981</span></div>
-            <div class="status-row"><span class="status-label" style="width: 80px;">BLS Valid Upto</span> : <span class="status-val">30-09-2027 (Active)</span></div>
-        </div>
-        
         <div class="status-section">
-            <div class="status-val" id="currentDate">Sunday</div>
-            <div id="currentDateTime">31-05-2026</div>
+            <div class="status-row">
+                <span class="status-label">Company:</span>
+                <span class="status-val" id="statusCompany">-</span>
+            </div>
+        </div>
+        <div class="status-section">
+            <div class="status-row">
+                <span class="status-label">User:</span>
+                <span class="status-val">Admin</span>
+            </div>
+        </div>
+        <div class="status-section">
+            <div class="status-logo">SS</div>
         </div>
     </div>
 
-    <!-- CUSTOM TOAST MESSAGE POPUP -->
-    <div class="toast-box" id="globalToast">
-        <span id="toastIcon">💡</span> <span id="toastMessage">Notification saved!</span>
-    </div>
+    <div class="toast-box" id="toastBox"></div>
 
     <script>
-        // Global ERP database matching BUSY structure, persists on localStorage
-        let accounts = JSON.parse(localStorage.getItem('busy_accounts')) || [
-            { name: 'Cash Account', group: 'Cash Accounts', balance: 150000.00 },
-            { name: 'State Bank of India', group: 'Bank Accounts', balance: 500000.00 },
-            { name: 'Sales Account', group: 'Sales Accounts', balance: 0.00 },
-            { name: 'Purchase Account', group: 'Purchase Accounts', balance: 0.00 },
-            { name: 'Sanjeev & Co', group: 'Sundry Debtors', balance: 0.00 },
-            { name: 'Aligarh Machine Tools', group: 'Sundry Creditors', balance: 0.00 },
-            { name: 'CGST Output Account', group: 'Duties & Taxes', balance: 0.00 },
-            { name: 'SGST Output Account', group: 'Duties & Taxes', balance: 0.00 },
-            { name: 'IGST Output Account', group: 'Duties & Taxes', balance: 0.00 },
-            { name: 'CGST Input Account', group: 'Duties & Taxes', balance: 0.00 },
-            { name: 'SGST Input Account', group: 'Duties & Taxes', balance: 0.00 },
-            { name: 'IGST Input Account', group: 'Duties & Taxes', balance: 0.00 }
-        ];
-
-        let items = JSON.parse(localStorage.getItem('busy_items')) || [
-            { name: 'Lenovo Thinkpad T14 Gen 3', unit: 'PCS', tax: 18, salePrice: 45000.00, purPrice: 38000.00, opStock: 10 },
-            { name: 'Logitech Wireless Mouse M235', unit: 'PCS', tax: 18, salePrice: 850.00, purPrice: 600.00, opStock: 50 },
-            { name: 'Dell 24 Inch IPS Monitor', unit: 'PCS', tax: 18, salePrice: 12500.00, purPrice: 9500.00, opStock: 8 }
-        ];
-
-        let vouchers = JSON.parse(localStorage.getItem('busy_vouchers_v2')) || [];
-
-        // BUSY Configurations & Settings Storage
-        let voucherConfig = JSON.parse(localStorage.getItem('busy_vch_config')) || {
-            enableTaxSales: 'Y',
-            enableRoundOff: 'Y',
-            defaultNarration: 'Being transaction recorded as per books.'
-        };
-
-        let featuresOptions = JSON.parse(localStorage.getItem('busy_features_options')) || {
-            valuationMethod: 'FIFO',
-            allowNegativeCash: 'N',
-            defaultTax: '18'
-        };
-
-        // State control for modification/editing mode
-        let currentModifyIndex = -1; 
-        let oldModifyVoucher = null; 
-
-        function saveDatabase() {
-            localStorage.setItem('busy_accounts', JSON.stringify(accounts));
-            localStorage.setItem('busy_items', JSON.stringify(items));
-            localStorage.setItem('busy_vouchers_v2', JSON.stringify(vouchers));
-            localStorage.setItem('busy_vch_config', JSON.stringify(voucherConfig));
-            localStorage.setItem('busy_features_options', JSON.stringify(featuresOptions));
-        }
-
-        // CUSTOM BEAUTIFUL TOAST NOTIFICATION 
-        function showCustomToast(msg, icon = '💡') {
-            const toast = document.getElementById('globalToast');
-            document.getElementById('toastIcon').innerText = icon;
-            document.getElementById('toastMessage').innerText = msg;
-            toast.style.display = 'flex';
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 3000);
-        }
-
-        // Custom Confirmation dialog state
-        let confirmPromiseResolver = null;
-        function showCustomConfirm(msg) {
-            document.getElementById('confirmDialogText').innerText = msg;
-            openWindow('confirmDialogWindow');
-            return new Promise((resolve) => {
-                confirmPromiseResolver = resolve;
-            });
-        }
-        function closeConfirmDialog(approved) {
-            document.getElementById('confirmDialogWindow').style.display = 'none';
-            if (confirmPromiseResolver) {
-                confirmPromiseResolver(approved);
-                confirmPromiseResolver = null;
+        // ==================== DATA MANAGEMENT ====================
+        let ERPData = {
+            company: null,
+            accounts: [],
+            items: [],
+            vouchers: {
+                Sales: [],
+                Purchase: [],
+                Payment: [],
+                Receipt: []
             }
-        }
+        };
 
-        // Live Real-Time Date & Time Clock
-        function updateTime() {
-            const now = new Date();
-            const options = { weekday: 'long' };
-            document.getElementById('currentDate').innerText = new Intl.DateTimeFormat('en-US', options).format(now);
-            document.getElementById('currentDateTime').innerText = now.toLocaleDateString('en-GB').replace(/\//g, '-');
-        }
-        setInterval(updateTime, 60000);
-        updateTime();
-
-        // Modal Popups manager
-        function openWindow(id) {
-            document.querySelectorAll('.busy-window').forEach(w => {
-                if(w.id !== 'confirmDialogWindow') w.style.display = 'none';
-            });
-            document.getElementById(id).style.display = 'flex';
-            
-            // Set Path bar dynamically
-            let path = "Company";
-            if (id === "voucherWindow") path = `Transactions --> ${activeVoucherType} Voucher`;
-            else if (id === "mastersWindow") path = "Administration --> Masters --> Add";
-            else if (id === "cashBankWindow") path = `Transactions --> ${activeCashBankType} Voucher`;
-            else if (id === "dayBookWindow") path = "Display --> Day Book Log";
-            else if (id === "ledgerReportWindow") path = "Display --> Account Ledger Books";
-            else if (id === "trialBalanceWindow") path = "Display --> Trial Balance";
-            else if (id === "stockStatusWindow") path = "Display --> Closing Inventory Stock";
-            else if (id === "voucherConfigWindow") path = "Administration --> Configuration --> Voucher Settings";
-            else if (id === "featuresOptionsWindow") path = "Administration --> Configuration --> Features";
-            else if (id === "vchListWindow") path = "Transactions --> List Directory";
-            else if (id === "printEmailSmsWindow") path = "Print/Email/SMS --> Invoice Manager";
-            else if (id === "housekeepingWindow") path = "House-Keeping --> Database Maintenance";
-            else if (id === "helpWindow") path = "Help --> Manual & Keyboard shortcuts";
-            document.getElementById('pathBar').innerText = path;
-        }
-        
-        function closeWindow(id) {
-            document.getElementById(id).style.display = 'none';
-            document.getElementById('pathBar').innerText = 'Company --> Close Company';
-        }
-
-        // Dynamic checks for saved companies
-        function checkFirstTimeUser() {
-            const savedCompany = localStorage.getItem("busy_company_name");
-            if (!savedCompany) {
-                document.getElementById('mainTitleBar').innerText = "SS ENTERPRISES - [No Company Open]";
-                document.getElementById('statusCompanyName').innerText = "No Company Open";
-                document.getElementById('workspaceWatermark').innerText = "SS ENTERPRISES (NO COMPANY)";
-                document.getElementById('statusLogo').innerHTML = `SS<br><span style="font-size: 8px; font-weight: normal; color: white;">ERP WEB</span>`;
-                
-                // Hide all menus except Company menu when closed
-                document.querySelectorAll('.company-dependent-menu').forEach(el => el.style.display = 'none');
-                
-                openWindow('createCompanyWindow'); 
+        function initializeERP() {
+            const stored = localStorage.getItem('ERPData');
+            if (stored) {
+                ERPData = JSON.parse(stored);
+                disableCompanyMenus(false);
+                updateUI();
             } else {
-                updateCompanyDisplay(savedCompany);
-                loadConfigurationsIntoUI();
+                disableCompanyMenus(true);
             }
         }
 
+        function saveERP() {
+            localStorage.setItem('ERPData', JSON.stringify(ERPData));
+        }
+
+        // ==================== COMPANY MANAGEMENT ====================
         function saveNewCompany() {
-            const compName = document.getElementById('compName').value.trim();
-            if(!compName) {
-                document.getElementById('compNameErr').style.display = 'inline';
-                return; 
+            const name = document.getElementById('compName').value.trim();
+            if (!name) {
+                showCustomToast('Enter company name!', '⚠️');
+                return;
             }
-            document.getElementById('compNameErr').style.display = 'none';
-            
-            localStorage.setItem("busy_company_name", compName);
-            updateCompanyDisplay(compName);
-            closeWindow('createCompanyWindow');
-            document.getElementById('pathBar').innerText = `Company --> Open Company --> ${compName}`;
-            showCustomToast("Company profile saved successfully!", "✅");
-        }
 
-        function updateCompanyDisplay(name) {
-            const upperName = name.toUpperCase();
-            document.getElementById('mainTitleBar').innerText = `${upperName} | F.Y. (2026-27) | SUPPORT : 8171904861`;
-            document.getElementById('statusCompanyName').innerText = upperName;
-            document.getElementById('workspaceWatermark').innerText = `${upperName} (F.Y. 2026-27)`;
-            
-            let initials = upperName.substring(0, 2).replace(/\s/g, '');
-            if(initials.length < 2) initials = upperName.substring(0, 2); 
-            document.getElementById('statusLogo').innerHTML = `${initials}<br><span style="font-size: 8px; font-weight: normal; color: white;">ERP WEB</span>`;
-            
-            // Show all menus when company is active
-            document.querySelectorAll('.company-dependent-menu').forEach(el => el.style.display = '');
+            ERPData.company = {
+                name: name,
+                country: document.getElementById('compCountry').value,
+                state: document.getElementById('compState').value,
+                address: document.getElementById('compAddress').value,
+                gstin: document.getElementById('compGSTIN').value,
+                fy: '2026-27',
+                createdDate: new Date().toISOString()
+            };
+
+            saveERP();
+            disableCompanyMenus(false);
+            closeWindow('createCompanyWindow');
+            showCustomToast(`Company '${name}' created successfully!`, '✅');
+            updateUI();
         }
 
         function closeCompany() {
-            localStorage.removeItem("busy_company_name");
-            document.querySelectorAll('.busy-window').forEach(w => w.style.display = 'none');
-            checkFirstTimeUser();
-            document.getElementById('pathBar').innerText = `Company --> Close Company`;
-            showCustomToast("Company closed. Resetting session.", "🚪");
+            if (confirm('Close company? Unsaved data will be lost.')) {
+                ERPData = { company: null, accounts: [], items: [], vouchers: { Sales: [], Purchase: [], Payment: [], Receipt: [] } };
+                localStorage.removeItem('ERPData');
+                disableCompanyMenus(true);
+                closeAllWindows();
+                document.getElementById('statusCompany').textContent = '-';
+                showCustomToast('Company closed', '👋');
+            }
         }
 
-        // ================= ADMINISTRATION & CONFIGURATION CONTROLS =================
-        function loadConfigurationsIntoUI() {
-            document.getElementById('cfgEnableTaxSales').value = voucherConfig.enableTaxSales;
-            document.getElementById('cfgEnableRoundOff').value = voucherConfig.enableRoundOff;
-            document.getElementById('cfgDefaultNarration').value = voucherConfig.defaultNarration;
-
-            document.getElementById('cfgValuationMethod').value = featuresOptions.valuationMethod;
-            document.getElementById('cfgNegativeCash').value = featuresOptions.allowNegativeCash;
-            document.getElementById('cfgDefaultTax').value = featuresOptions.defaultTax;
+        function disableCompanyMenus(disable) {
+            document.querySelectorAll('.company-dependent-menu').forEach(menu => {
+                if (disable) menu.classList.add('disabled');
+                else menu.classList.remove('disabled');
+            });
         }
 
-        function saveVoucherConfig() {
-            voucherConfig.enableTaxSales = document.getElementById('cfgEnableTaxSales').value;
-            voucherConfig.enableRoundOff = document.getElementById('cfgEnableRoundOff').value;
-            voucherConfig.defaultNarration = document.getElementById('cfgDefaultNarration').value.trim();
-            
-            saveDatabase();
-            showCustomToast("Voucher configurations updated successfully!", "⚙️");
-            closeWindow('voucherConfigWindow');
-        }
-
-        function saveFeaturesOptions() {
-            featuresOptions.valuationMethod = document.getElementById('cfgValuationMethod').value;
-            featuresOptions.allowNegativeCash = document.getElementById('cfgNegativeCash').value;
-            featuresOptions.defaultTax = document.getElementById('cfgDefaultTax').value;
-            
-            saveDatabase();
-            showCustomToast("System feature options applied successfully!", "⚙️");
-            closeWindow('featuresOptionsWindow');
-        }
-
-        // ================= MASTERS CONTROLS & DYNAMIC POPUPS =================
+        // ==================== MASTERS MANAGEMENT ====================
         function openAddMaster(type) {
-            openWindow('mastersWindow');
             document.getElementById('mType').value = type;
             toggleMasterFields();
-            document.getElementById('mName').value = "";
-            document.getElementById('mName').focus();
-
-            // Set default tax inside master UI dynamically from configurations
-            document.getElementById('mItemTax').value = featuresOptions.defaultTax;
-        }
-
-        // Support opening extra administration sub-master categories
-        function openAddExtraMaster(category) {
             openWindow('mastersWindow');
-            document.getElementById('mType').value = category;
-            toggleMasterFields();
-            document.getElementById('mName').value = "";
-            document.getElementById('mName').placeholder = `Enter ${category} Name`;
-            document.getElementById('mName').focus();
         }
 
         function toggleMasterFields() {
             const type = document.getElementById('mType').value;
-            if(type === "Account") {
-                document.getElementById('accountFields').style.display = 'block';
-                document.getElementById('itemFields').style.display = 'none';
-                document.getElementById('extraMasterFields').style.display = 'none';
-                document.getElementById('mastersWindowHeaderTitle').innerText = "Add Account Master (Ledger)";
-            } else if(type === "Item") {
-                document.getElementById('accountFields').style.display = 'none';
-                document.getElementById('itemFields').style.display = 'block';
-                document.getElementById('extraMasterFields').style.display = 'none';
-                document.getElementById('mastersWindowHeaderTitle').innerText = "Add Stock Item Master";
-            } else {
-                document.getElementById('accountFields').style.display = 'none';
-                document.getElementById('itemFields').style.display = 'none';
-                document.getElementById('extraMasterFields').style.display = 'block';
-                document.getElementById('mExtraDetails').placeholder = `Parent hierarchy for ${type}`;
-                document.getElementById('mastersWindowHeaderTitle').innerText = `Add ${type} Master`;
-            }
+            document.getElementById('accountFields').style.display = type === 'Account' ? 'block' : 'none';
+            document.getElementById('itemFields').style.display = type === 'Item' ? 'block' : 'none';
         }
-
-        // Added support for Account Group, Item Group, Bill Sundry, Material Centre, and Unit databases
-        let accountGroups = ["Sundry Debtors", "Sundry Creditors", "Bank Accounts", "Cash Accounts", "Capital Account"];
-        let itemGroups = ["General Stock"];
-        let billSundries = ["CGST", "SGST", "IGST", "Round Off"];
-        let materialCentres = ["Main Store"];
-        let units = ["PCS", "BOX", "KGS"];
 
         function saveMasterEntry() {
             const type = document.getElementById('mType').value;
             const name = document.getElementById('mName').value.trim();
 
-            if(!name) {
-                showCustomToast("Master Name is required!", "❌");
+            if (!name) {
+                showCustomToast('Enter master name!', '⚠️');
                 return;
             }
 
-            // Prevent duplicate entries & dynamic category saves
-            if(type === 'Account') {
-                if(accounts.some(a => a.name.toLowerCase() === name.toLowerCase())) {
-                    showCustomToast("Account with this name already exists!", "⚠️");
-                    return;
-                }
-                const group = document.getElementById('mAccountGroup').value;
-                const bal = parseFloat(document.getElementById('mAccountBal').value) || 0;
-                accounts.push({ name, group, balance: bal });
-                showCustomToast(`Account '${name}' created successfully!`, "📂");
-            } else if(type === 'Item') {
-                if(items.some(i => i.name.toLowerCase() === name.toLowerCase())) {
-                    showCustomToast("Item with this name already exists!", "⚠️");
-                    return;
-                }
-                const unit = document.getElementById('mItemUnit').value;
-                const tax = parseInt(document.getElementById('mItemTax').value);
-                const sPrice = parseFloat(document.getElementById('mItemSalePrice').value) || 0;
-                const pPrice = parseFloat(document.getElementById('mItemPurPrice').value) || 0;
-                const qty = parseInt(document.getElementById('mItemOpQty').value) || 0;
-                
-                items.push({ name, unit, tax, salePrice: sPrice, purPrice: pPrice, opStock: qty });
-                showCustomToast(`Stock Item '${name}' created successfully!`, "📦");
-            } else {
-                // Dynamic sub-masters databases save
-                if(type === 'Account Group') {
-                    if(!accountGroups.includes(name)) accountGroups.push(name);
-                } else if(type === 'Item Group') {
-                    if(!itemGroups.includes(name)) itemGroups.push(name);
-                } else if(type === 'Bill Sundry') {
-                    if(!billSundries.includes(name)) billSundries.push(name);
-                } else if(type === 'Material Centre') {
-                    if(!materialCentres.includes(name)) materialCentres.push(name);
-                } else if(type === 'Unit') {
-                    if(!units.includes(name)) units.push(name);
-                }
-                showCustomToast(`${type} Master '${name}' saved successfully!`, "📁");
+            if (type === 'Account') {
+                const account = {
+                    id: 'ACC_' + Date.now(),
+                    name: name,
+                    group: document.getElementById('mAccountGroup').value,
+                    openingBalance: parseFloat(document.getElementById('mAccountBal').value || 0),
+                    balance: parseFloat(document.getElementById('mAccountBal').value || 0)
+                };
+                ERPData.accounts.push(account);
+            } else if (type === 'Item') {
+                const item = {
+                    id: 'ITEM_' + Date.now(),
+                    name: name,
+                    unit: document.getElementById('mItemUnit').value,
+                    tax: parseFloat(document.getElementById('mItemTax').value),
+                    salePrice: parseFloat(document.getElementById('mItemSalePrice').value || 0),
+                    quantity: 0
+                };
+                ERPData.items.push(item);
             }
 
-            saveDatabase();
+            saveERP();
             closeWindow('mastersWindow');
+            updatePartySelects();
+            updateItemSelects();
+            showCustomToast(`${type} saved successfully!`, '✅');
+            document.getElementById('mName').value = '';
         }
 
-        function openMasterList(customFilter = 'ALL') {
-            openWindow('masterListWindow');
-            document.getElementById('masterListFilter').value = customFilter === 'ALL' ? 'ALL' : (customFilter === 'Account' ? 'Account' : 'Item');
+        function openMasterList(type) {
+            document.getElementById('masterListFilter').value = type;
             renderMasterListTable();
+            openWindow('masterListWindow');
         }
 
         function renderMasterListTable() {
             const filter = document.getElementById('masterListFilter').value;
-            const tbody = document.getElementById('masterListTable').getElementsByTagName('tbody')[0];
-            tbody.innerHTML = "";
+            const tbody = document.querySelector('#masterListTable tbody');
+            tbody.innerHTML = '';
 
-            if(filter === "ALL" || filter === "Account") {
-                accounts.forEach(acc => {
-                    const row = tbody.insertRow();
-                    row.innerHTML = `
-                        <td style="font-weight: bold;">${acc.name}</td>
-                        <td style="color: #4ade80;">Account</td>
-                        <td style="color: var(--text-muted);">${acc.group}</td>
-                        <td class="text-right" style="font-weight: bold;">₹ ${acc.balance.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
-                    `;
+            if (filter === 'Account' || filter === 'ALL') {
+                ERPData.accounts.forEach(acc => {
+                    tbody.innerHTML += `<tr>
+                        <td>${acc.name}</td>
+                        <td>Account</td>
+                        <td>${acc.group}</td>
+                        <td class="text-right">₹ ${acc.balance.toFixed(2)}</td>
+                    </tr>`;
                 });
             }
 
-            if(filter === "ALL" || filter === "Item") {
-                items.forEach(it => {
-                    const row = tbody.insertRow();
-                    row.innerHTML = `
-                        <td style="font-weight: bold; color: var(--accent-color);">${it.name}</td>
-                        <td style="color: #f39c12;">Stock Item</td>
-                        <td style="color: var(--text-muted);">${it.unit} | GST ${it.tax}%</td>
-                        <td class="text-right" style="font-weight: bold;">S: ₹ ${it.salePrice} / P: ₹ ${it.purPrice}</td>
-                    `;
-                });
-            }
-
-            // Display dynamic administrative sub-masters if requested
-            if(filter === "ALL") {
-                accountGroups.forEach(grp => {
-                    const row = tbody.insertRow();
-                    row.innerHTML = `<td>${grp}</td><td style="color:#3498db;">Account Group</td><td style="color:var(--text-muted);">Administrative Hierarchy</td><td class="text-right">-</td>`;
-                });
-                itemGroups.forEach(grp => {
-                    const row = tbody.insertRow();
-                    row.innerHTML = `<td>${grp}</td><td style="color:#e67e22;">Item Group</td><td style="color:var(--text-muted);">Material Hierarchy</td><td class="text-right">-</td>`;
-                });
-                billSundries.forEach(sun => {
-                    const row = tbody.insertRow();
-                    row.innerHTML = `<td>${sun}</td><td style="color:#9b59b6;">Bill Sundry</td><td style="color:var(--text-muted);">Tax/Billing Charge</td><td class="text-right">-</td>`;
-                });
-                materialCentres.forEach(cen => {
-                    const row = tbody.insertRow();
-                    row.innerHTML = `<td>${cen}</td><td style="color:#1abc9c;">Material Centre</td><td style="color:var(--text-muted);">Warehouse Location</td><td class="text-right">-</td>`;
-                });
-                units.forEach(u => {
-                    const row = tbody.insertRow();
-                    row.innerHTML = `<td>${u}</td><td style="color:#f1c40f;">Unit Master</td><td style="color:var(--text-muted);">UOM Base</td><td class="text-right">-</td>`;
+            if (filter === 'Item' || filter === 'ALL') {
+                ERPData.items.forEach(item => {
+                    tbody.innerHTML += `<tr>
+                        <td>${item.name}</td>
+                        <td>Item</td>
+                        <td>${item.unit} @ ₹${item.salePrice}</td>
+                        <td class="text-right">${item.quantity}</td>
+                    </tr>`;
                 });
             }
         }
 
-        // ================= REAL ERP DOUBLE-ENTRY TRANSACTION CODE =================
-        let activeVoucherType = 'Sales';
-
-        function openVoucherWindow(type, action = 'Add', existingVch = null) {
-            activeVoucherType = type;
+        // ==================== VOUCHER MANAGEMENT ====================
+        function openVoucherWindow(type) {
+            document.getElementById('vchWindowHeader').textContent = type + ' - Add';
+            document.getElementById('vchNo').value = getNextVoucherNo(type);
+            clearVoucherData();
+            updatePartySelects();
             openWindow('voucherWindow');
-            
-            // Set Titles dynamically based on Vch Type & Action
-            document.getElementById('vchWindowHeader').innerText = `${type} Voucher - ${action}`;
-            document.getElementById('vchTaxType').value = "LGST18";
-            
-            // Set Next Voucher Number automatically
-            if (action === 'Add') {
-                currentModifyIndex = -1;
-                oldModifyVoucher = null;
-                const filtered = vouchers.filter(v => v.type === type);
-                document.getElementById('vchNo').value = filtered.length + 101;
-                document.getElementById('vchNarration').value = voucherConfig.defaultNarration;
-                document.getElementById('vchDate').value = "31-05-2026";
-            } else if (action === 'Modify' && existingVch) {
-                // Populate existing voucher details to form
-                document.getElementById('vchNo').value = existingVch.vchNo;
-                document.getElementById('vchDate').value = existingVch.date;
-                document.getElementById('vchNarration').value = existingVch.narration;
-                
-                // Track indexes for save modification updates
-                currentModifyIndex = vouchers.indexOf(existingVch);
-                oldModifyVoucher = JSON.parse(JSON.stringify(existingVch)); // Deep copy to adjust balances later
-            }
-            
-            // Populate Party Dropdown intelligently
-            const partySelect = document.getElementById('vchParty');
-            partySelect.innerHTML = "";
-            accounts.forEach(acc => {
-                if(acc.group === 'Sundry Debtors' || acc.group === 'Sundry Creditors' || acc.group === 'Cash Accounts' || acc.group === 'Bank Accounts') {
-                    const opt = document.createElement('option');
-                    opt.value = acc.name;
-                    opt.innerText = `${acc.name} (${acc.group})`;
-                    partySelect.appendChild(opt);
-                }
-            });
-
-            if (action === 'Modify' && existingVch) {
-                partySelect.value = existingVch.party;
-            }
-
-            // Initialize Grid with items
-            const tbody = document.getElementById('vchItemGridBody');
-            tbody.innerHTML = "";
-            
-            const rowsCount = (action === 'Modify' && existingVch) ? Math.max(existingVch.items.length, 5) : 5;
-            for(let i = 1; i <= rowsCount; i++) {
-                const itemData = (action === 'Modify' && existingVch && existingVch.items[i-1]) ? existingVch.items[i-1] : null;
-                addRowToVchItemGrid(i, itemData);
-            }
-            calculateVoucherTotals();
+            currentVoucherType = type;
         }
 
-        // Dynamic auto-calculating voucher rows with modify support
-        function addRowToVchItemGrid(sno, itemData = null) {
-            const tbody = document.getElementById('vchItemGridBody');
-            const row = tbody.insertRow();
-            
-            // Build dynamic dropdown option of real items present inside inventory database
-            let itemOptions = `<option value="">-- Select Item --</option>`;
-            items.forEach(it => {
-                const selected = (itemData && itemData.itemName === it.name) ? 'selected' : '';
-                itemOptions += `<option value="${it.name}" ${selected}>${it.name}</option>`;
-            });
+        let currentVoucherType = 'Sales';
 
-            const qty = itemData ? itemData.qty : 0;
-            const unit = itemData ? items.find(it => it.name === itemData.itemName)?.unit || 'PCS' : 'PCS';
-            const price = itemData ? itemData.price : 0.00;
-            const amount = itemData ? itemData.amount : 0.00;
+        function getNextVoucherNo(type) {
+            const count = ERPData.vouchers[type].length;
+            return (100 + count + 1).toString();
+        }
 
-            row.innerHTML = `
-                <td class="text-center" style="color: var(--text-muted); font-weight: bold; padding: 4px;">${sno}</td>
-                <td><select class="table-input-item" onchange="vchItemDropdownChanged(this)">${itemOptions}</select></td>
-                <td><input type="number" class="text-right table-input-qty" value="${qty}" oninput="calculateVoucherTotals()"></td>
-                <td><input type="text" class="text-center table-input-unit" value="${unit}" readonly></td>
-                <td><input type="number" class="text-right table-input-price" value="${price.toFixed(2)}" oninput="calculateVoucherTotals()"></td>
-                <td><input type="number" class="text-right table-input-amount" value="${amount.toFixed(2)}" readonly style="font-weight: bold;"></td>
+        function clearVoucherData() {
+            document.getElementById('vchDate').value = new Date().toLocaleDateString('en-IN');
+            document.getElementById('vchParty').value = '';
+            document.getElementById('vchNarration').value = '';
+            document.getElementById('vchItemGridBody').innerHTML = `
+                <tr>
+                    <td class="text-center">1</td>
+                    <td><select onchange="calculateVoucherTotals()" style="width:100%;"><option>Select Item</option></select></td>
+                    <td><input type="number" onchange="calculateVoucherTotals()" value="0"></td>
+                    <td class="text-center">PCS</td>
+                    <td><input type="number" onchange="calculateVoucherTotals()" value="0" class="text-right"></td>
+                    <td><input type="text" readonly value="0.00" class="text-right"></td>
+                </tr>
             `;
-        }
-
-        function vchItemDropdownChanged(selectEl) {
-            const row = selectEl.closest('tr');
-            const itemName = selectEl.value;
-            const itemObj = items.find(i => i.name === itemName);
-            
-            if(itemObj) {
-                row.querySelector('.table-input-unit').value = itemObj.unit;
-                row.querySelector('.table-input-price').value = (activeVoucherType.includes('Sales')) ? itemObj.salePrice : itemObj.purPrice;
-                row.querySelector('.table-input-qty').value = 1;
-            } else {
-                row.querySelector('.table-input-unit').value = "PCS";
-                row.querySelector('.table-input-price').value = "0.00";
-                row.querySelector('.table-input-qty').value = 0;
-            }
             calculateVoucherTotals();
         }
 
-        // Intelligent Live Taxes & Sundries Calculations
+        function updatePartySelects() {
+            const selects = document.querySelectorAll('#vchParty, #cbAccount1, #cbAccount2');
+            selects.forEach(sel => {
+                const current = sel.value;
+                sel.innerHTML = '<option value="">Select...</option>';
+                ERPData.accounts.forEach(acc => {
+                    sel.innerHTML += `<option value="${acc.id}">${acc.name}</option>`;
+                });
+                sel.value = current;
+            });
+            document.querySelectorAll('#ledgerReportSelectAccount').forEach(sel => {
+                sel.innerHTML = '';
+                ERPData.accounts.forEach(acc => {
+                    sel.innerHTML += `<option value="${acc.id}">${acc.name}</option>`;
+                });
+            });
+        }
+
+        function updateItemSelects() {
+            const selects = document.querySelectorAll('#vchItemGridBody select');
+            selects.forEach(sel => {
+                sel.innerHTML = '<option value="">Select Item</option>';
+                ERPData.items.forEach(item => {
+                    sel.innerHTML += `<option value="${item.id}" data-price="${item.salePrice}">${item.name}</option>`;
+                });
+            });
+        }
+
         function calculateVoucherTotals() {
-            const tbody = document.getElementById('vchItemGridBody');
-            const rows = tbody.getElementsByTagName('tr');
-            let subtotal = 0;
+            const rows = document.querySelectorAll('#vchItemGridBody tr');
+            let total = 0;
 
-            for(let i = 0; i < rows.length; i++) {
-                const qty = parseFloat(rows[i].querySelector('.table-input-qty').value) || 0;
-                const price = parseFloat(rows[i].querySelector('.table-input-price').value) || 0;
-                const amt = qty * price;
-                
-                rows[i].querySelector('.table-input-amount').value = amt.toFixed(2);
-                subtotal += amt;
-            }
+            rows.forEach(row => {
+                const qty = parseFloat(row.cells[2].querySelector('input').value) || 0;
+                const price = parseFloat(row.cells[4].querySelector('input').value) || 0;
+                const amount = qty * price;
+                row.cells[5].querySelector('input').value = amount.toFixed(2);
+                total += amount;
+            });
 
-            // Check if taxes are enabled in configuration settings
-            const isTaxEnabled = (activeVoucherType.includes('Sales')) ? (voucherConfig.enableTaxSales === 'Y') : true;
             const taxType = document.getElementById('vchTaxType').value;
-            let cgst = 0, sgst = 0, igst = 0;
+            let tax = 0, cgst = 0, sgst = 0;
 
-            if (isTaxEnabled) {
-                if(taxType === 'LGST18') {
-                    cgst = subtotal * 0.09;
-                    sgst = subtotal * 0.09;
-                    document.getElementById('sundryName1').value = "CGST";
-                    document.getElementById('sundryRate1').value = "9%";
-                    document.getElementById('sundryName2').value = "SGST";
-                    document.getElementById('sundryRate2').value = "9%";
-                } else if(taxType === 'IGST18') {
-                    igst = subtotal * 0.18;
-                    document.getElementById('sundryName1').value = "IGST";
-                    document.getElementById('sundryRate1').value = "18%";
-                    document.getElementById('sundryName2').value = "None";
-                    document.getElementById('sundryRate2').value = "0%";
-                } else {
-                    document.getElementById('sundryName1').value = "None";
-                    document.getElementById('sundryRate1').value = "0%";
-                    document.getElementById('sundryName2').value = "None";
-                    document.getElementById('sundryRate2').value = "0%";
-                }
-            } else {
-                document.getElementById('sundryName1').value = "Taxes Disabled";
-                document.getElementById('sundryRate1').value = "0%";
-                document.getElementById('sundryName2').value = "Taxes Disabled";
-                document.getElementById('sundryRate2').value = "0%";
+            if (taxType === 'LGST18') {
+                cgst = total * 0.09;
+                sgst = total * 0.09;
+                tax = cgst + sgst;
+            } else if (taxType === 'IGST18') {
+                tax = total * 0.18;
             }
 
-            document.getElementById('cgstAmtVal').value = (cgst || igst).toFixed(2);
+            document.getElementById('cgstAmtVal').value = cgst.toFixed(2);
             document.getElementById('sgstAmtVal').value = sgst.toFixed(2);
 
-            const grossTotal = subtotal + cgst + sgst + igst;
-            
-            // Check if Round Off configuration is active
-            let roundedTotal = grossTotal;
-            let roundOff = 0;
-            if (voucherConfig.enableRoundOff === 'Y') {
-                roundedTotal = Math.round(grossTotal);
-                roundOff = roundedTotal - grossTotal;
-            }
-
-            document.getElementById('roundOffVal').value = roundOff.toFixed(2);
-            document.getElementById('netAmountVal').innerText = "₹ " + roundedTotal.toLocaleString('en-IN', {minimumFractionDigits: 2});
-        }
-
-        // Reverses ledger/stock adjustments during modification mode to maintain math integrity
-        function reverseVoucherAccountingImpact(vch) {
-            if (!vch) return;
-            
-            const partyAcc = accounts.find(a => a.name === vch.party);
-            const salesAcc = accounts.find(a => a.name === 'Sales Account');
-            const purAcc = accounts.find(a => a.name === 'Purchase Account');
-
-            // Handle standard voucher reversal logic
-            if(vch.type === 'Sales' || vch.type === 'Sales Return') {
-                const multiplier = (vch.type === 'Sales') ? 1 : -1;
-                
-                if (partyAcc) partyAcc.balance -= (vch.netAmt * multiplier);
-                if (salesAcc) salesAcc.balance -= (vch.subtotal * multiplier);
-                
-                if(vch.cgst > 0) {
-                    const acc = accounts.find(a => a.name === 'CGST Output Account');
-                    if (acc) acc.balance -= (vch.cgst * multiplier);
-                }
-                if(vch.sgst > 0) {
-                    const acc = accounts.find(a => a.name === 'SGST Output Account');
-                    if (acc) acc.balance -= (vch.sgst * multiplier);
-                }
-                if(vch.igst > 0) {
-                    const acc = accounts.find(a => a.name === 'IGST Output Account');
-                    if (acc) acc.balance -= (vch.igst * multiplier);
-                }
-
-                // Reverse inventory quantities
-                vch.items.forEach(it => {
-                    const stockItem = items.find(i => i.name === it.itemName);
-                    if(stockItem) {
-                        stockItem.opStock += (it.qty * multiplier);
-                    }
-                });
-            } else if (vch.type === 'Purchase' || vch.type === 'Purchase Return') {
-                const multiplier = (vch.type === 'Purchase') ? 1 : -1;
-                
-                if (partyAcc) partyAcc.balance -= (vch.netAmt * multiplier);
-                if (purAcc) purAcc.balance -= (vch.subtotal * multiplier);
-
-                if(vch.cgst > 0) {
-                    const acc = accounts.find(a => a.name === 'CGST Input Account');
-                    if (acc) acc.balance -= (vch.cgst * multiplier);
-                }
-                if(vch.sgst > 0) {
-                    const acc = accounts.find(a => a.name === 'SGST Input Account');
-                    if (acc) acc.balance -= (vch.sgst * multiplier);
-                }
-                if(vch.igst > 0) {
-                    const acc = accounts.find(a => a.name === 'IGST Input Account');
-                    if (acc) acc.balance -= (vch.igst * multiplier);
-                }
-
-                // Reverse inventory quantities
-                vch.items.forEach(it => {
-                    const stockItem = items.find(i => i.name === it.itemName);
-                    if(stockItem) {
-                        stockItem.opStock -= (it.qty * multiplier);
-                    }
-                });
-            } else {
-                // Cash bank and Journal adjustments reversal
-                const objAcc1 = accounts.find(a => a.name === vch.debitAcc);
-                const objAcc2 = accounts.find(a => a.name === vch.creditAcc);
-                if (objAcc1) objAcc1.balance -= vch.netAmt;
-                if (objAcc2) objAcc2.balance += vch.netAmt;
-            }
+            const netAmount = total + tax;
+            document.getElementById('netAmountVal').textContent = '₹ ' + netAmount.toFixed(2);
         }
 
         function saveVoucher() {
+            const type = currentVoucherType;
+            const vchNo = document.getElementById('vchNo').value;
             const party = document.getElementById('vchParty').value;
             const date = document.getElementById('vchDate').value;
-            const vchNumber = document.getElementById('vchNo').value;
-            const taxType = document.getElementById('vchTaxType').value;
-            const narration = document.getElementById('vchNarration').value || voucherConfig.defaultNarration;
 
-            const tbody = document.getElementById('vchItemGridBody');
-            const rows = tbody.getElementsByTagName('tr');
-            
-            let itemsList = [];
-            let subtotal = 0;
-
-            for(let i = 0; i < rows.length; i++) {
-                const itemName = rows[i].querySelector('.table-input-item').value;
-                if(itemName) {
-                    const qty = parseFloat(rows[i].querySelector('.table-input-qty').value) || 0;
-                    const price = parseFloat(rows[i].querySelector('.table-input-price').value) || 0;
-                    const amt = qty * price;
-                    itemsList.push({ itemName, qty, price, amount: amt });
-                    subtotal += amt;
-                }
-            }
-
-            if(itemsList.length === 0) {
-                showCustomToast("Please add at least one stock item!", "⚠️");
+            if (!party) {
+                showCustomToast('Select party account!', '⚠️');
                 return;
             }
 
-            // Reverse older double entries if modifying/editing existing records
-            if (currentModifyIndex > -1 && oldModifyVoucher) {
-                reverseVoucherAccountingImpact(oldModifyVoucher);
-            }
+            const rows = document.querySelectorAll('#vchItemGridBody tr');
+            let items = [];
 
-            const isTaxEnabled = (activeVoucherType.includes('Sales')) ? (voucherConfig.enableTaxSales === 'Y') : true;
-            let cgst = 0, sgst = 0, igst = 0;
-            if (isTaxEnabled) {
-                if(taxType === 'LGST18') {
-                    cgst = subtotal * 0.09;
-                    sgst = subtotal * 0.09;
-                } else if(taxType === 'IGST18') {
-                    igst = subtotal * 0.18;
+            rows.forEach(row => {
+                const itemSelect = row.cells[1].querySelector('select');
+                const qty = parseFloat(row.cells[2].querySelector('input').value) || 0;
+                const price = parseFloat(row.cells[4].querySelector('input').value) || 0;
+
+                if (itemSelect.value && qty > 0) {
+                    items.push({
+                        itemId: itemSelect.value,
+                        qty: qty,
+                        price: price,
+                        amount: qty * price
+                    });
                 }
+            });
+
+            if (items.length === 0) {
+                showCustomToast('Add at least one item!', '⚠️');
+                return;
             }
 
-            let netAmt = subtotal + cgst + sgst + igst;
-            let roundOff = 0;
-            if (voucherConfig.enableRoundOff === 'Y') {
-                netAmt = Math.round(netAmt);
-                roundOff = netAmt - (subtotal + cgst + sgst + igst);
-            }
-
-            // Update Ledger accounts balances
-            const partyAcc = accounts.find(a => a.name === party);
-            const salesAcc = accounts.find(a => a.name === 'Sales Account');
-            const purAcc = accounts.find(a => a.name === 'Purchase Account');
-
-            if(activeVoucherType === 'Sales' || activeVoucherType === 'Sales Return') {
-                const multiplier = (activeVoucherType === 'Sales') ? 1 : -1;
-                
-                partyAcc.balance += (netAmt * multiplier);
-                salesAcc.balance += (subtotal * multiplier);
-                
-                if(cgst > 0) accounts.find(a => a.name === 'CGST Output Account').balance += (cgst * multiplier);
-                if(sgst > 0) accounts.find(a => a.name === 'SGST Output Account').balance += (sgst * multiplier);
-                if(igst > 0) accounts.find(a => a.name === 'IGST Output Account').balance += (igst * multiplier);
-
-                itemsList.forEach(it => {
-                    const stockItem = items.find(i => i.name === it.itemName);
-                    if(stockItem) {
-                        stockItem.opStock = (stockItem.opStock || 0) - (it.qty * multiplier);
-                    }
-                });
-            } else {
-                const multiplier = (activeVoucherType === 'Purchase') ? 1 : -1;
-                
-                partyAcc.balance += (netAmt * multiplier); 
-                purAcc.balance += (subtotal * multiplier);
-
-                if(cgst > 0) accounts.find(a => a.name === 'CGST Input Account').balance += (cgst * multiplier);
-                if(sgst > 0) accounts.find(a => a.name === 'SGST Input Account').balance += (sgst * multiplier);
-                if(igst > 0) accounts.find(a => a.name === 'IGST Input Account').balance += (igst * multiplier);
-
-                itemsList.forEach(it => {
-                    const stockItem = items.find(i => i.name === it.itemName);
-                    if(stockItem) {
-                        stockItem.opStock = (stockItem.opStock || 0) + (it.qty * multiplier);
-                    }
-                });
-            }
-
-            // Record Voucher details in database log
-            const voucherLog = {
-                type: activeVoucherType,
-                vchNo: vchNumber,
-                date,
-                party,
-                subtotal,
-                cgst,
-                sgst,
-                igst,
-                roundOff,
-                netAmt,
-                narration,
-                items: itemsList
+            const amount = parseFloat(document.getElementById('netAmountVal').textContent.replace('₹ ', ''));
+            
+            const voucher = {
+                id: type + '_' + vchNo,
+                type: type,
+                vchNo: vchNo,
+                date: date,
+                party: party,
+                items: items,
+                amount: amount,
+                narration: document.getElementById('vchNarration').value
             };
 
-            if (currentModifyIndex > -1) {
-                vouchers[currentModifyIndex] = voucherLog;
-            } else {
-                vouchers.push(voucherLog);
-            }
-            
-            saveDatabase();
-            showCustomToast(`${activeVoucherType} Voucher #${vchNumber} saved successfully!`, "💾");
+            ERPData.vouchers[type].push(voucher);
+            saveERP();
             closeWindow('voucherWindow');
-            
-            // Clean edit variables
-            currentModifyIndex = -1;
-            oldModifyVoucher = null;
+            showCustomToast(`${type} saved (No. ${vchNo})`, '✅');
         }
 
-        // ================= CASH / BANK ENTRY WINDOW LOGIC =================
-        let activeCashBankType = 'Payment';
+        function openVoucherList(type) {
+            document.getElementById('vchListHeader').textContent = type + ' Vouchers';
+            const tbody = document.querySelector('#vchListTable tbody');
+            tbody.innerHTML = '';
 
-        function openCashBankWindow(type, action = 'Add', existingVch = null) {
-            activeCashBankType = type;
+            ERPData.vouchers[type].forEach(vch => {
+                const partyName = ERPData.accounts.find(a => a.id === vch.party)?.name || 'Unknown';
+                tbody.innerHTML += `<tr>
+                    <td>${vch.date}</td>
+                    <td>${vch.vchNo}</td>
+                    <td>${partyName}</td>
+                    <td>${vch.narration}</td>
+                    <td class="text-right">₹ ${vch.amount.toFixed(2)}</td>
+                </tr>`;
+            });
+
+            openWindow('vchListWindow');
+        }
+
+        // ==================== CASH/BANK VOUCHERS ====================
+        function openCashBankWindow(type) {
+            document.getElementById('cbHeader').textContent = type + ' Voucher';
+            document.getElementById('cbVchNo').value = getNextVoucherNo(type);
+            
+            const label1 = document.getElementById('cbAccountLabel1');
+            const label2 = document.getElementById('cbAccountLabel2');
+
+            if (type === 'Payment') {
+                label1.textContent = 'Paid To';
+                label2.textContent = 'Cash/Bank';
+            } else if (type === 'Receipt') {
+                label1.textContent = 'Received From';
+                label2.textContent = 'Cash/Bank';
+            }
+
+            updatePartySelects();
+            currentCashBankType = type;
             openWindow('cashBankWindow');
-
-            document.getElementById('cbHeader').innerText = `${type} Voucher Entry - ${action}`;
-            
-            if (action === 'Add') {
-                currentModifyIndex = -1;
-                oldModifyVoucher = null;
-                document.getElementById('cbVchNo').value = vouchers.filter(v => v.type === type).length + 1;
-                document.getElementById('cbAmount').value = "";
-                document.getElementById('cbNarration').value = "";
-                document.getElementById('cbDate').value = "31-05-2026";
-            } else if (action === 'Modify' && existingVch) {
-                document.getElementById('cbVchNo').value = existingVch.vchNo;
-                document.getElementById('cbDate').value = existingVch.date;
-                document.getElementById('cbAmount').value = existingVch.netAmt;
-                document.getElementById('cbNarration').value = existingVch.narration;
-                
-                currentModifyIndex = vouchers.indexOf(existingVch);
-                oldModifyVoucher = JSON.parse(JSON.stringify(existingVch));
-            }
-
-            const select1 = document.getElementById('cbAccount1');
-            const select2 = document.getElementById('cbAccount2');
-            select1.innerHTML = "";
-            select2.innerHTML = "";
-
-            if(type === 'Payment' || type === 'Debit Note') {
-                document.getElementById('cbAccountLabel1').innerText = "Debit Account (Paid To Party)";
-                document.getElementById('cbAccountLabel2').innerText = "Credit Account (From Cash/Bank)";
-                
-                accounts.forEach(acc => {
-                    if(acc.group === 'Sundry Creditors' || acc.group === 'Sundry Debtors' || acc.group === 'Capital Account') {
-                        select1.add(new Option(`${acc.name} (${acc.group})`, acc.name));
-                    }
-                    if(acc.group === 'Cash Accounts' || acc.group === 'Bank Accounts') {
-                        select2.add(new Option(acc.name, acc.name));
-                    }
-                });
-            } else if(type === 'Receipt' || type === 'Credit Note') {
-                document.getElementById('cbAccountLabel1').innerText = "Debit Account (Deposit to Cash/Bank)";
-                document.getElementById('cbAccountLabel2').innerText = "Credit Account (Received From Party)";
-
-                accounts.forEach(acc => {
-                    if(acc.group === 'Cash Accounts' || acc.group === 'Bank Accounts') {
-                        select1.add(new Option(acc.name, acc.name));
-                    }
-                    if(acc.group === 'Sundry Debtors' || acc.group === 'Sundry Creditors' || acc.group === 'Capital Account') {
-                        select2.add(new Option(`${acc.name} (${acc.group})`, acc.name));
-                    }
-                });
-            } else {
-                // Contra & Journal (Universal selector)
-                document.getElementById('cbAccountLabel1').innerText = "Debit Account";
-                document.getElementById('cbAccountLabel2').innerText = "Credit Account";
-
-                accounts.forEach(acc => {
-                    select1.add(new Option(`${acc.name} (${acc.group})`, acc.name));
-                    select2.add(new Option(`${acc.name} (${acc.group})`, acc.name));
-                });
-            }
-
-            if (action === 'Modify' && existingVch) {
-                select1.value = existingVch.debitAcc;
-                select2.value = existingVch.creditAcc;
-            }
         }
+
+        let currentCashBankType = 'Payment';
 
         function saveCashBankVoucher() {
-            const date = document.getElementById('cbDate').value;
-            const vchNo = document.getElementById('cbVchNo').value;
-            const acc1 = document.getElementById('cbAccount1').value;
-            const acc2 = document.getElementById('cbAccount2').value;
-            const amount = parseFloat(document.getElementById('cbAmount').value) || 0;
-            const narration = document.getElementById('cbNarration').value || `Being cash/bank dynamic transfer`;
+            const type = currentCashBankType;
+            const amount = parseFloat(document.getElementById('cbAmount').value);
 
-            if(amount <= 0) {
-                showCustomToast("Please enter a valid amount!", "⚠️");
+            if (!amount || amount <= 0) {
+                showCustomToast('Enter valid amount!', '⚠️');
                 return;
             }
 
-            if(acc1 === acc2) {
-                showCustomToast("Debit and Credit accounts cannot be the same!", "⚠️");
-                return;
-            }
-
-            // Reverse old entry adjustments if modifying
-            if (currentModifyIndex > -1 && oldModifyVoucher) {
-                reverseVoucherAccountingImpact(oldModifyVoucher);
-            }
-
-            // Real accounting logic balances shift with Strict Negative cash checks validation
-            if (activeCashBankType === 'Payment' && featuresOptions.allowNegativeCash === 'N') {
-                const cashAccountObj = accounts.find(a => a.name === acc2);
-                if (cashAccountObj && cashAccountObj.balance < amount) {
-                    showCustomToast(`Negative Balances restriction! Available in ${acc2}: ₹ ${cashAccountObj.balance}`, "❌");
-                    return;
-                }
-            }
-
-            const objAcc1 = accounts.find(a => a.name === acc1);
-            const objAcc2 = accounts.find(a => a.name === acc2);
-
-            if (objAcc1) objAcc1.balance += amount; 
-            if (objAcc2) objAcc2.balance -= amount; 
-
-            // Record transaction
-            const cashLog = {
-                type: activeCashBankType,
-                vchNo,
-                date,
-                party: `${acc1} / ${acc2}`,
-                netAmt: amount,
-                debitAcc: acc1,
-                creditAcc: acc2,
-                narration
+            const voucher = {
+                id: type + '_' + document.getElementById('cbVchNo').value,
+                type: type,
+                vchNo: document.getElementById('cbVchNo').value,
+                date: document.getElementById('cbDate').value,
+                account1: document.getElementById('cbAccount1').value,
+                account2: document.getElementById('cbAccount2').value,
+                amount: amount,
+                narration: document.getElementById('cbNarration').value
             };
 
-            if (currentModifyIndex > -1) {
-                vouchers[currentModifyIndex] = cashLog;
-            } else {
-                vouchers.push(cashLog);
-            }
-
-            saveDatabase();
-            showCustomToast(`${activeCashBankType} recorded successfully!`, "💾");
+            ERPData.vouchers[type].push(voucher);
+            saveERP();
             closeWindow('cashBankWindow');
-            
-            // Clean modifications trackers
-            currentModifyIndex = -1;
-            oldModifyVoucher = null;
+            showCustomToast(`${type} saved successfully!`, '✅');
         }
 
-        // ================= HOUSEKEEPING UTILITY SYSTEM =================
-        function backupERPData() {
-            const backupPayload = {
-                accounts,
-                items,
-                vouchers,
-                voucherConfig,
-                featuresOptions,
-                companyName: localStorage.getItem("busy_company_name")
-            };
+        // ==================== REPORTS ====================
+        function openDayBook() {
+            const tbody = document.querySelector('#dayBookTable tbody');
+            tbody.innerHTML = '';
 
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupPayload));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", `SS_ENTERPRISES_BUSY_BACKUP_${new Date().toISOString().slice(0,10)}.json`);
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-            showCustomToast("ERP database backup JSON file exported!", "📥");
+            ['Sales', 'Purchase', 'Payment', 'Receipt'].forEach(type => {
+                ERPData.vouchers[type].forEach(vch => {
+                    const partyName = ERPData.accounts.find(a => a.id === (vch.party || vch.account1))?.name || 'Unknown';
+                    tbody.innerHTML += `<tr>
+                        <td>${vch.date}</td>
+                        <td>${vch.type}</td>
+                        <td>${vch.vchNo}</td>
+                        <td>${partyName}</td>
+                        <td class="text-right dr-text">${['Purchase', 'Receipt'].includes(vch.type) ? '₹ ' + vch.amount.toFixed(2) : ''}</td>
+                        <td class="text-right cr-text">${['Sales', 'Payment'].includes(vch.type) ? '₹ ' + vch.amount.toFixed(2) : ''}</td>
+                    </tr>`;
+                });
+            });
+
+            openWindow('dayBookWindow');
+        }
+
+        function openLedgerReport() {
+            updatePartySelects();
+            document.getElementById('ledgerReportSelectAccount').onchange = renderLedgerReport;
+            openWindow('ledgerReportWindow');
+        }
+
+        function renderLedgerReport() {
+            const accountId = document.getElementById('ledgerReportSelectAccount').value;
+            const tbody = document.querySelector('#ledgerReportTable tbody');
+            tbody.innerHTML = '';
+
+            if (!accountId) return;
+
+            let balance = 0;
+            const account = ERPData.accounts.find(a => a.id === accountId);
+            if (account) balance = account.openingBalance;
+
+            ['Sales', 'Purchase', 'Payment', 'Receipt'].forEach(type => {
+                ERPData.vouchers[type].forEach(vch => {
+                    if (vch.party === accountId || vch.account1 === accountId || vch.account2 === accountId) {
+                        if (['Sales', 'Receipt'].includes(vch.type)) balance -= vch.amount;
+                        else balance += vch.amount;
+
+                        tbody.innerHTML += `<tr>
+                            <td>${vch.date}</td>
+                            <td>${vch.type}</td>
+                            <td>${vch.vchNo}</td>
+                            <td>${vch.narration || '-'}</td>
+                            <td class="text-right dr-text">${['Purchase', 'Receipt'].includes(vch.type) ? '₹ ' + vch.amount.toFixed(2) : ''}</td>
+                            <td class="text-right cr-text">${['Sales', 'Payment'].includes(vch.type) ? '₹ ' + vch.amount.toFixed(2) : ''}</td>
+                            <td class="text-right">₹ ${balance.toFixed(2)}</td>
+                        </tr>`;
+                    }
+                });
+            });
+        }
+
+        function openTrialBalance() {
+            const tbody = document.querySelector('#trialBalanceTable tbody');
+            tbody.innerHTML = '';
+
+            let totalDr = 0, totalCr = 0;
+
+            ERPData.accounts.forEach(acc => {
+                let balance = acc.openingBalance;
+
+                Object.keys(ERPData.vouchers).forEach(type => {
+                    ERPData.vouchers[type].forEach(vch => {
+                        if (vch.party === acc.id || vch.account1 === acc.id || vch.account2 === acc.id) {
+                            if (['Sales', 'Receipt'].includes(vch.type)) balance -= vch.amount;
+                            else balance += vch.amount;
+                        }
+                    });
+                });
+
+                if (balance >= 0) {
+                    tbody.innerHTML += `<tr><td>${acc.name}</td><td class="text-right">₹ ${balance.toFixed(2)}</td><td></td></tr>`;
+                    totalDr += balance;
+                } else {
+                    tbody.innerHTML += `<tr><td>${acc.name}</td><td></td><td class="text-right">₹ ${Math.abs(balance).toFixed(2)}</td></tr>`;
+                    totalCr += Math.abs(balance);
+                }
+            });
+
+            tbody.innerHTML += `<tr style="border-top: 2px solid #ff9800; font-weight: bold;">
+                <td>TOTAL</td>
+                <td class="text-right">₹ ${totalDr.toFixed(2)}</td>
+                <td class="text-right">₹ ${totalCr.toFixed(2)}</td>
+            </tr>`;
+
+            openWindow('trialBalanceWindow');
+        }
+
+        function openStockStatus() {
+            const tbody = document.querySelector('#stockStatusTable tbody');
+            tbody.innerHTML = '';
+
+            ERPData.items.forEach(item => {
+                const value = item.quantity * item.salePrice;
+                tbody.innerHTML += `<tr>
+                    <td>${item.name}</td>
+                    <td class="text-center">${item.unit}</td>
+                    <td class="text-right">0</td>
+                    <td class="text-right">0</td>
+                    <td class="text-right">${item.quantity}</td>
+                    <td class="text-right">₹ ${item.salePrice}</td>
+                    <td class="text-right">₹ ${value.toFixed(2)}</td>
+                </tr>`;
+            });
+
+            openWindow('stockStatusWindow');
+        }
+
+        // ==================== WINDOW MANAGEMENT ====================
+        function openWindow(windowId) {
+            closeAllWindows();
+            const window = document.getElementById(windowId);
+            window.classList.add('show');
+            document.getElementById('modalOverlay').classList.add('show');
+        }
+
+        function closeWindow(windowId) {
+            document.getElementById(windowId).classList.remove('show');
+            if (!document.querySelector('.busy-window.show')) {
+                document.getElementById('modalOverlay').classList.remove('show');
+            }
+        }
+
+        function closeAllWindows() {
+            document.querySelectorAll('.busy-window').forEach(w => w.classList.remove('show'));
+            document.getElementById('modalOverlay').classList.remove('show');
+        }
+
+        // ==================== UTILITIES ====================
+        function showCustomToast(message, icon = '💬') {
+            const box = document.getElementById('toastBox');
+            box.textContent = `${icon} ${message}`;
+            box.style.display = 'flex';
+            setTimeout(() => box.style.display = 'none', 3000);
+        }
+
+        function backupERPData() {
+            const data = JSON.stringify(ERPData, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `ERPBackup_${new Date().getTime()}.json`;
+            link.click();
+            showCustomToast('Backup downloaded!', '💾');
         }
 
         function triggerRestoreInput() {
@@ -2110,510 +1385,43 @@
 
         function restoreERPData(event) {
             const file = event.target.files[0];
-            if (!file) return;
-
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = (e) => {
                 try {
-                    const parsedData = JSON.parse(e.target.result);
-                    if (parsedData.accounts && parsedData.items && parsedData.vouchers) {
-                        accounts = parsedData.accounts;
-                        items = parsedData.items;
-                        vouchers = parsedData.vouchers;
-                        if(parsedData.voucherConfig) voucherConfig = parsedData.voucherConfig;
-                        if(parsedData.featuresOptions) featuresOptions = parsedData.featuresOptions;
-                        
-                        if(parsedData.companyName) {
-                            localStorage.setItem("busy_company_name", parsedData.companyName);
-                        }
-
-                        saveDatabase();
-                        checkFirstTimeUser();
-                        showCustomToast("ERP backup restored and active successfully!", "✅");
-                    } else {
-                        showCustomToast("Invalid BUSY backup file format!", "❌");
-                    }
-                } catch (err) {
-                    showCustomToast("Failed to parse database backup JSON!", "❌");
+                    ERPData = JSON.parse(e.target.result);
+                    saveERP();
+                    disableCompanyMenus(false);
+                    updateUI();
+                    showCustomToast('Data restored!', '✅');
+                } catch {
+                    showCustomToast('Invalid backup file!', '❌');
                 }
             };
             reader.readAsText(file);
         }
 
-        async function triggerClearDataConfirm() {
-            const userApproved = await showCustomConfirm("CRITICAL WARNING!\n\nAre you sure you want to delete and reset all accounting masters, configurations, and transaction vouchers? This action is completely irreversible!");
-            if (userApproved) {
-                localStorage.clear();
-                accounts = [
-                    { name: 'Cash Account', group: 'Cash Accounts', balance: 150000.00 },
-                    { name: 'State Bank of India', group: 'Bank Accounts', balance: 500000.00 },
-                    { name: 'Sales Account', group: 'Sales Accounts', balance: 0.00 },
-                    { name: 'Purchase Account', group: 'Purchase Accounts', balance: 0.00 },
-                    { name: 'Sanjeev & Co', group: 'Sundry Debtors', balance: 0.00 },
-                    { name: 'Aligarh Machine Tools', group: 'Sundry Creditors', balance: 0.00 },
-                    { name: 'CGST Output Account', group: 'Duties & Taxes', balance: 0.00 },
-                    { name: 'SGST Output Account', group: 'Duties & Taxes', balance: 0.00 },
-                    { name: 'IGST Output Account', group: 'Duties & Taxes', balance: 0.00 },
-                    { name: 'CGST Input Account', group: 'Duties & Taxes', balance: 0.00 },
-                    { name: 'SGST Input Account', group: 'Duties & Taxes', balance: 0.00 },
-                    { name: 'IGST Input Account', group: 'Duties & Taxes', balance: 0.00 }
-                ];
-                items = [
-                    { name: 'Lenovo Thinkpad T14 Gen 3', unit: 'PCS', tax: 18, salePrice: 45000.00, purPrice: 38000.00, opStock: 10 },
-                    { name: 'Logitech Wireless Mouse M235', unit: 'PCS', tax: 18, salePrice: 850.00, purPrice: 600.00, opStock: 50 },
-                    { name: 'Dell 24 Inch IPS Monitor', unit: 'PCS', tax: 18, salePrice: 12500.00, purPrice: 9500.00, opStock: 8 }
-                ];
-                vouchers = [];
-                voucherConfig = {
-                    enableTaxSales: 'Y',
-                    enableRoundOff: 'Y',
-                    defaultNarration: 'Being transaction recorded as per books.'
-                };
-                featuresOptions = {
-                    valuationMethod: 'FIFO',
-                    allowNegativeCash: 'N',
-                    defaultTax: '18'
-                };
-                
-                saveDatabase();
-                checkFirstTimeUser();
-                showCustomToast("ERP Database fully factory formatted!", "⚠️");
+        function triggerClearDataConfirm() {
+            if (confirm('Delete ALL data? This cannot be undone!')) {
+                ERPData = { company: null, accounts: [], items: [], vouchers: { Sales: [], Purchase: [], Payment: [], Receipt: [] } };
+                localStorage.removeItem('ERPData');
+                disableCompanyMenus(true);
+                closeAllWindows();
+                document.getElementById('statusCompany').textContent = '-';
+                showCustomToast('All data cleared', '🗑️');
             }
         }
 
-        // ================= DISPLAY REPORTS SYSTEM LOGIC =================
-        function openDayBook() {
-            openWindow('dayBookWindow');
-            const tbody = document.getElementById('dayBookTable').getElementsByTagName('tbody')[0];
-            tbody.innerHTML = "";
-
-            if(vouchers.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center" style="color:var(--text-muted);">No entries recorded in Day Book.</td></tr>`;
-                return;
-            }
-
-            vouchers.forEach(v => {
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${v.date}</td>
-                    <td style="font-weight:bold; color:var(--accent-color);">${v.type}</td>
-                    <td>${v.vchNo}</td>
-                    <td>${v.party} <br><small style="color:var(--text-muted);">${v.narration}</small></td>
-                    <td class="text-right dr-text">₹ ${v.netAmt.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
-                    <td class="text-right cr-text">₹ ${v.netAmt.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
-                `;
-            });
-        }
-
-        function openLedgerReport() {
-            openWindow('ledgerReportWindow');
-            const select = document.getElementById('ledgerReportSelectAccount');
-            select.innerHTML = "";
-            
-            accounts.forEach(acc => {
-                select.add(new Option(acc.name, acc.name));
-            });
-
-            renderLedgerReport();
-        }
-
-        function renderLedgerReport() {
-            const accName = document.getElementById('ledgerReportSelectAccount').value;
-            const tbody = document.getElementById('ledgerReportTable').getElementsByTagName('tbody')[0];
-            tbody.innerHTML = "";
-
-            if(!accName) return;
-
-            let postings = [];
-            
-            vouchers.forEach(v => {
-                if(v.type === 'Sales' && v.party === accName) {
-                    postings.push({ date: v.date, type: 'Sales', vchNo: v.vchNo, oppAcc: 'Sales Account', debit: v.netAmt, credit: 0 });
-                } else if(v.type === 'Purchase' && v.party === accName) {
-                    postings.push({ date: v.date, type: 'Purchase', vchNo: v.vchNo, oppAcc: 'Purchase Account', debit: 0, credit: v.netAmt });
-                } else if(v.type === 'Sales Return' && v.party === accName) {
-                    postings.push({ date: v.date, type: 'Sales Return', vchNo: v.vchNo, oppAcc: 'Sales Account', debit: 0, credit: v.netAmt });
-                } else if(v.type === 'Purchase Return' && v.party === accName) {
-                    postings.push({ date: v.date, type: 'Purchase Return', vchNo: v.vchNo, oppAcc: 'Purchase Account', debit: v.netAmt, credit: 0 });
-                }
-                
-                if(v.debitAcc === accName) {
-                    postings.push({ date: v.date, type: v.type, vchNo: v.vchNo, oppAcc: v.creditAcc, debit: v.netAmt, credit: 0 });
-                } else if(v.creditAcc === accName) {
-                    postings.push({ date: v.date, type: v.type, vchNo: v.vchNo, oppAcc: v.debitAcc, debit: 0, credit: v.netAmt });
-                }
-            });
-
-            if(postings.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center" style="color:var(--text-muted);">No ledger entries recorded for this account.</td></tr>`;
-                return;
-            }
-
-            let runningBal = 0;
-            postings.forEach(p => {
-                runningBal += (p.debit - p.credit);
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${p.date}</td>
-                    <td>${p.type}</td>
-                    <td>${p.vchNo}</td>
-                    <td style="color:var(--text-muted);">${p.oppAcc}</td>
-                    <td class="text-right ${p.debit > 0 ? 'dr-text' : ''}">₹ ${p.debit.toFixed(2)}</td>
-                    <td class="text-right ${p.credit > 0 ? 'cr-text' : ''}">₹ ${p.credit.toFixed(2)}</td>
-                    <td class="text-right" style="font-weight:bold;">₹ ${Math.abs(runningBal).toFixed(2)} ${runningBal >= 0 ? 'Dr' : 'Cr'}</td>
-                `;
-            });
-        }
-
-        function openTrialBalance() {
-            openWindow('trialBalanceWindow');
-            const tbody = document.getElementById('trialBalanceTable').getElementsByTagName('tbody')[0];
-            tbody.innerHTML = "";
-
-            let totalDr = 0;
-            let totalCr = 0;
-
-            accounts.forEach(acc => {
-                const bal = acc.balance;
-                let dr = 0, cr = 0;
-                
-                if(acc.group === 'Sundry Debtors' || acc.group === 'Cash Accounts' || acc.group === 'Bank Accounts' || acc.group === 'Purchase Accounts') {
-                    dr = bal >= 0 ? bal : 0;
-                    cr = bal < 0 ? Math.abs(bal) : 0;
-                } else {
-                    cr = bal >= 0 ? bal : 0;
-                    dr = bal < 0 ? Math.abs(bal) : 0;
-                }
-
-                if(dr > 0 || cr > 0) {
-                    totalDr += dr;
-                    totalCr += cr;
-                    const row = tbody.insertRow();
-                    row.innerHTML = `
-                        <td style="font-weight: bold;">${acc.name}</td>
-                        <td style="color:var(--text-muted);">${acc.group}</td>
-                        <td class="text-right dr-text">₹ ${dr.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
-                        <td class="text-right cr-text">₹ ${cr.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
-                    `;
-                }
-            });
-
-            const totalRow = tbody.insertRow();
-            totalRow.style.background = "rgba(255, 152, 0, 0.1)";
-            totalRow.style.borderTop = "2px solid var(--accent-color)";
-            totalRow.innerHTML = `
-                <td colspan="2" style="font-weight: bold; color: var(--accent-color);">GRAND TOTALS</td>
-                <td class="text-right dr-text" style="font-weight: bold; font-size: 14px;">₹ ${totalDr.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
-                <td class="text-right cr-text" style="font-weight: bold; font-size: 14px;">₹ ${totalCr.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
-            `;
-        }
-
-        function openStockStatus() {
-            openWindow('stockStatusWindow');
-            const tbody = document.getElementById('stockStatusTable').getElementsByTagName('tbody')[0];
-            tbody.innerHTML = "";
-
-            items.forEach(it => {
-                let inward = it.opStock >= 0 ? it.opStock : 0;
-                let outward = 0;
-
-                vouchers.forEach(v => {
-                    if(v.items) {
-                        v.items.forEach(vit => {
-                            if(vit.itemName === it.name) {
-                                if(v.type === 'Sales' || v.type === 'Purchase Return') outward += vit.qty;
-                                if(v.type === 'Purchase' || v.type === 'Sales Return') inward += vit.qty;
-                            }
-                        });
-                    }
-                });
-
-                const closingQty = inward - outward;
-                const valuation = closingQty * it.purPrice;
-
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td style="font-weight:bold; color:var(--accent-color);">${it.name}</td>
-                    <td class="text-center">${it.unit}</td>
-                    <td class="text-right" style="color: #2ece71;">${inward}</td>
-                    <td class="text-right" style="color: #e74c3c;">${outward}</td>
-                    <td class="text-right" style="font-weight:bold; color:#fff;">${closingQty}</td>
-                    <td class="text-right">₹ ${it.purPrice.toFixed(2)}</td>
-                    <td class="text-right" style="font-weight:bold; color:#4ade80;">₹ ${valuation.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
-                `;
-            });
-        }
-
-        // Universal Transaction modify/edit list view
-        function openVoucherList(type, optionMode = 'List') {
-            openWindow('vchListWindow');
-            document.getElementById('vchListHeader').innerText = `${type} Transactions Directory [Mode: ${optionMode}]`;
-            
-            const tbody = document.getElementById('vchListTable').getElementsByTagName('tbody')[0];
-            tbody.innerHTML = "";
-
-            const filtered = vouchers.filter(v => v.type === type);
-
-            if(filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center" style="color:var(--text-muted);">No entries recorded.</td></tr>`;
-                return;
-            }
-
-            filtered.forEach((v, index) => {
-                const row = tbody.insertRow();
-                
-                // Set modify / view actions dynamically
-                let actionBtn = `<button class="btn" style="padding: 2px 8px; font-size:11px;" onclick="viewVoucherDetails('${v.vchNo}', '${v.type}')">View</button>`;
-                if (optionMode === 'Modify') {
-                    actionBtn = `<button class="btn" style="padding: 2px 8px; font-size:11px; background-color: #3498db; color: white;" onclick="triggerModifyVoucher('${v.vchNo}', '${v.type}')">✏️ Modify</button>`;
-                }
-
-                row.innerHTML = `
-                    <td>${v.date}</td>
-                    <td style="font-weight:bold;">${v.vchNo}</td>
-                    <td>${v.party ? v.party : (v.debitAcc + ' / ' + v.creditAcc)}</td>
-                    <td style="color:var(--text-muted);">${v.narration}</td>
-                    <td class="text-right" style="font-weight:bold; color:var(--accent-color);">₹ ${v.netAmt.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
-                    <td class="text-center">${actionBtn}</td>
-                `;
-            });
-        }
-
-        // Triggers modifications by loading previous vouchers to matching input frames
-        function triggerModifyVoucher(vchNo, type) {
-            const vch = vouchers.find(v => v.vchNo === vchNo && v.type === type);
-            if (!vch) return;
-            
-            if (type === 'Sales' || type === 'Purchase' || type === 'Sales Return' || type === 'Purchase Return' || type === 'Stock Journal' || type === 'Stock Transfer') {
-                openVoucherWindow(type, 'Modify', vch);
-            } else {
-                openCashBankWindow(type, 'Modify', vch);
+        function updateUI() {
+            if (ERPData.company) {
+                document.getElementById('statusCompany').textContent = ERPData.company.name;
+                document.getElementById('mainTitleBar').textContent = `${ERPData.company.name} | F.Y. ${ERPData.company.fy} | SUPPORT : 8171904861`;
+                updatePartySelects();
+                updateItemSelects();
             }
         }
 
-        function viewVoucherDetails(vchNo, type) {
-            triggerModifyVoucher(vchNo, type); // View also loads into matched entry screen in modify mode for simplified editing/inspection
-        }
-
-        // ================= PRINT / EMAIL / SMS SYSTEM LOGIC =================
-        function openPrintEmailWindow() {
-            openWindow('printEmailSmsWindow');
-            const select = document.getElementById('printInvoiceSelect');
-            select.innerHTML = "";
-            
-            const bills = vouchers.filter(v => v.type === 'Sales' || v.type === 'Purchase' || v.type === 'Sales Return');
-            if(bills.length === 0) {
-                select.add(new Option("-- No Bills Found --", ""));
-                document.getElementById('invoicePrintFrame').innerHTML = `<p style="color:#000; text-align:center; padding: 20px;">Please create a voucher first to generate printing files.</p>`;
-                return;
-            }
-
-            bills.forEach(b => {
-                select.add(new Option(`${b.type} Bill #${b.vchNo} - ${b.party}`, b.vchNo));
-            });
-
-            renderInvoicePreview();
-        }
-
-        function renderInvoicePreview() {
-            const vchNo = document.getElementById('printInvoiceSelect').value;
-            if(!vchNo) return;
-            
-            const bill = vouchers.find(v => v.vchNo === vchNo);
-            if(!bill) return;
-
-            let itemRows = "";
-            bill.items.forEach((it, i) => {
-                itemRows += `
-                    <tr>
-                        <td>${i + 1}</td>
-                        <td>${it.itemName}</td>
-                        <td style="text-align: right;">${it.qty}</td>
-                        <td style="text-align: right;">₹ ${it.price.toFixed(2)}</td>
-                        <td style="text-align: right;">₹ ${it.amount.toFixed(2)}</td>
-                    </tr>
-                `;
-            });
-
-            const companyName = localStorage.getItem("busy_company_name") || "SS ENTERPRISES";
-
-            document.getElementById('invoicePrintFrame').innerHTML = `
-                <div class="printable-invoice">
-                    <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px;">
-                        <h2 style="margin: 0; font-size: 20px; font-weight: bold;">${companyName.toUpperCase()}</h2>
-                        <p style="margin: 3px 0; font-size: 11px;">Aligarh Industrial Area, Uttar Pradesh, India | Contact: 8171904861</p>
-                        <h3 style="margin: 5px 0 0; font-size: 14px; text-decoration: underline;">TAX INVOICE</h3>
-                    </div>
-                    
-                    <div style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 11px;">
-                        <div>
-                            <strong>Billed To:</strong><br>
-                            ${bill.party}<br>
-                            State: Uttar Pradesh (09)<br>
-                            Payment Mode: Cash/Credit
-                        </div>
-                        <div style="text-align: right;">
-                            <strong>Invoice No:</strong> ${bill.vchNo}<br>
-                            <strong>Date:</strong> ${bill.date}<br>
-                            <strong>F.Y:</strong> 2026-27
-                        </div>
-                    </div>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>S.No</th>
-                                <th>Item Particulars</th>
-                                <th style="text-align: right;">Qty</th>
-                                <th style="text-align: right;">Rate</th>
-                                <th style="text-align: right;">Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${itemRows}
-                            <tr>
-                                <td colspan="4" style="text-align: right; font-weight: bold;">Subtotal</td>
-                                <td style="text-align: right; font-weight: bold;">₹ ${bill.subtotal.toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="4" style="text-align: right;">CGST (9%)</td>
-                                <td style="text-align: right;">₹ ${bill.cgst.toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="4" style="text-align: right;">SGST (9%)</td>
-                                <td style="text-align: right;">₹ ${bill.sgst.toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="4" style="text-align: right;">Round Off</td>
-                                <td style="text-align: right;">₹ ${bill.roundOff.toFixed(2)}</td>
-                            </tr>
-                            <tr style="background: #f0f0f0;">
-                                <td colspan="4" style="text-align: right; font-weight: bold;">GRAND TOTAL (Net Payable)</td>
-                                <td style="text-align: right; font-weight: bold; font-size: 14px;">₹ ${bill.netAmt.toFixed(2)}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div style="margin-top: 25px; border-top: 1px dashed #000; padding-top: 10px; font-size: 10px; display: flex; justify-content: space-between;">
-                        <div>
-                            <strong>Terms & Conditions:</strong><br>
-                            1. Goods once sold will not be taken back.<br>
-                            2. Subject to Aligarh Jurisdiction only.
-                        </div>
-                        <div style="text-align: right; margin-top: 15px;">
-                            For <strong>${companyName.toUpperCase()}</strong><br><br><br>
-                            Authorized Signatory
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function triggerPrintInvoice() {
-            const printContent = document.getElementById('invoicePrintFrame').innerHTML;
-            const originalContent = document.body.innerHTML;
-            document.body.innerHTML = printContent;
-            window.print();
-            document.body.innerHTML = originalContent;
-            window.location.reload(); // Reload to restore SPA framework bindings safely
-        }
-
-        function triggerEmailInvoice() {
-            showCustomToast("Drafting invoice PDF. Preparing smtp sockets...", "📬");
-            setTimeout(() => {
-                showCustomToast("Invoice copy emailed to registered party successfully!", "✉️");
-            }, 1500);
-        }
-
-        function triggerSmsInvoice() {
-            showCustomToast("Connecting to bulk SMS gateway...", "📡");
-            setTimeout(() => {
-                showCustomToast("SMS transactional alert sent to party!", "📱");
-            }, 1500);
-        }
-
-        // ================= HOUSEKEEPING SYSTEM ACTIONS =================
-        function openHousekeepingWindow() {
-            openWindow('housekeepingWindow');
-        }
-
-        function startHousekeepingTask(statusMsg, successMsg) {
-            showCustomToast(statusMsg, "🔄");
-            setTimeout(() => {
-                showCustomToast(successMsg, "✅");
-            }, 2000);
-        }
-
-        // ================= HELP SYSTEM WINDOW =================
-        function openHelpWindow() {
-            openWindow('helpWindow');
-        }
-
-        // ================= KEYBOARD EVENTS MANAGEMENT (F2 / F3 SHORTCUTS) =================
-        document.addEventListener('keydown', function(e) {
-            // Save trigger inside dynamic window forms
-            if(e.key === 'F2') {
-                e.preventDefault();
-                const vWindow = document.getElementById('voucherWindow');
-                const mWindow = document.getElementById('mastersWindow');
-                const cbWindow = document.getElementById('cashBankWindow');
-
-                if(vWindow.style.display === 'flex' || vWindow.style.display === 'block') {
-                    saveVoucher();
-                } else if(mWindow.style.display === 'flex' || mWindow.style.display === 'block') {
-                    saveMasterEntry();
-                } else if(cbWindow.style.display === 'flex' || cbWindow.style.display === 'block') {
-                    saveCashBankVoucher();
-                } else {
-                    showCustomToast("No active entry form found to save!", "⚠️");
-                }
-            }
-
-            // Add Master trigger anywhere
-            if(e.key === 'F3') {
-                e.preventDefault();
-                openAddMaster('Account');
-            }
-
-            // Sales Voucher shortcut (Alt+S)
-            if(e.altKey && e.key.toLowerCase() === 's') {
-                e.preventDefault();
-                openVoucherWindow('Sales');
-            }
-
-            // Purchase Voucher shortcut (Alt+P)
-            if(e.altKey && e.key.toLowerCase() === 'p') {
-                e.preventDefault();
-                openVoucherWindow('Purchase');
-            }
-
-            // Ledger Report shortcut (Alt+L)
-            if(e.altKey && e.key.toLowerCase() === 'l') {
-                e.preventDefault();
-                openLedgerReport();
-            }
-
-            // Payment Voucher shortcut (F5)
-            if(e.key === 'F5') {
-                e.preventDefault();
-                openCashBankWindow('Payment');
-            }
-
-            // Receipt Voucher shortcut (F6)
-            if(e.key === 'F6') {
-                e.preventDefault();
-                openCashBankWindow('Receipt');
-            }
-
-            // Contra Voucher shortcut (F4)
-            if(e.key === 'F4') {
-                e.preventDefault();
-                openCashBankWindow('Contra');
-            }
-        });
-
-        // Initialize ERP app workflow
-        window.addEventListener('load', checkFirstTimeUser);
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', initializeERP);
     </script>
 </body>
 </html>
